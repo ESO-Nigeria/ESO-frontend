@@ -37,7 +37,11 @@ module.exports = {
           DEFAULT: "#1B4137",
           foreground: "hsl(var(--primary-foreground))",
           base: '#1B4137',
-          success: '#12B76A'
+          success: '#12B76A',
+          '100':"#D1D9D7",
+          '200':"#D8F6E5",
+          '700': '#257F4A',
+          '600': '#31A962'
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -48,6 +52,7 @@ module.exports = {
           "body-600": '#232E3F',
           "body-regular": "#98A2B3",
           "body-regular-contrast": "#667085",
+          "body-text-regular": "#3F434A"
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",

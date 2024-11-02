@@ -78,6 +78,7 @@
     "vue-multiselect": "^2.1.9",
     "vue-router": "latest",
     "vue-sweetalert2": "^5.0.5",
+    "vue3-dropzone": "^2.2.1",
     "vuex-persistedstate": "^4.1.0",
     "zod": "^3.23.8"
   }

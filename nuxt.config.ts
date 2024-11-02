@@ -44,9 +44,6 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  alias: {
-    "@": "~/",
-  },
   modules: [
     'nuxt-typed-router', // 'nuxt-typed-link',
   [
