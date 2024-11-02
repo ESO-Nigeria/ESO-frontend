@@ -53,8 +53,8 @@
               </Select>
             </FormControl>
             <FormDescription>
-              <p class="text-sm text-secondary-body-regular-contrast">(First Name & Last Name of Most senior executive
-                member)</p>
+              <!-- <p class="text-sm text-secondary-body-regular-contrast">(First Name & Last Name of Most senior executive
+                member)</p> -->
             </FormDescription>
             <FormMessage />
           </FormItem>
@@ -129,21 +129,37 @@
             <FormLabel class="text-[#3F434A] text-base font-medium">Password</FormLabel>
             <FormControl class=" relative w-full  items-center">
 
-              <div class="relative w-full  items-center">
-                <Input type="password"
+              <div class="relative w-full  items-center mb-2">
+                <Input 
+                  :type="isPasswordVisible ? 'text' : 'password'"
                   class="h-11 pl-10 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                  placeholder="Enter Password" v-bind="componentField" />
-                <span class="absolute end-0 inset-y-0 flex items-center justify-center px-2">
+                  placeholder="Enter Password" v-bind="componentField"   @input="checkPasswordStrength" v-model="password"                  />
+                <button type="button" @click="togglePasswordVisibility"  aria-label="Toggle password visibility" class="absolute cursor-pointer end-0 inset-y-0 flex items-center justify-center px-2">
 
-                  <Eye class="size-5 text-muted-foreground" />
-                </span>
+                  <Eye v-if="!isPasswordVisible" class="size-5 text-muted-foreground" />
+                  <EyeOff v-else class="size-5 text-muted-foreground" />
+                </button>
                 <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
-
                   <img src="~/assets/images/icons/lock.svg" class="size-5 text-muted-foreground" />
                 </span>
               </div>
             </FormControl>
             <FormMessage />
+            <ul class="space-y-1 text-sm mt-3">
+              <li class="text-secondary-body-regular-contrast font-normal inline-flex items-center" :class="getIndicatorClass(criteria.length)">
+                <span v-if="criteria.length" class="text-green-500 mr-1 ">
+                  <img src="~/assets/images/icons/secure_check.svg" />
+                </span>
+                Password must be at least 8 characters
+              
+              </li>
+              <li class="text-secondary-body-regular-contrast font-normal" :class="getIndicatorClass(criteria.uppercase)">
+                <span v-if="criteria.uppercase" class="text-green-500 mr-1">✔</span>Password must have at least one uppercase</li>
+              <li class="text-secondary-body-regular-contrast font-normal" :class="getIndicatorClass(criteria.number)">
+                <span v-if="criteria.number" class="text-green-500 mr-1">✔</span>Password must have one number</li>
+              <li class="text-secondary-body-regular-contrast font-normal" :class="getIndicatorClass(criteria.special)">
+                <span v-if="criteria.special" class="text-green-500 mr-1">✔</span>Password must have one special characters</li>
+            </ul>
           </FormItem>
         </FormField>
         <FormField v-slot="{ componentField }" name="confirm_password">
@@ -152,17 +168,19 @@
             <FormControl class=" relative w-full  items-center">
 
               <div class="relative w-full  items-center">
-                <Input type="password"
+                <Input 
+                :type="isPasswordVisible ? 'text' : 'password'"
                   class="pl-10 h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="Enter Password" v-bind="componentField" />
                 <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
 
                   <img src="~/assets/images/icons/lock.svg" class="size-5 text-muted-foreground" />
                 </span>
-                <span class="absolute end-0 inset-y-0 flex items-center justify-center px-2">
+                <button @click="togglePasswordVisibility"   class="absolute end-0 inset-y-0 flex items-center justify-center px-2">
 
-                  <Eye class="size-5 text-muted-foreground" />
-                </span>
+                  <Eye v-if="!isPasswordVisible" class="size-5 text-muted-foreground" />
+                  <EyeOff v-else class="size-5 text-muted-foreground" />
+                </button>
               </div>
             </FormControl>
           </FormItem>
@@ -183,7 +201,7 @@
 </template>
 
 <script setup>
-import { Eye, LoaderCircle } from 'lucide-vue-next'
+import { Eye, EyeOff, LoaderCircle } from 'lucide-vue-next'
 import { Mail } from 'lucide-vue-next';
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
@@ -192,32 +210,55 @@ import { useAuthStore } from '~/store/auth';
 
 const formSchema = toTypedSchema(
   z.object({
-    organization_name: z.string().min(1, { message: "Organization Name is required" }),
-    organization_type: z.string().min(1, { message: "Organization Type is required" }),
-    
-    first_name: z.string().min(1, { message: "First Name is required" }),
-    
-    last_name: z.string().min(1, { message: "Last Name is required" }),
-    
-    email: z.string()
-      .min(1, { message: "Email is required" })
+    organization_name: z.string({ required_error: "Organization Name is required."}),
+    organization_type: z.string({ required_error: "Organization Type is required."}),
+    first_name: z.string({ required_error: "First Name is required."}),
+    last_name: z.string({ required_error: "Last Name is required."}),
+    email: z.string({ required_error: "Email is required."})
       .email({ message: "Must be a valid email" }),
-    
-    whatsapp_number: z.string()
+    whatsapp_number: z.string({required_error: "Whatsapp number is required"})
       .min(10, { message: "Whatsapp Number must be at least 10 characters" }) // Minimum length of 10
       .max(15, { message: "Whatsapp Number cannot exceed 15 characters" }) // Optional: add a max length validation
       .regex(/^\d+$/, { message: "Whatsapp Number must be digits only" }), // Ensure only digits
        
-    password: z.string()
-      .min(6, { message: "Password must be at least 6 characters" })
-      .min(1, { message: "Password is required" }), // This can stay to ensure there's some input
+    password: z.string({ message: "Password is required" }),
+      // This can stay to ensure there's some input
     confirm_password: z.string().optional()
   })
 );
 
+// Password and criteria state
+const password = ref('');
+const isPasswordVisible = ref(false);
+
+const criteria = ref({
+  length: false,
+  uppercase: false,
+  number: false,
+  special: false,
+});
+
+// Function to check password strength criteria
+function checkPasswordStrength() {
+  console.log('password', password, values)
+  const value = password.value;
+  criteria.value.length = value.length >= 8;
+  criteria.value.uppercase = /[A-Z]/.test(value);
+  criteria.value.number = /[0-9]/.test(value);
+  criteria.value.special = /[@$!%*?&]/.test(value);
+}
+
+// Function to return CSS class for each criterion
+function getIndicatorClass(isPassed) {
+  return isPassed ? 'text-green-500' : 'text-gray-500';
+}
+
+function togglePasswordVisibility() {
+  isPasswordVisible.value = !isPasswordVisible.value;
+}
 
 const authStore = useAuthStore()
-const { isFieldDirty, handleSubmit } = useForm({
+const { isFieldDirty, handleSubmit, values } = useForm({
   validationSchema: formSchema,
 });
 const router = useRouter()
