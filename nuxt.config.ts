@@ -74,4 +74,9 @@ export default defineNuxtConfig({
     '/dashboard/**': { ssr: false },    
 
   },
+  runtimeConfig:{
+    public: {
+      apiUrl: 'https://eso-backend.onrender.com',
+    }
+  }
 })

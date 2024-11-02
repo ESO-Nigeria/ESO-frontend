@@ -6,7 +6,7 @@
           <img class="w-auto " src="~/assets/images/icons/logo.svg" alt="logo">
         </div>
       </div>
-      <form class="flex gap-4 flex-col mt-8">
+      <form @submit="onSubmit" class="flex gap-4 flex-col mt-8">
         <div class="flex flex-col gap-2">
           <h6 class="text-secondary-header3 text-3xl font-bold">Welcome back,</h6>
           <p class=" text-secondary-body-300 font-medium text-lg ">Log in to continue</p>
@@ -42,12 +42,13 @@
 
         <!-- </div> -->
         <p class="inline-flex  items-center gap-2 text-base font-medium text-secondary-body-600">Forgot Your Password
-          <NuxtLink to="/auth/forgot" class=""> <img src="~/assets/images/icons/arrow.svg" /> </NuxtLink>.</p>
-
-        <Button class="text-base py-3 h-11 mt-2">Login</Button>
+          <NuxtLink to="/auth/forgot" class=""> <img src="~/assets/images/icons/arrow.svg" /> </NuxtLink></p>
+        <Button :disabled="loading" class="text-base py-3 h-11 mt-2">Login 
+          <LoaderCircle v-show="loading" class="animate-spin h-4 w-4 ml-2" />
+        </Button>
         <p class="mt-2 text-base font-medium text-secondary-body-600">Do not have an Account?  <NuxtLink
             to="/auth/register" class="inline-flex items-center gap-2 "><span class="underline ">Sign Up</span> <img
-              src="~/assets/images/icons/arrow.svg" /> </NuxtLink>.</p>
+              src="~/assets/images/icons/arrow.svg" /> </NuxtLink></p>
 
       </form>
 
@@ -56,7 +57,42 @@
 </template>
 
 <script setup>
-import { Eye } from 'lucide-vue-next'
+import { Eye, LoaderCircle } from 'lucide-vue-next'
+import { useForm } from "vee-validate";
+import { toTypedSchema } from "@vee-validate/zod";
+import * as z from "zod";
+import { useAuthStore } from '~/store/auth';
+
+const authStore = useAuthStore()
+const form = useForm({
+  // validationSchema: formSchema,
+});
+const router = useRouter()
+const loading  = ref(false);
+
+const onSubmit = form.handleSubmit(async(values) => {
+  const  { email, password } = values;
+ 
+  try {
+    loading.value = true;
+  const response =  await authStore.login( {email, password} );
+  console.log('response', response.data?.data)
+  if (response.data && response?.data?.data?.auth_token) {
+    loading.value = false;
+    // redirect to dashboard
+    console.log('here', response?.data?.data?.auth_token)
+    router.push('/dashboard');
+
+    } else {
+      loading.value = false;
+      // alert(response.data.message);
+      }
+    loading.value = false
+  }catch(error) {
+    loading.value = false
+    console.log('error', error)
+  }
+});
 </script>
 
 <style lang="scss" scoped></style>
