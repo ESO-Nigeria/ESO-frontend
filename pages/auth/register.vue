@@ -176,7 +176,7 @@
 
                   <img src="~/assets/images/icons/lock.svg" class="size-5 text-muted-foreground" />
                 </span>
-                <button @click="togglePasswordVisibility"   class="absolute end-0 inset-y-0 flex items-center justify-center px-2">
+                <button type="button" @click="togglePasswordVisibility"   class="absolute end-0 inset-y-0 flex items-center justify-center px-2">
 
                   <Eye v-if="!isPasswordVisible" class="size-5 text-muted-foreground" />
                   <EyeOff v-else class="size-5 text-muted-foreground" />
