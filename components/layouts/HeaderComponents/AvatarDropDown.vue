@@ -48,7 +48,6 @@ const handleShowMenu = () => {
               : profileDetails.firstname
           }} -->
         </span>
-        <span class="block text-xs font-medium">Owner</span>
       </span>
       <svg
         :class="dropdownOpen && 'rotate-180'"
