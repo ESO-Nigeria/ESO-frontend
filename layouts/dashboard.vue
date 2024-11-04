@@ -12,5 +12,16 @@
   </div>
 </template>
 <script setup>
+import { useAuthStore } from '~/store/auth';
+
+const loading = ref(false)
+const authStore = useAuthStore()
+
+onMounted(async() => {
+
+  loading.value = true
+  await authStore.getUser()
+  loading.value = false  
+})
 
 </script>

@@ -3,7 +3,9 @@
     <NuxtLayout name="auth">
       <div class="">
         <div class="flex justify-center mx-auto">
-          <img class="w-auto " src="~/assets/images/icons/logo.svg" alt="logo">
+          <NuxtLink to="/">
+            <img class="w-auto " src="~/assets/images/icons/logo.svg" alt="logo">
+          </NuxtLink>
         </div>
       </div>
       <form  @submit="onSubmit"  class="flex gap-4 flex-col mt-8">
@@ -34,19 +36,21 @@
                   <SelectValue placeholder="Select an organization type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="financial_management_service">
+                  <SelectItem value="FMS">
                     Financial Management Service
                   </SelectItem>
-                  <SelectItem value="legal_services">
+                  <SelectItem value="LS">
                     Legal Services
                   </SelectItem>
-                  <SelectItem value="market_development">
-                    Market Development
+                  <!-- IRS: Investment-Readiness Services -->
+
+                  <SelectItem value="IRS">
+                    Investment-Readiness Services
                   </SelectItem>
-                  <SelectItem value="management_consulting">
+                  <SelectItem value="MC">
                     Management Consulting
                   </SelectItem>
-                  <SelectItem value="others">
+                  <SelectItem value="ORS">
                     Other Relevant Services
                   </SelectItem>
                 </SelectContent>
@@ -282,7 +286,7 @@ console.log('values', values)
     loading.value = true;
   const response =  await authStore.register( body );
   console.log('response', response.data?.data)
-  if (response.data && response?.data?.data?.id) {
+  if (response.data && response?.data?.data?.data?.id) {
     loading.value = false;
     // redirect to dashboard
     console.log('here', response?.data?.data?.id)

@@ -3,7 +3,10 @@
     <NuxtLayout name="auth">
       <div class="">
         <div class="flex justify-center mx-auto">
-          <img class="w-auto " src="~/assets/images/icons/logo.svg" alt="logo">
+          <NuxtLink to="/">
+            <img class="w-auto " src="~/assets/images/icons/logo.svg" alt="logo">
+          </NuxtLink>
+          
         </div>
       </div>
       <form @submit="onSubmit" class="flex gap-4 flex-col mt-8">
@@ -42,8 +45,9 @@
         </FormField>
 
         <!-- </div> -->
+        <NuxtLink to="/auth/forgot" class="">
         <p class="inline-flex  items-center gap-2 text-base font-medium text-secondary-body-600">Forgot Your Password
-          <NuxtLink to="/auth/forgot" class=""> <img src="~/assets/images/icons/arrow.svg" /> </NuxtLink></p>
+         <img src="~/assets/images/icons/arrow.svg" /> </p></NuxtLink>
         <Button :disabled="loading" class="text-base py-3 h-11 mt-2">Login 
           <LoaderCircle v-show="loading" class="animate-spin h-4 w-4 ml-2" />
         </Button>
@@ -82,11 +86,9 @@ const onSubmit = form.handleSubmit(async(values) => {
   try {
     loading.value = true;
   const response =  await authStore.login( {email, password} );
-  console.log('response', response.data?.data)
-  if (response.data && response?.data?.data?.auth_token) {
+  if (response.data && response?.data?.data?.data?.auth_token) {
     loading.value = false;
     // redirect to dashboard
-    console.log('here', response?.data?.data?.auth_token)
     router.push('/dashboard');
 
     } else {

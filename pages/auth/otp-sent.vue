@@ -10,7 +10,7 @@
       <div class="flex flex-col gap-2">
         <h6 class="text-secondary-header3 text-3xl font-bold">OTP Sent</h6>
         <p class="text-primary-success font-medium text-lg">Success!</p>
-        <p class=" text-secondary-body-300 font-medium text-lg ">We have sent a reset Link  to your email address eso**@co***.com</p>
+        <p class=" text-secondary-body-300 font-medium text-lg ">We have sent a reset Link  to your email address </p>
       </div>
    
          

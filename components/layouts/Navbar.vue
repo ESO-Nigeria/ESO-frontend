@@ -1,5 +1,16 @@
 <script setup lang="ts">
 import AvatarDropDown from './HeaderComponents/AvatarDropDown.vue'
+import { useAuthStore } from '~/store/auth';
+
+const authStore = useAuthStore();
+
+const user = computed(() => {
+  return authStore.user;
+})
+
+console.log(authStore, 'authStore', user)
+
+
 </script>
 
 <template>

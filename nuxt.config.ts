@@ -76,7 +76,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig:{
     public: {
-      apiUrl: 'https://eso-backend.onrender.com',
+      apiUrl: 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net',
     }
   }
 })

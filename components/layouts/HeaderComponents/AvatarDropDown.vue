@@ -2,6 +2,7 @@
 import { useRouter } from '#imports';
 import { onClickOutside } from '@vueuse/core';
 import { ref } from 'vue';
+import { useAuthStore } from '~/store/auth';
 
 const target = ref(null);
 const dropdownOpen = ref(false);
@@ -14,17 +15,24 @@ onClickOutside(target, () => {
 const router = useRouter();
 const showMenu = ref(false);
 const routePathName = useRequestURL().pathname;
-const authStore = "";
+const authStore = useAuthStore();
 // const profileDetails = authStore.getProfile;
+const user = computed(() => {
+  return authStore.user;
+})
 
-// const logUserOut = async () => {
-//   authStore.logUserOut();
-//   router.push({ name: 'login' });
-// };
+console.log(authStore, 'authStore', user)
+
+const logUserOut = async () => {
+  authStore.logUserOut();
+  router.push('/auth/login');
+};
 
 const handleShowMenu = () => {
   showMenu.value = !showMenu.value;
 };
+
+
 </script>
 
 <template>
@@ -41,12 +49,7 @@ const handleShowMenu = () => {
       </div>
       <span class="hidden text-right lg:block">
         <span class="block text-sm font-medium text-black"
-          >Hi, Steven
-          <!-- {{
-            profileDetails.firstName
-              ? profileDetails.firstName
-              : profileDetails.firstname
-          }} -->
+          >Hi, {{user?.first_name}}
         </span>
       </span>
       <svg
@@ -70,35 +73,7 @@ const handleShowMenu = () => {
       v-show="dropdownOpen"
       class="absolute right-0 mt-4 flex w-52 flex-col bg-white shadow-10 rounded-[10px]">
       <ul class="flex flex-col p-4">
-        <li>
-          <NuxtLink
-            to="/profile"
-            class="flex items-center py-2 px-[18px] gap-2 text-sm font-normal duration-300 ease-in-out">
-            <svg
-              width="17"
-              height="16"
-              viewBox="0 0 17 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_8673_420087)">
-                <path
-                  d="M13.1667 2.66667H12.4333C12.2786 1.91428 11.8692 1.23823 11.2742 0.752479C10.6791 0.266727 9.9348 0.000969683 9.16667 0L7.83333 0C7.0652 0.000969683 6.32088 0.266727 5.72583 0.752479C5.13079 1.23823 4.7214 1.91428 4.56667 2.66667H3.83333C2.9496 2.66773 2.10237 3.01925 1.47748 3.64415C0.852588 4.26904 0.501059 5.11627 0.5 6L0.5 12.6667C0.501059 13.5504 0.852588 14.3976 1.47748 15.0225C2.10237 15.6474 2.9496 15.9989 3.83333 16H13.1667C14.0504 15.9989 14.8976 15.6474 15.5225 15.0225C16.1474 14.3976 16.4989 13.5504 16.5 12.6667V6C16.4989 5.11627 16.1474 4.26904 15.5225 3.64415C14.8976 3.01925 14.0504 2.66773 13.1667 2.66667ZM7.83333 1.33333H9.16667C9.57884 1.33504 9.98042 1.46406 10.3165 1.70273C10.6525 1.94139 10.9066 2.27806 11.044 2.66667H5.956C6.09339 2.27806 6.34749 1.94139 6.68353 1.70273C7.01958 1.46406 7.42116 1.33504 7.83333 1.33333ZM3.83333 4H13.1667C13.6971 4 14.2058 4.21071 14.5809 4.58579C14.956 4.96086 15.1667 5.46957 15.1667 6V8H1.83333V6C1.83333 5.46957 2.04405 4.96086 2.41912 4.58579C2.79419 4.21071 3.3029 4 3.83333 4ZM13.1667 14.6667H3.83333C3.3029 14.6667 2.79419 14.456 2.41912 14.0809C2.04405 13.7058 1.83333 13.1971 1.83333 12.6667V9.33333H7.83333V10C7.83333 10.1768 7.90357 10.3464 8.0286 10.4714C8.15362 10.5964 8.32319 10.6667 8.5 10.6667C8.67681 10.6667 8.84638 10.5964 8.97141 10.4714C9.09643 10.3464 9.16667 10.1768 9.16667 10V9.33333H15.1667V12.6667C15.1667 13.1971 14.956 13.7058 14.5809 14.0809C14.2058 14.456 13.6971 14.6667 13.1667 14.6667Z"
-                  fill="#374957" />
-              </g>
-              <defs>
-                <clipPath id="clip0_8673_420087">
-                  <rect
-                    width="16"
-                    height="16"
-                    fill="white"
-                    transform="translate(0.5)" />
-                </clipPath>
-              </defs>
-            </svg>
-
-            Change Role
-          </NuxtLink>
-        </li>
+        
         <li>
           <NuxtLink
             to="#"
@@ -131,10 +106,9 @@ const handleShowMenu = () => {
             Profile
           </NuxtLink>
         </li>
-        <!-- @click="logUserOut(), handleShowMenu()" -->
         <li
-          
-          class="flex items-center py-2 px-[18px] gap-2 text-sm font-normal duration-300 ease-in-out cursor-pointer">
+        @click="logUserOut"
+         class="flex items-center py-2 px-[18px] gap-2 text-sm font-normal duration-300 ease-in-out cursor-pointer">
           <svg
             width="17"
             height="16"

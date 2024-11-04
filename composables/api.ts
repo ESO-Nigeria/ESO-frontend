@@ -11,12 +11,12 @@ export const apiGetRequest = async (url: string): Promise<ApiResponse> => {
   const baseURL = config.public.apiUrl;
   const { getToken } = storeToRefs(useAuthStore());
   const token = getToken.value;
-  
+  console.log('getToken', getToken)
   try {
     const response = await axios.get(baseURL + url, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token, // Add your authorization header here
+        'Authorization': 'token ' + token, // Add your authorization header here
       },
     });
     
@@ -40,7 +40,7 @@ export const apiPostRequest = async (url: string, body: object): Promise<ApiResp
       },
     });
 
-    return { data: response.data, error: null };
+    return { data: response, error: null };
   } catch (error: any) {
     return { data: null, error: error?.response?.data ?? 'Unknown error' };
   }

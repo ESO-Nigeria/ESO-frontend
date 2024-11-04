@@ -72,6 +72,9 @@
           </div>
         </div>
         
+        <div>
+          <LayoutsTablesProgrammesTable :data="[]"/>
+        </div>
       </div>
     </NuxtLayout>
   </div>
