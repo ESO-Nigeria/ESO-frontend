@@ -11,12 +11,13 @@ export const apiGetRequest = async (url: string): Promise<ApiResponse> => {
   const baseURL = config.public.apiUrl;
   const { getToken } = storeToRefs(useAuthStore());
   const token = getToken.value;
-  console.log('getToken', getToken)
+  const storedToken = getItem("token");
+  console.log('getToken', getToken, storedToken)
   try {
     const response = await axios.get(baseURL + url, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'token ' + token, // Add your authorization header here
+        'Authorization': 'token ' + JSON.parse(storedToken), // Add your authorization header here
       },
     });
     
