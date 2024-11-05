@@ -74,6 +74,9 @@ export default defineNuxtConfig({
     '/dashboard/**': { ssr: false },    
 
   },
+  build: {
+    transpile: ['@vuepic/vue-datepicker']
+},
   runtimeConfig:{
     public: {
       apiUrl: 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net',

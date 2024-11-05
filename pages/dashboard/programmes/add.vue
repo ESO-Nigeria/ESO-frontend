@@ -255,7 +255,7 @@
                 <div class="grid grid-cols-2 gap-4">
                   <FormField v-slot="{ componentField }" name="participants">
                     <FormItem class="space-y-1">
-                      <FormLabel class="text-[#3F434A] text-base font-medium">No of participant accepted per cohort(Optional)</FormLabel>
+                      <FormLabel class="text-[#3F434A] text-base font-medium text-nowrap">No of participant accepted per cohort(Optional)</FormLabel>
                       <FormControl>
                         <div class="relative w-full  items-center">
                           <Input type="number"
@@ -288,10 +288,11 @@
                       <FormLabel class="text-[#3F434A] text-base font-medium">Timeline / Duration</FormLabel>
                       <FormControl>
                         <div class="relative w-full  items-center">
-                          <Input type="number"
+                          <VueDatePicker v-model="date" :enable-time-picker="false" range multi-calendars ></VueDatePicker>
+                          <!-- <Input type="number"
                             class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                             placeholder="Enter Number" v-bind="componentField" />
-                          
+                           -->
                         </div>
           
                       </FormControl>
@@ -302,35 +303,227 @@
                       <FormLabel class="text-[#3F434A] text-base font-medium">Application Deadline</FormLabel>
                       <FormControl>
                         <div class="relative w-full  items-center">
-                          <Input type="number"
+                          <VueDatePicker v-model="deadline" :enable-time-picker="false" class="" ></VueDatePicker>
+
+                          <!-- <Input type="number"
                             class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                            placeholder="Enter Amount or Free" v-bind="componentField" />
+                            placeholder="Enter Amount or Free" v-bind="componentField" /> -->
                         </div>
           
                       </FormControl>
                     </FormItem>
                   </FormField>
                 </div>
+                <FormField v-slot="{ componentField }" name="location">
+                  <FormItem class="space-y-1">
+                    <FormLabel class="text-[#3F434A] text-base font-medium">Location</FormLabel>
+                    <FormControl>
+                      <div class="relative w-full  items-center">
+                        <Input type="text"
+                          class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
+                          placeholder="Location" v-bind="componentField" />
+                        
+                      </div>
+        
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+                <FormField v-slot="{ componentField }" name="fee">
+                  <FormItem class="space-y-1">
+                    <FormLabel class="text-[#3F434A] text-base font-medium">Program Mode</FormLabel>
+                    <FormControl>
+                      <div class="relative w-full  items-center">
+                        <Input type="number"
+                          class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
+                          placeholder="Enter Amount or Free" v-bind="componentField" />
+                        
+                      </div>
+        
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+                <FormField v-slot="{ componentField }" name="link">
+                  <FormItem class="space-y-1">
+                    <FormLabel class="text-[#3F434A] text-base font-medium">Registration Link</FormLabel>
+                    <FormControl>
+                      <div class="relative w-full  items-center">
+                        <Input type="url"
+                          class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
+                          placeholder="Enter Amount or Free" v-bind="componentField" />
+                        
+                      </div>
+        
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+                <FormField v-slot="{ componentField }" name="website">
+                  <FormItem class="space-y-1">
+                    <FormLabel class="text-[#3F434A] text-base font-medium">Website Link(Optional)</FormLabel>
+                    <FormControl>
+                      <div class="relative w-full  items-center">
+                        <Input type="url"
+                          class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
+                          placeholder="Enter Amount or Free" v-bind="componentField" />
+                        
+                      </div>
+        
+                    </FormControl>
+                  </FormItem>
+                </FormField>
               </div>
 
+              <div v-if="currentStep === 2" class="flex gap-4 flex-col mt-8">
+                <div class="space-y-6">
+                  <p class="text-lg text-[#071827] font-medium">Program Overview</p>
+                  <div class="space-y-2">
+                    <p class="text-sm text-primary font-bold">Program Title</p>
+                    <p class="text-sm text-[#3F434A] font-normal">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, similique? Minima rerum, rem magnam sequi ab, inventore, explicabo cum cumque laborum possimus temporibus voluptatem amet dolores officia necessitatibus eum nam.</p>
+                  </div>
+                  <div class="space-y-2">
+                    <p class="text-sm text-primary font-bold">Program Description</p>
+                    <p class="text-sm text-[#3F434A] font-normal">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, similique? Minima rerum, rem magnam sequi ab, inventore, explicabo cum cumque laborum possimus temporibus voluptatem amet dolores officia necessitatibus eum nam.</p>
+                  </div>
+                  <div class="space-y-2">
+                    <p class="text-sm text-primary font-bold">Program Details</p>
+                    <p class="text-sm text-[#3F434A] font-normal">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, similique? Minima rerum, rem magnam sequi ab, inventore, explicabo cum cumque laborum possimus temporibus voluptatem amet dolores officia necessitatibus eum nam.</p>
+                  </div>
+                  <div class="space-y-2">
+                    <p class="text-sm text-primary font-bold">Brief Detail of Instructors Used</p>
+                    <p class="text-sm text-[#3F434A] font-normal">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, similique? Minima rerum, rem magnam sequi ab, inventore, explicabo cum cumque laborum possimus temporibus voluptatem amet dolores officia necessitatibus eum nam.</p>
+                  </div>
+                  <div class="space-y-2">
+                    <p class="text-sm text-primary font-bold">Sector*</p>
+                    <p class="text-sm text-[#3F434A] font-normal">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, similique? Minima rerum, rem magnam sequi ab, inventore, explicabo cum cumque laborum possimus temporibus voluptatem amet dolores officia necessitatibus eum nam.</p>
+                  </div>
+                  <div class="space-y-2">
+                    <p class="text-sm text-primary font-bold">Business Stage (Target Audience)*</p>
+                    <p class="text-sm text-[#3F434A] font-normal">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, similique? Minima rerum, rem magnam sequi ab, inventore, explicabo cum cumque laborum possimus temporibus voluptatem amet dolores officia necessitatibus eum nam.</p>
+                  </div>
+                  <div class="space-y-2">
+                    <p class="text-sm text-primary font-bold">Non Financial Support Provided*</p>
+                    <p class="text-sm text-[#3F434A] font-normal">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, similique? Minima rerum, rem magnam sequi ab, inventore, explicabo cum cumque laborum possimus temporibus voluptatem amet dolores officia necessitatibus eum nam.</p>
+                  </div>
+                  <div class="space-y-2">
+                    <p class="text-sm text-primary font-bold">Financial Support Provided*</p>
+                    <p class="text-sm text-[#3F434A] font-normal">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet, similique? Minima rerum, rem magnam sequi ab, inventore, explicabo cum cumque laborum possimus temporibus voluptatem amet dolores officia necessitatibus eum nam.</p>
+                  </div>
+                  <div class="flex justify-end">
+                    <Button type="button" @click="currentStep = 0" variant="ghost" class="text-[#667085]">
+                      <Edit class="inline-flex"/> Edit Program Overview
+                    </Button>
+                  </div>
+                </div>
+                <div class="space-y-6">
+                  <p class="text-lg text-[#071827] font-medium">Program Overview</p>
+                  <div class="grid grid-cols-2">
+                    <div class="space-y-2">
+                      <p class="text-sm text-primary font-bold">No of participant accepted per cohort(Optional)</p>
+                      <p class="text-sm text-[#3F434A] font-normal">10</p>
+                    </div>
+                    <div class="space-y-2">
+                      <p class="text-sm text-primary font-bold">Participation Fee</p>
+                      <p class="text-sm text-[#3F434A] font-normal">Free</p>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <div class="space-y-2">
+                      <p class="text-sm text-primary font-bold">Timeline/Duration</p>
+                      <p class="text-sm text-[#3F434A] font-normal">1 Month</p>
+                    </div>
+                    <div class="space-y-2">
+                      <p class="text-sm text-primary font-bold">Application Deadline</p>
+                      <p class="text-sm text-[#3F434A] font-normal">01/11/2024</p>
+                    </div>
+                  </div>
+                  
+                  <div class="space-y-2">
+                    <p class="text-sm text-primary font-bold">Location*</p>
+                    <p class="text-sm text-[#3F434A] font-normal">tags</p>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <div class="space-y-2">
+                      <p class="text-sm text-primary font-bold">Program Mode</p>
+                      <p class="text-sm text-[#3F434A] font-normal">Hybrid</p>
+                    </div>
+                    <div class="space-y-2">
+                      <p class="text-sm text-primary font-bold">Application Deadline</p>
+                      <p class="text-sm text-[#3F434A] font-normal">01/11/2024</p>
+                    </div>
+                  </div>
+
+                  <div class="space-y-2">
+                    <p class="text-sm text-primary font-bold">Registration Link.</p>
+                    <p class="text-sm text-[#3F434A] font-normal">www.register.com/busines//new.</p>
+                  </div>
+
+                  <div class="space-y-2">
+                    <p class="text-sm text-primary font-bold">Website Url</p>
+                    <p class="text-sm text-[#3F434A] font-normal">www.register.com/busines//new.</p>
+                  </div>
+                  
+                  
+                  <div class="flex justify-end">
+                    <Button type="button" @click="currentStep = 1" variant="ghost" class="text-[#667085]">
+                      <Edit class="inline-flex"/> Edit Program Details
+                    </Button>
+                  </div>
+                </div>
+              </div>
 
             </form>
             <!-- v-if="currentStep > 0" -->
             <div class="flex justify-end mt-6 gap-4">
-              <Button size="lg"  @click="goToPreviousStep" type="button" variant="outline">
+              <Button size="lg" class="py-3 px-5 h-11 w-[145px]" @click="goToPreviousStep" type="button" variant="outline">
                 Cancel
               </Button>
-              <Button size="lg" v-if="currentStep < steps.length - 1" @click="goToNextStep" type="button">
+              <Button class="py-3 px-5 h-11 w-[145px]" size="lg" v-if="currentStep < steps.length - 1" @click="goToNextStep" type="button">
                 Next
               </Button>
-              <Button v-if="currentStep === steps.length - 1" type="submit" variant="primary">
+              <!-- <Button size="lg" v-if="currentStep === steps.length - 1" type="submit" >
                 Submit
-              </Button>
+              </Button> -->
+              <AlertDialog>
+                <AlertDialogTrigger class="">
+                  <Button type="button" size="lg" v-if="currentStep === steps.length - 1" class="py-3 px-5 h-11 w-[145px]"> Submit</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent class="max-w-[426px] pt-12">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle
+                      class=" pt-4 pb-2 text-3xl text-center text-gray-950"
+                      >Confirm Submission</AlertDialogTitle
+                    >
+                    <AlertDialogDescription
+                      class="px-4 text-center font-normal text-base text-[#3F434A]">
+                      Are you sure you want to submit?             </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <Alert class="mb-2 bg-[#EDF2F780] px-4 py-3 inline-flex">
+                    <img
+                      class="mr-2"
+                      src="~/assets/images/icons/info.svg"
+                      alt="" />
+                    <AlertDescription class="text-sm text-[#5C6F7F]">
+                      When you click “Yes, Submit”, your programme will be sent to ESO Collaborative Admin to verify and approved Please review the information provided to ensure accuracy. Once confirmed, this information will be submitted for verification.
+                    </AlertDescription>
+                  </Alert>
+                  <AlertDialogFooter class="flex gap-2.5">
+                    <AlertDialogCancel type="button" class="w-full h-11 py-3 px-6">Edit Details</AlertDialogCancel>
+                    <AlertDialogAction type="button"  class="w-full h-11 py-3 px-6 bg-primary-600">Yes, Submit</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </div>
         </div>
         <div class=" bg-white rounded-md p-6">
-right
+          <div>
+            <p class="text-base text-[#3F434A] font-medium">Program Overview</p>
+            <div>
+              <div class="h-[290px] bg-[#EAECF0] mt-4"> 
+                <img :src="image_preview_link" class="h-full w-full"/>
+              </div>
+
+            </div>
+          </div>
         </div>
       </div>
      </div>
@@ -341,7 +534,7 @@ right
 </template>
 
 <script setup>
-import { Check } from 'lucide-vue-next';
+import { Check, Edit } from 'lucide-vue-next';
 import { ref } from 'vue';
 import FormDescription from '~/components/ui/form/FormDescription.vue';
 import { useDropzone } from "vue3-dropzone"; // Ensure to use the dropzone library compatible with Vue
@@ -351,7 +544,13 @@ import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 import { useAuthStore } from '~/store/auth';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+import AlertDialogTrigger from '~/components/ui/alert-dialog/AlertDialogTrigger.vue';
+import AlertDialogFooter from '~/components/ui/alert-dialog/AlertDialogFooter.vue';
 
+const date = ref();
+const deadline = ref()
 const formSchema = toTypedSchema(
   z.object({
     organization_name: z.string({ required_error: "Organization Name is required."}),
@@ -376,7 +575,7 @@ const { isFieldDirty, values } = useForm({
 });
 
 // Steps Array
-const steps = ['Program Overview', 'Program Details', 'Publish'];
+const steps = ['Program Overview', 'Program Details', 'Preview & Publish'];
 const currentStep = ref(0);
 
 // Form Data
@@ -390,20 +589,33 @@ const formData = ref({
 const progressValue = computed(() => ((currentStep.value + 1) / steps.length) * 100);
 const program_image = ref({})
 const program_image_errors = ref({})
+const image_preview_link = ref()
 
 function bytesToKilobytes(bytes) {
   return Math.floor(bytes / 1024);
 }
-
 function onDrop1(acceptedFiles, rejectReasons) {
   program_image.value = acceptedFiles[0]
+  // Check for any rejection reasons
   if (rejectReasons[0]) {
-    program_image_errors.value = rejectReasons[0].errors[0]
+    program_image_errors.value = rejectReasons[0].errors[0];
+  } else {
+    // Create a FileReader to read the image file
+    const file = acceptedFiles[0];
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+      image_preview_link.value = event.target.result; // Save the data URL to the ref
+    };
+
+    // Read the file as a data URL
+    reader.readAsDataURL(file);
   }
 }
 const deleteCac = () => {
   program_image.value = {}
   program_image_errors.value = {}
+  image_preview_link.value = ''
 }
 
 const { getRootProps: getRootProps1, getInputProps: getInputProps1 } = useDropzone({ onDrop: onDrop1, maxSize: 560000, accept: ".pdf, .jpeg, .png", maxFiles: 1});

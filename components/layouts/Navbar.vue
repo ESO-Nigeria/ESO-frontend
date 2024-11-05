@@ -8,8 +8,6 @@ const user = computed(() => {
   return authStore.user;
 })
 
-console.log(authStore, 'authStore', user)
-
 
 </script>
 

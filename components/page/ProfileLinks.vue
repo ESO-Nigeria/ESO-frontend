@@ -2,8 +2,8 @@
   <div class="mt-4 flex flex-col gap-6">
     <p class="text-base text-secondary-body-500">Provide your website and social media links to complete verification.</p>
     <div>
-      <div class="flex-1">
-        <form class="flex gap-4 flex-col w-2/6 h-[50vh]">
+      <div class="flex-1 flex flex-col">
+        <form class="flex gap-4 flex-col w-2/6 ">
           
           <FormField v-slot="{ componentField }" name="website_url">
             <FormItem class="space-y-1">
@@ -24,7 +24,7 @@
               
             <div class="flex items-center border border-secondary-body-500 rounded-md relative">
               <span class="bg-[#F2F4F7] pl-8 text-[#98A2B3] rounded-l-md px-3 h-11 py-2 text-sm border border-gray-300 border-r-0 flex items-center">
-                linkedin.com/in/
+                linkedin.com
               </span>
               <Input type="url"
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0]  ring-0  rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
@@ -44,7 +44,7 @@
               
             <div class="flex items-center border border-secondary-body-500 rounded-md relative">
               <span class="bg-[#F2F4F7] pl-8 text-[#98A2B3] rounded-l-md px-3 h-11 py-2 text-sm border border-gray-300 border-r-0 flex items-center">
-                instagram.com/
+                instagram.com
               </span>
               <Input type="url"
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0]  ring-0  rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
@@ -62,7 +62,7 @@
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">Facebook</FormLabel>
             <div class="flex items-center border border-secondary-body-500 rounded-md relative">
               <span class="bg-[#F2F4F7] pl-8 text-[#98A2B3] rounded-l-md px-3 h-11 py-2 text-sm border border-gray-300 border-r-0 flex items-center">
-                facebook.com/
+                facebook.com
               </span>
               <Input type="url"
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0]  ring-0  rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
@@ -81,7 +81,7 @@
               
             <div class="flex items-center border border-secondary-body-500 rounded-md relative">
               <span class="bg-[#F2F4F7] pl-8 text-[#98A2B3] rounded-l-md px-3 h-11 py-2 text-sm border border-gray-300 border-r-0 flex items-center">
-                twitter.com/
+                twitter.com
               </span>
               <Input type="url"
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0]  ring-0  rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
@@ -122,7 +122,7 @@
               </Alert>
               <AlertDialogFooter class="flex gap-2.5">
                 <AlertDialogCancel type="button" class="w-full h-11 py-3 px-6">Edit Details</AlertDialogCancel>
-                <AlertDialogAction type="button"  class="w-full h-11 py-3 px-6 bg-primary-600">Yes, Submit</AlertDialogAction>
+                <AlertDialogAction type="button" @click="onSubmit"  class="w-full h-11 py-3 px-6 bg-primary-600">Yes, Submit</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -134,8 +134,57 @@
 
 <script setup>
 import { Mail } from 'lucide-vue-next';
+import { useForm } from "vee-validate";
+import { toTypedSchema } from "@vee-validate/zod";
+import * as z from "zod";
+import { useAuthStore } from '~/store/auth';
+import { useProfileStore } from '~/store/profile';
+const authStore = useAuthStore()
+const profileStore = useProfileStore()
+const router = useRouter()
 
+const form = useForm({
+  // validationSchema: formSchema,
+});
 
+const props = defineProps({
+  user: {
+    type: Object
+  }
+})
+
+function convertToSocialLinks(obj) {
+  return Object.entries(obj).map(([platform, url]) => ({
+    platform,
+    url,
+  }));
+}
+
+const onSubmit = form.handleSubmit(async(values) => {
+  console.log('values', values)
+  const socialLinksArray = convertToSocialLinks(values);
+console.log(socialLinksArray);
+
+try {
+    loading.value = true;
+  const response =  await profileStore.updateProfile ( {email } );
+  console.log('response', response?.data?.data?.status)
+  if (response.data && response?.data?.data?.status == 204) {
+    loading.value = false;
+    // redirect to dashboard
+    console.log('here', response?.data?.data?.auth_token)
+    router.push('/auth/otp-sent');
+
+    } else {
+      loading.value = false;
+      // alert(response.data.message);
+      }
+    loading.value = false
+  }catch(error) {
+    loading.value = false
+    console.log('error', error)
+  }
+})
 </script>
 
 <style lang="scss" scoped>

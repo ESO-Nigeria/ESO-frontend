@@ -1,18 +1,22 @@
 <template>
   <div>
+
     <NuxtLayout name="dashboard">
-      <div class="flex flex-col w-full gap-3">
+      <div v-if="loading" class="flex h-screen justify-center items-center">
+        <LayoutsLoader />
+      </div>
+      <div v-else class="flex flex-col w-full gap-3">
         <LayoutsBreadcrumb
           :breadcrumbs="[{ text: 'Dashboard' }]"></LayoutsBreadcrumb>
         <div class="mt-3">
           <LayoutsTitleHeader
-            :title="'Hi, Impact Hub'"
+           :title="`${user?.organization_name ? user?.organization_name : ''}`"
              />
         </div>
         <div class="bg-white p-8 rounded-md flex flex-col gap-4 ">
             <div class="grid grid-cols-2 items-center">
               <LayoutsSubTitleHeader
-              :title="'Welcome aboard🚀, Samuel!'"
+               :title="`Welcome aboard🚀, ${user?.first_name ? user?.first_name : ''}`"
                />
                <Progress :model-value="15 " class="bg-[#B1EDCA]" :indicator_class="'bg-[#257F4A]'"/>
             </div>
@@ -45,14 +49,14 @@
               </TabsList>
               <TabsContent value="orders">
                 
-                <PageProfile />
+                <PageProfile :user="user" />
                
               </TabsContent>
               <TabsContent value="dispensed">
-               <PageProfileUploads />
+               <PageProfileUploads :user="user" />
               </TabsContent>
               <TabsContent value="dispensed2">
-                <PageProfileLinks />
+                <PageProfileLinks :user="user" />
               </TabsContent>
             </Tabs>
             </div>
@@ -70,7 +74,20 @@ import Tabs from '~/components/ui/tabs/Tabs.vue';
 import TabsContent from '~/components/ui/tabs/TabsContent.vue';
 import TabsList from '~/components/ui/tabs/TabsList.vue';
 import TabsTrigger from '~/components/ui/tabs/TabsTrigger.vue';
+import { useAuthStore } from '~/store/auth';
 
+const authStore = useAuthStore();
+
+const user = computed(() => {
+  return authStore.user;
+})
+const loading = computed(() => {
+  return authStore.loadingUser
+})
+
+onMounted(() => {
+  authStore.getUser()
+})
 
 </script>
 

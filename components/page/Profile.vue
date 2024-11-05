@@ -23,8 +23,7 @@
         </div>
         <div class="flex-1">
           <form class="flex gap-4 flex-col ">
-            
-            <FormField v-slot="{ componentField }" name="organization_name">
+            <FormField :modelValue="user?.organization_name" v-slot="{ componentField }" name="organization_name">
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">Organization Name</FormLabel>
                 <FormControl>
@@ -35,17 +34,35 @@
                 </FormControl>
               </FormItem>
             </FormField>
-            <FormField v-slot="{ componentField }" name="organization_type">
+            <FormField :modelValue="user?.organization_type" v-slot="{ componentField }" name="organization_type">
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">Organization Type</FormLabel>
-                <FormControl class=" relative w-full  items-center">
-                  <div class="relative w-full  items-center">
-                    <Input type="text"
-                    disabled
-                      class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                      placeholder="Organization Type" v-bind="componentField" />
-                  </div>
-                  <p class="text-sm text-secondary-body-regular-contrast">Providing financial analysis, bookkeeping, budgeting, financial reporting, tax, accounting, and ensuring compliance with relevant accounting standards.</p>
+                <FormControl>
+                  <Select disabled v-bind="componentField">
+                    <SelectTrigger
+                      class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
+                      <SelectValue placeholder="Select an organization type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="FMS">
+                        Financial Management Service
+                      </SelectItem>
+                      <SelectItem value="LS">
+                        Legal Services
+                      </SelectItem>
+                      <!-- IRS: Investment-Readiness Services -->
+    
+                      <SelectItem value="IRS">
+                        Investment-Readiness Services
+                      </SelectItem>
+                      <SelectItem value="MC">
+                        Management Consulting
+                      </SelectItem>
+                      <SelectItem value="ORS">
+                        Other Relevant Services
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
               </FormItem>
             </FormField>
@@ -67,7 +84,7 @@
           </FormField>
           <FormField
           v-slot="{ componentField }"
-          name="description">
+          name="services">
           <FormItem class="space-y-1">
             <FormLabel class="text-[#3F434A] text-sm font-medium"
               >Services Offer</FormLabel
@@ -107,7 +124,7 @@
           <p class="text-sm text-secondary-body-regular-contrast">(First Name & Last Name of Most senior executive
             member)</p>
         </div>
-        <FormField v-slot="{ componentField }" name="email">
+        <FormField :modelValue="user?.email" v-slot="{ componentField }" name="email">
           <FormItem class="space-y-1">
             <FormLabel class="text-[#3F434A] text-base font-medium">Email Address (Work Email Address)</FormLabel>
             <FormControl>
@@ -125,7 +142,7 @@
           </FormItem>
         </FormField>
         <div class="grid grid-cols-2 gap-4">
-          <FormField v-slot="{ componentField }" name="whatsapp_number">
+          <FormField :modelValue="user?.whatsapp_number" v-slot="{ componentField }" name="whatsapp_number">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">Whatsapp Number</FormLabel>
               <FormControl>
@@ -271,21 +288,23 @@
               </AlertDialogContent>
             </AlertDialog>
           </div>
-        </div>
-       
-        
-        
+        </div> 
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { PhoneCall } from 'lucide-vue-next';
+import { Mail, PhoneCall } from 'lucide-vue-next';
 import Avatar from '../ui/avatar/Avatar.vue';
 import AvatarFallback from '../ui/avatar/AvatarFallback.vue';
 import AvatarImage from '../ui/avatar/AvatarImage.vue';
 
+const props = defineProps({
+  user: {
+    type: Object
+  }
+})
 
 </script>
 

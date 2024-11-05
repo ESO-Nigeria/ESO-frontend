@@ -12,7 +12,6 @@ export const apiGetRequest = async (url: string): Promise<ApiResponse> => {
   const { getToken } = storeToRefs(useAuthStore());
   const token = getToken.value;
   const storedToken = getItem("token");
-  console.log('getToken', getToken, storedToken)
   try {
     const response = await axios.get(baseURL + url, {
       headers: {

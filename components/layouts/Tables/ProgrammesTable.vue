@@ -131,17 +131,14 @@ onMounted(() => {
             <Checkbox id="terms" class="h-5 w-5 border border-gray-300 rounded-md data-[state=checked]:border-[#088AD8] data-[state=checked]:bg-primaryBlue-25 data-[state=checked]:text-primaryBlue-500" />
           </div>
         </TableHead>
-        <TableHead class="">
-          Request ID
-        </TableHead>
-        <TableHead class="text-center">Date Added</TableHead>
-        <TableHead class="text-center">Category</TableHead>
-        <TableHead class="text-center">Item Name</TableHead>
-        <TableHead class="text-center">Quantity</TableHead>
-        <TableHead class="text-center">Requested By</TableHead>
-        <TableHead class="text-center">Supplied By</TableHead>
-        <TableHead class="text-center">Date Supplied</TableHead>
-        <TableHead class="text-center">Status</TableHead>
+        
+        <TableHead class="text-center">Programme Title</TableHead>
+        <TableHead class="text-center">Sector</TableHead>
+        <TableHead class="text-center">Program Mode</TableHead>
+
+        <TableHead class="text-center">Application Deadline</TableHead>
+        <TableHead class="text-center">Approval Status</TableHead>
+        <TableHead class="text-center">Action</TableHead>
        
       </TableRow>
     </TableHeader>
