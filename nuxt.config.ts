@@ -52,6 +52,7 @@ export default defineNuxtConfig({
       autoImports: [['defineStore']],
     },
   ], 
+  'pinia-plugin-persistedstate/nuxt',
   '@vueuse/nuxt', 
   'nuxt-simple-sitemap', 
   '@nuxtjs/tailwindcss', 

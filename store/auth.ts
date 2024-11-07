@@ -26,7 +26,7 @@ export const useAuthStore = defineStore("auth", {
       try {
         const response = await apiPostRequest("/auth/token/login", body, { auth: false });
         // this.submitting = false
-        console.log("response", response.data.data.auth_token);
+        // console.log("response", response.data.data.auth_token);
         setItem("token", JSON.stringify(response.data.data.auth_token));
         return { data: response, error: response.error };
       } catch (error) {
@@ -37,7 +37,7 @@ export const useAuthStore = defineStore("auth", {
       try {
         const response = await apiPostRequest("/auth/users/", body);
         // this.submitting = false
-        console.log("response", response);
+        // console.log("response", response);
         // setItem('token', JSON.stringify(response.data.auth_token))
         return { data: response, error: response.error };
       } catch (error) {
@@ -89,7 +89,7 @@ export const useAuthStore = defineStore("auth", {
         const response = await apiGetRequest("/auth/users/me/");
         this.user = response.data
         this.loadingUser = false
-        console.log('response.data', response.data)
+        // console.log('response.data', response.data)
         return { data: response, error: response.error };
       }catch (error){
         return { data: null, error: "Unknown error" }
