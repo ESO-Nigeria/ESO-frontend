@@ -15,7 +15,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import AlertDialogTrigger from '~/components/ui/alert-dialog/AlertDialogTrigger.vue';
 import AlertDialogFooter from '~/components/ui/alert-dialog/AlertDialogFooter.vue';
 import { useProgrammeStore } from '~/store/programmme';
-import { sectors } from '~/lib/data';
+import { sectors, targetAudience, nonFinancialSupport, financialSupport } from '~/lib/data';
 
 
 const { isFieldDirty, handleSubmit, values } = useForm({
@@ -275,47 +275,21 @@ async function handleFormSubmit() {
                       </FormItem>
                     </FormField> -->
 
-                    <FormField v-slot="{ componentField }" name="sector">
-                      <FormItem class="space-y-1">
-                        <FormLabel class="text-[#3F434A] text-base font-medium">Sector </FormLabel>
-                        <FormControl>
-                          <Select v-model="formFields.sectors">
-                            <SelectTrigger
-                              class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
-                              <SelectValue placeholder="Sector" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem v-for="sector in sectors" :key="sector.id" :value="sector.id">
-                                {{ sector.name }}
-                              </SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                      </FormItem>
-                    </FormField>
+                    <MultiSelect
+                      v-model="formFields.sectors"
+                      :options="sectors"
+                      title="Sector"
+                      placeholder="Select sectors..."
+                    />
 
-                    <FormField v-slot="{ componentField }" name="target_audience">
-                      <FormItem class="space-y-1">
-                        <FormLabel class="text-[#3F434A] text-base font-medium">Business Stage (Target Audience)
-                        </FormLabel>
-                        <FormControl>
-                          <Select v-model="formFields.target_audience">
-                            <SelectTrigger
-                              class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
-                              <SelectValue placeholder="Target Audience" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="primary care">
-                                Nigeria
-                              </SelectItem>
-                            </SelectContent>
-                          </Select>
+                    <MultiSelect
+                      v-model="formFields.target_audience"
+                      :options="targetAudience"
+                      title="Target Audience"
+                      placeholder="Select target audience..."
+                    />
 
-                        </FormControl>
-                      </FormItem>
-                    </FormField>
-
-                    <FormField v-slot="{ componentField }" name="organization_name">
+                    <!-- <FormField v-slot="{ componentField }" name="organization_name">
                       <FormItem class="space-y-1">
                         <FormLabel class="text-[#3F434A] text-base font-medium">Other partners and funders</FormLabel>
                         <FormControl>
@@ -325,30 +299,23 @@ async function handleFormSubmit() {
                         </FormControl>
                         <FormMessage />
                       </FormItem>
-                    </FormField>
-                    <FormField v-slot="{ componentField }" name="non_financial_support">
-                      <FormItem class="space-y-1">
-                        <FormLabel class="text-[#3F434A] text-base font-medium">Non Financial Support Provided
-                        </FormLabel>
-                        <FormControl>
-                          <Select v-model="formFields.non_financial_supports">
-                            <SelectTrigger
-                              class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
-                              <SelectValue placeholder="Non Financial Support " />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="primary care">
-                                Nigeria
-                              </SelectItem>
+                    </FormField> -->
 
+                    <MultiSelect
+                      v-model="formFields.non_financial_supports"
+                      :options="nonFinancialSupport"
+                      title="Non Financial Support"
+                      placeholder="Select non financial support..."
+                    />
 
-                            </SelectContent>
-                          </Select>
+                    <MultiSelect
+                      v-model="formFields.financial_supports"
+                      :options="financialSupport"
+                      title="Financial Support Provided"
+                      placeholder="Select financial support..."
+                    />
 
-                        </FormControl>
-                      </FormItem>
-                    </FormField>
-                    <FormField v-slot="{ componentField }" name="financial_support">
+                    <!-- <FormField v-slot="{ componentField }" name="financial_support">
                       <FormItem class="space-y-1">
                         <FormLabel class="text-[#3F434A] text-base font-medium">Financial Support Provided </FormLabel>
                         <FormControl>
@@ -366,7 +333,7 @@ async function handleFormSubmit() {
 
                         </FormControl>
                       </FormItem>
-                    </FormField>
+                    </FormField> -->
                   </div>
 
                   <div v-if="currentStep === 1" class="flex gap-4 flex-col mt-10">
