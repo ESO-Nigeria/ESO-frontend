@@ -34,7 +34,7 @@ interface ProgrammeDetails {
 }
 
 export const useProgrammeStore = defineStore("programme", {
-    persist: true,
+    persist: false,
     state: () => ({
         programme: {
             "title": "Youth Empowerment Program",
@@ -44,8 +44,7 @@ export const useProgrammeStore = defineStore("programme", {
             "sectors": [2, 4],
             "financial_supports": [1],
             "non_financial_supports": [2, 3],
-            "target_audience": [1],  // List of IDs for related NonFinancialSupport instances
-            "approval_status": "PENDING"
+            "target_audience": [1],  
         } as Programme,
         programme_details: {
             "number_of_participants": 23,
@@ -59,7 +58,6 @@ export const useProgrammeStore = defineStore("programme", {
             "registration_required": true,
             "registration_link": "http://example.com/register",
             "website_link": "http://example.com/program",
-            "application_status": "ONGOING",
             "program": 4
         } as ProgrammeDetails,
         image: null,

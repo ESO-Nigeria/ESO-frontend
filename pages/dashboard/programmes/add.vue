@@ -15,7 +15,35 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import AlertDialogTrigger from '~/components/ui/alert-dialog/AlertDialogTrigger.vue';
 import AlertDialogFooter from '~/components/ui/alert-dialog/AlertDialogFooter.vue';
 import { useProgrammeStore } from '~/store/programmme';
+import { sectors } from '~/lib/data';
 
+
+const { isFieldDirty, handleSubmit, values } = useForm({
+});
+
+const formFields = ref({
+  "title": "",
+  "description": "",
+  "brief_details": "",
+  "program_image": '',
+  "sectors": [],
+  "financial_supports": [],
+  "non_financial_supports": [],
+  "target_audience": [],
+})
+
+const formFieldsDetails = ref({
+  "number_of_participants": '',
+  "amount": '',
+  "start_date": '',
+  "end_date": '',
+  "application_deadline": '',
+  "city": '',
+  "country": '',
+  "program_mode": "",
+  "registration_link": '',
+  "website_link": '',
+})
 
 const programmeStore = useProgrammeStore();
 
@@ -27,42 +55,16 @@ const programme_details = computed(() => {
   return programmeStore.getCreateProgrammeDetails
 })
 
+onMounted(() => {
+  formFields.value = programme.value
+  formFieldsDetails.value = programme_details.value
+})
+
 const date = ref();
 const deadline = ref()
-const formSchema = toTypedSchema(
-  z.object({
-    organization_name: z.string({ required_error: "Organization Name is required." }),
-    organization_type: z.string({ required_error: "Organization Type is required." }),
-    first_name: z.string({ required_error: "First Name is required." }),
-    last_name: z.string({ required_error: "Last Name is required." }),
-    email: z.string({ required_error: "Email is required." })
-      .email({ message: "Must be a valid email" }),
-    whatsapp_number: z.string({ required_error: "Whatsapp number is required" })
-      .min(10, { message: "Whatsapp Number must be at least 10 characters" }) // Minimum length of 10
-      .max(15, { message: "Whatsapp Number cannot exceed 15 characters" }) // Optional: add a max length validation
-      .regex(/^\d+$/, { message: "Whatsapp Number must be digits only" }), // Ensure only digits
 
-    password: z.string({ message: "Password is required" }),
-    // This can stay to ensure there's some input
-    confirm_password: z.string().optional()
-  })
-);
-
-const { isFieldDirty, values } = useForm({
-  validationSchema: formSchema,
-});
-
-// Steps Array
 const steps = ['Program Overview', 'Program Details', 'Preview & Publish'];
-const currentStep = ref(2);
-
-// Form Data
-const formData = ref({
-  firstName: '',
-  lastName: '',
-  address: '',
-  city: '',
-});
+const currentStep = ref(0);
 
 const progressValue = computed(() => ((currentStep.value + 1) / steps.length) * 100);
 const program_image = ref({})
@@ -103,14 +105,23 @@ function goToNextStep() {
   if (currentStep.value < steps.length - 1) {
     currentStep.value += 1;
   }
+  updateProgrammeState()
 }
 
 function goToPreviousStep() {
   if (currentStep.value > 0) {
     currentStep.value -= 1;
   }
+  updateProgrammeState()
 }
-async function handleSubmit() {
+
+function updateProgrammeState() {
+  programmeStore.STORE_PROGRAMME(formFields.value)
+  programmeStore.STORE_PROGRAMME_DETAILS(formFieldsDetails.value)
+}
+
+
+async function handleFormSubmit() {
   programmeStore.SET_LOADING(true);
 
   try {
@@ -177,9 +188,9 @@ async function handleSubmit() {
                 </div>
 
                 <form action="">
-                  <div v-if="currentStep === 0" class="flex gap-4 flex-col mt-4">
-                    <div>
-
+                  <div v-if="currentStep === 0" class="flex gap-4 flex-col mt-10">
+                    <!-- TOOD: Add Programme Image Uploader  -->
+                    <!-- <div>
                       <p class="text-base text-[#3F434A] font-medium">Upload Programme Image</p>
                       <div v-if="program_image?.name"
                         class="border border-primary text-sm h-[72px] p-4 rounded-md flex items-start ">
@@ -204,9 +215,7 @@ async function handleSubmit() {
                         </div>
                       </div>
                       <div v-else class="mb-4">
-
                         <div class="mt-4">
-                          <!-- Dropzone 1 -->
                           <div v-bind="getRootProps1()"
                             class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
                             <input v-bind="getInputProps1()" />
@@ -219,14 +228,16 @@ async function handleSubmit() {
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <FormField v-slot="{ componentField }" name="program_title">
+                    </div> -->
+             
+                    <FormField v-slot="{ componentField }" name="title">
                       <FormItem class="space-y-1">
                         <FormLabel class="text-[#3F434A] text-base font-medium">Program Title</FormLabel>
                         <FormControl>
                           <Input type="text"
+                            v-model="formFields.title"
                             class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                            placeholder="Program Title" v-bind="componentField" />
+                            placeholder="Program Title" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -237,7 +248,7 @@ async function handleSubmit() {
                         <FormControl>
                           <Textarea placeholder="Program Description"
                             class="border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                            v-bind="componentField" />
+                            v-model="formFields.description" />
                         </FormControl>
                       </FormItem>
                     </FormField>
@@ -247,41 +258,38 @@ async function handleSubmit() {
                         <FormControl>
                           <Textarea placeholder="Program Details"
                             class="border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                            v-bind="componentField" />
+                            v-model="formFields.brief_details" />
                         </FormControl>
                       </FormItem>
                     </FormField>
 
-                    <FormField v-slot="{ componentField }" name="instructor">
+                    <!-- <FormField v-slot="{ componentField }" name="instructor">
                       <FormItem class="space-y-1">
                         <FormLabel class="text-[#3F434A] text-sm font-medium">Brief detail of instructors used
                           (Optional)</FormLabel>
                         <FormControl>
                           <Textarea placeholder="Brief detail of instructors used "
                             class="border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                            v-bind="componentField" />
+                            v-model="formFields.instructors" />
                         </FormControl>
                       </FormItem>
-                    </FormField>
+                    </FormField> -->
 
                     <FormField v-slot="{ componentField }" name="sector">
                       <FormItem class="space-y-1">
                         <FormLabel class="text-[#3F434A] text-base font-medium">Sector </FormLabel>
                         <FormControl>
-                          <Select v-bind="componentField">
+                          <Select v-model="formFields.sectors">
                             <SelectTrigger
                               class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                               <SelectValue placeholder="Sector" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="primary care">
-                                Nigeria
+                              <SelectItem v-for="sector in sectors" :key="sector.id" :value="sector.id">
+                                {{ sector.name }}
                               </SelectItem>
-
-
                             </SelectContent>
                           </Select>
-
                         </FormControl>
                       </FormItem>
                     </FormField>
@@ -291,7 +299,7 @@ async function handleSubmit() {
                         <FormLabel class="text-[#3F434A] text-base font-medium">Business Stage (Target Audience)
                         </FormLabel>
                         <FormControl>
-                          <Select v-bind="componentField">
+                          <Select v-model="formFields.target_audience">
                             <SelectTrigger
                               class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                               <SelectValue placeholder="Target Audience" />
@@ -300,8 +308,6 @@ async function handleSubmit() {
                               <SelectItem value="primary care">
                                 Nigeria
                               </SelectItem>
-
-
                             </SelectContent>
                           </Select>
 
@@ -309,17 +315,6 @@ async function handleSubmit() {
                       </FormItem>
                     </FormField>
 
-                    <FormField v-slot="{ componentField }" name="organization_name">
-                      <FormItem class="space-y-1">
-                        <FormLabel class="text-[#3F434A] text-base font-medium">Other partners and funders</FormLabel>
-                        <FormControl>
-                          <Input type="text"
-                            class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                            placeholder="Enter Organization Name" v-bind="componentField" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    </FormField>
                     <FormField v-slot="{ componentField }" name="organization_name">
                       <FormItem class="space-y-1">
                         <FormLabel class="text-[#3F434A] text-base font-medium">Other partners and funders</FormLabel>
@@ -336,7 +331,7 @@ async function handleSubmit() {
                         <FormLabel class="text-[#3F434A] text-base font-medium">Non Financial Support Provided
                         </FormLabel>
                         <FormControl>
-                          <Select v-bind="componentField">
+                          <Select v-model="formFields.non_financial_supports">
                             <SelectTrigger
                               class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                               <SelectValue placeholder="Non Financial Support " />
@@ -357,7 +352,7 @@ async function handleSubmit() {
                       <FormItem class="space-y-1">
                         <FormLabel class="text-[#3F434A] text-base font-medium">Financial Support Provided </FormLabel>
                         <FormControl>
-                          <Select v-bind="componentField">
+                          <Select v-model="formFields.financial_supports">
                             <SelectTrigger
                               class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                               <SelectValue placeholder="Select " />
@@ -366,8 +361,6 @@ async function handleSubmit() {
                               <SelectItem value="primary care">
                                 Nigeria
                               </SelectItem>
-
-
                             </SelectContent>
                           </Select>
 
@@ -376,7 +369,7 @@ async function handleSubmit() {
                     </FormField>
                   </div>
 
-                  <div v-if="currentStep === 1" class="flex gap-4 flex-col mt-4">
+                  <div v-if="currentStep === 1" class="flex gap-4 flex-col mt-10">
                     <div class="grid grid-cols-2 gap-4">
                       <FormField v-slot="{ componentField }" name="participants">
                         <FormItem class="space-y-1">
@@ -386,7 +379,7 @@ async function handleSubmit() {
                             <div class="relative w-full  items-center">
                               <Input type="number"
                                 class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                                placeholder="Enter Number" v-bind="componentField" />
+                                placeholder="Enter Number" v-model="formFieldsDetails.number_of_participants" />
 
                             </div>
 
@@ -400,7 +393,7 @@ async function handleSubmit() {
                             <div class="relative w-full  items-center">
                               <Input type="number"
                                 class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                                placeholder="Enter Amount or Free" v-bind="componentField" />
+                                placeholder="Enter Amount or Free" v-model="formFieldsDetails.amount" />
 
                             </div>
 
@@ -408,6 +401,7 @@ async function handleSubmit() {
                         </FormItem>
                       </FormField>
                     </div>
+                  
                     <div class="grid grid-cols-2 gap-4">
                       <FormField v-slot="{ componentField }" name="participants">
                         <FormItem class="space-y-1">
@@ -441,20 +435,32 @@ async function handleSubmit() {
                         </FormItem>
                       </FormField>
                     </div>
+                   <div class="grid grid-cols-2 gap-4">
                     <FormField v-slot="{ componentField }" name="location">
                       <FormItem class="space-y-1">
-                        <FormLabel class="text-[#3F434A] text-base font-medium">Location</FormLabel>
+                        <FormLabel class="text-[#3F434A] text-base font-medium">Country</FormLabel>
                         <FormControl>
-                          <div class="relative w-full  items-center">
+                          <div class="relative w-full items-center">
                             <Input type="text"
                               class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                              placeholder="Location" v-bind="componentField" />
-
+                              placeholder="Location" v-model="formFieldsDetails.country" />
                           </div>
-
                         </FormControl>
                       </FormItem>
                     </FormField>
+                    <FormField v-slot="{ componentField }" name="location">
+                      <FormItem class="space-y-1">
+                        <FormLabel class="text-[#3F434A] text-base font-medium">City</FormLabel>
+                        <FormControl>
+                          <div class="relative w-full items-center">
+                            <Input type="text"
+                              class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
+                              placeholder="Location" v-model="formFieldsDetails.city" />
+                          </div>
+                        </FormControl>
+                      </FormItem>
+                    </FormField>
+                   </div>
                     <FormField v-slot="{ componentField }" name="fee">
                       <FormItem class="space-y-1">
                         <FormLabel class="text-[#3F434A] text-base font-medium">Program Mode</FormLabel>
@@ -462,7 +468,7 @@ async function handleSubmit() {
                           <div class="relative w-full  items-center">
                             <Input type="number"
                               class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                              placeholder="Enter Amount or Free" v-bind="componentField" />
+                              placeholder="Enter Amount or Free" v-model="formFieldsDetails.program_mode" />
 
                           </div>
 
@@ -476,7 +482,7 @@ async function handleSubmit() {
                           <div class="relative w-full  items-center">
                             <Input type="url"
                               class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                              placeholder="Enter Amount or Free" v-bind="componentField" />
+                              placeholder="Enter Amount or Free" v-model="formFieldsDetails.registration_link" />
 
                           </div>
 
@@ -490,7 +496,7 @@ async function handleSubmit() {
                           <div class="relative w-full  items-center">
                             <Input type="url"
                               class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                              placeholder="Enter Amount or Free" v-bind="componentField" />
+                              placeholder="Enter Amount or Free" v-model="formFieldsDetails.website_link" />
 
                           </div>
 
@@ -499,7 +505,7 @@ async function handleSubmit() {
                     </FormField>
                   </div>
 
-                  <div v-if="currentStep === 2" class="flex gap-4 flex-col mt-8">
+                  <div v-if="currentStep === 2" class="flex gap-4 flex-col mt-10">
                     <div class="space-y-6">
                       <p class="text-lg text-[#071827] font-medium">Program Overview</p>
                       <div class="space-y-2">
@@ -635,7 +641,7 @@ async function handleSubmit() {
                       </Alert>
                       <AlertDialogFooter class="flex gap-2.5">
                         <AlertDialogCancel type="button" class="w-full h-11 py-3 px-6">Edit Details</AlertDialogCancel>
-                        <AlertDialogAction @click="handleSubmit" type="button" class="w-full h-11 py-3 px-6 bg-primary-600">Yes, Submit
+                        <AlertDialogAction @click="handleFormSubmit" type="button" class="w-full h-11 py-3 px-6 bg-primary-600">Yes, Submit
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
