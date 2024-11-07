@@ -15,7 +15,8 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import AlertDialogTrigger from '~/components/ui/alert-dialog/AlertDialogTrigger.vue';
 import AlertDialogFooter from '~/components/ui/alert-dialog/AlertDialogFooter.vue';
 import { useProgrammeStore } from '~/store/programmme';
-import { sectors, targetAudience, nonFinancialSupport, financialSupport } from '~/lib/data';
+import { sectors, targetAudience, nonFinancialSupport, financialSupport, programMode } from '~/lib/data';
+import { formatDate } from '~/lib/utils';
 
 
 const { isFieldDirty, handleSubmit, values } = useForm({
@@ -64,7 +65,7 @@ const date = ref();
 const deadline = ref()
 
 const steps = ['Program Overview', 'Program Details', 'Preview & Publish'];
-const currentStep = ref(0);
+const currentStep = ref(1);
 
 const progressValue = computed(() => ((currentStep.value + 1) / steps.length) * 100);
 const program_image = ref({})
@@ -115,9 +116,15 @@ function goToPreviousStep() {
   updateProgrammeState()
 }
 
+// YYYY-MM-DD
 function updateProgrammeState() {
   programmeStore.STORE_PROGRAMME(formFields.value)
-  programmeStore.STORE_PROGRAMME_DETAILS(formFieldsDetails.value)
+  programmeStore.STORE_PROGRAMME_DETAILS({
+    ...formFieldsDetails.value,
+    start_date: formatDate(date.value[0]),
+    end_date: formatDate(date.value[1]),
+    application_deadline: formatDate(deadline.value)
+  })
 }
 
 
@@ -428,17 +435,24 @@ async function handleFormSubmit() {
                       </FormItem>
                     </FormField>
                    </div>
+
                     <FormField v-slot="{ componentField }" name="fee">
                       <FormItem class="space-y-1">
                         <FormLabel class="text-[#3F434A] text-base font-medium">Program Mode</FormLabel>
                         <FormControl>
                           <div class="relative w-full  items-center">
-                            <Input type="number"
-                              class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                              placeholder="Enter Amount or Free" v-model="formFieldsDetails.program_mode" />
-
+                            <Select v-model="formFieldsDetails.program_mode">
+                              <SelectTrigger
+                                class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
+                                <SelectValue placeholder="Select Program Mode" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem v-for="mode in programMode" :key="mode.id" :value="mode.id">
+                                  {{ mode.label }}
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
                           </div>
-
                         </FormControl>
                       </FormItem>
                     </FormField>
@@ -493,21 +507,38 @@ async function handleFormSubmit() {
                           adipisicing elit. Amet, similique? Minima rerum, rem magnam sequi ab, inventore, explicabo cum
                           cumque laborum possimus temporibus voluptatem amet dolores officia necessitatibus eum nam.</p>
                       </div> -->
+                 
                       <div class="space-y-2">
                         <p class="text-sm text-primary font-bold">Sector*</p>
-                        <p class="text-sm text-[#3F434A] font-normal">{{ programme.sectors.map(sector => sector).join(', ') }}</p>
+                       <div class="flex flex-wrap gap-2">
+                         <span class="text-sm text-[#3F434A] bg-[#D1FADF] font-normal px-3 py-1 rounded-full" v-for="sector in programme.sectors">
+                          {{ sectors.find(s => s.id === sector)?.label }}
+                        </span>
+                       </div>
                       </div>
                       <div class="space-y-2">
                         <p class="text-sm text-primary font-bold">Business Stage (Target Audience)*</p>
-                        <p class="text-sm text-[#3F434A] font-normal">{{ programme.target_audience.map(audience => audience).join(', ') }}</p>
+                        <div class="flex flex-wrap gap-2">
+                         <span class="text-sm text-[#3F434A] bg-[#D1FADF] font-normal px-3 py-1 rounded-full" v-for="audience in programme.target_audience">
+                          {{ targetAudience.find(a => a.id === audience)?.label }}
+                        </span>
+                       </div>
                       </div>
                       <div class="space-y-2">
                         <p class="text-sm text-primary font-bold">Non Financial Support Provided*</p>
-                        <p class="text-sm text-[#3F434A] font-normal">{{ programme.non_financial_supports.map(support => support).join(', ') }}</p>
+                        <div class="flex flex-wrap gap-2">
+                         <span class="text-sm text-[#3F434A] bg-[#D1FADF] font-normal px-3 py-1 rounded-full" v-for="support in programme.non_financial_supports">
+                          {{ nonFinancialSupport.find(s => s.id === support)?.label }}
+                        </span>
+                       </div>
                       </div>
                       <div class="space-y-2">
                         <p class="text-sm text-primary font-bold">Financial Support Provided*</p>
-                        <p class="text-sm text-[#3F434A] font-normal">{{ programme.financial_supports.map(support => support).join(', ') }}</p>
+                        <div class="flex flex-wrap gap-2">
+                         <span class="text-sm text-[#3F434A] bg-[#D1FADF] font-normal px-3 py-1 rounded-full" v-for="support in programme.financial_supports">
+                          {{ financialSupport.find(s => s.id === support)?.label }}
+                        </span>
+                       </div>
                       </div>
                       <div class="flex justify-end">
                         <Button type="button" @click="currentStep = 0" variant="ghost" class="text-[#667085]">

@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { toast } from 'vue-sonner';
 
 enum ApplicationStatus {
     ONGOING = 'ONGOING',
@@ -25,7 +26,7 @@ interface ProgrammeDetails {
     application_deadline: string;
     city: string;
     country: string;
-    program_mode: 'HYBRID' // TODO: Add other options
+    program_mode: 'ONLINE' | 'IN_PERSON' | 'HYBRID';
     registration_required: boolean;
     registration_link: string;
     website_link: string;
@@ -125,16 +126,24 @@ export const useProgrammeStore = defineStore("programme", {
                 const payload = body
                 delete payload?.program_image // TODO: Remove this later
                 const response = await apiPostRequest(`/api/programs/`, payload);
+                if (response.error) {
+                    toast.error(response?.error?.error?.[0] || "Unable to create programme, please try again")
+                }
                 return { data: response, error: response.error };
-            } catch (error) {
+            } catch (error: any) {
+                toast.error(error?.response?.data?.error?.[0] || "Unable to create programme, please try again")
                 return { data: null, error: error ?? "Unknown error" };
             }
         },
         async CREATE_PROGRAMME_DETAILS(body: any) {
             try {
                 const response = await apiPostRequest(`/api/programdetails/`, body);
+                if (response.error) {
+                    toast.error(response?.error?.error?.[0] || "Unable to create programme details, please try again")
+                }
                 return { data: response, error: response.error };
-            } catch (error) {
+            } catch (error: any) {
+                toast.error(error?.response?.data?.error?.[0] || "Unable to create programme details, please try again")
                 return { data: null, error: error ?? "Unknown error" };
             }
         }
