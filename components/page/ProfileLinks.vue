@@ -1,5 +1,16 @@
 <template>
   <div class="mt-4 flex flex-col gap-6">
+    <Alert v-show="success" class="bg-[#E2FEF0] border-0 flex items-center">
+      <CheckIcon class="text-[#05944F] size-5" />
+      <div class="">
+        <AlertTitle class="text-[#232E3F]">Details Submitted Successfully!</AlertTitle>
+        <AlertDescription class="text-[#5C6F7F]">
+          Your organization details have been submitted for verification. Please continue to complete the remaining sections to finalize your application.
+        </AlertDescription>
+      </div>
+     
+    </Alert>
+    {{links}}
     <p class="text-base text-secondary-body-500">Provide your website and social media links to complete verification.</p>
     <div>
       <div class="flex-1 flex flex-col">
@@ -98,8 +109,11 @@
         <div class="mt-8 flex justify-end gap-6" >
           <Button size="lg" variant="outline" class="py-3 px-5 h-11 w-[145px]">Cancel</Button>
           <AlertDialog>
-            <AlertDialogTrigger class="">
-              <Button size="lg" class="py-3 px-5 h-11 w-[145px]">Save</Button>
+            <AlertDialogTrigger :disabled="loading " class="">
+              <Button type="button" :disabled="loading " size="lg" class="py-3 px-5 h-11 w-[145px]">
+                Save
+                <LoaderCircle v-show="loading" class="animate-spin h-4 w-4 ml-2" />
+              </Button>
             </AlertDialogTrigger>
             <AlertDialogContent class="max-w-[426px] pt-12">
               <AlertDialogHeader>
@@ -133,7 +147,7 @@
 </template>
 
 <script setup>
-import { Mail } from 'lucide-vue-next';
+import { LoaderCircle, Mail } from 'lucide-vue-next';
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
@@ -142,11 +156,16 @@ import { useProfileStore } from '~/store/profile';
 const authStore = useAuthStore()
 const profileStore = useProfileStore()
 const router = useRouter()
+const success = ref(false)
+const loading  = ref(false);
 
 const form = useForm({
   // validationSchema: formSchema,
 });
 
+const links = computed(() => {
+  return  profileStore.links
+})
 const props = defineProps({
   user: {
     type: Object
@@ -164,16 +183,16 @@ const onSubmit = form.handleSubmit(async(values) => {
   console.log('values', values)
   const socialLinksArray = convertToSocialLinks(values);
 console.log(socialLinksArray);
-
+ 
 try {
     loading.value = true;
-  const response =  await profileStore.updateProfile ( {email } );
-  console.log('response', response?.data?.data?.status)
-  if (response.data && response?.data?.data?.status == 204) {
+  const response =  await profileStore.socialLinks(socialLinksArray);
+  console.log('response', response?.data?.data)
+  if (response.data && response?.data?.data) {
     loading.value = false;
     // redirect to dashboard
-    console.log('here', response?.data?.data?.auth_token)
-    router.push('/auth/otp-sent');
+    // console.log('here', response?.data?.data?.auth_token)
+    // router.push('/auth/otp-sent');
 
     } else {
       loading.value = false;
@@ -184,6 +203,10 @@ try {
     loading.value = false
     console.log('error', error)
   }
+})
+
+onMounted(() => {
+  profileStore.getLinks()
 })
 </script>
 

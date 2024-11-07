@@ -47,7 +47,11 @@
                   </div>
                   <p class="text-lg text-secondary-body-text-regular font-medium">Organization Profile</p>
                   <p class="text-secondary-body-text-regular text-sm">Enter details about your organization for verification.</p>
-                  <NuxtLink to="/dashboard/onboarding" class="text-primary text-sm">Start Now</NuxtLink>
+                  <NuxtLink to="/dashboard/onboarding" class=" text-sm">
+
+                    <Button type="button"> Start Now</Button>
+                   
+                  </NuxtLink>
                 </div>
                 <div class="px-8 py-8 flex flex-col gap-2.5 border rounded border-[#D0D5DD]">
                   <div>
@@ -66,7 +70,9 @@
                   </div>
                   <p class="text-lg text-secondary-body-text-regular font-medium">Certificates & Licenses</p>
                   <p class="text-secondary-body-text-regular text-sm">Upload relevant certificates and licenses for verification.</p>
-                  <NuxtLink to="/dashboard/onboarding" class="text-primary text-sm">Start Now</NuxtLink>
+                  <NuxtLink to="/dashboard/onboarding" class=" text-sm">
+                    <Button type="button"> Start Now</Button>
+                  </NuxtLink>
                 </div>
                
                
@@ -88,7 +94,9 @@
                   </div>
                   <p class="text-lg text-secondary-body-text-regular font-medium">Web & Socials</p>
                   <p class="text-secondary-body-text-regular text-sm">Provide your website and social media links to complete verification.</p>
-                  <NuxtLink to="/dashboard/onboarding" class="text-primary text-sm">Start Now</NuxtLink>
+                  <NuxtLink to="/dashboard/onboarding" class=" text-sm">
+                    <Button type="button"> Start Now</Button>
+                  </NuxtLink>
                 </div>
               </div>
             </div>

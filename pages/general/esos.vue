@@ -1,9 +1,9 @@
 <template>
   <div>
-    <NuxtLayout name="general" title="ESO Programmes" >
+    <NuxtLayout name="general" title="Enterprise Support Organisations (ESOs)" >
           <div class="container py-4">
             <LayoutsBreadcrumb
-            :breadcrumbs="[{ text: 'Programmes' }]"></LayoutsBreadcrumb>
+            :breadcrumbs="[{ text: 'ESOs' }]"></LayoutsBreadcrumb>
             <div class="py-6 h-full">
               <div class="grid h-full items-stretch gap-6 md:grid-cols-[350px_minmax(0,1fr)]">
                 <div class="py-4">
@@ -162,7 +162,7 @@
                     <Card v-for="(item, index) in Array.from({length: 10})" :key="index"  class=" rounded-lg px-0 py-0 overflow-hidden">
                       <CardHeader class="p-0 relative">
                         <img
-                          src="~/assets/images/image.png"
+                          src="~/assets/images/esobanner.png"
                           alt="Program Image"
                           class="w-full h-[300px] object-cover rounded-lg"
                         />  
@@ -179,7 +179,7 @@
                             3 months
                           </span>
                         </div>
-                        <NuxtLink to="/general/programms/1/details" class="text-base font-semibold text-primary">Access Bank Corners Business Accelerator</NuxtLink>
+                        <NuxtLink to="/general/eso/1/details" class="text-base font-semibold text-primary">Access Bank Corners Business Accelerator</NuxtLink>
                         <div class="text-sm text-[#475467] flex items-center space-x-2">
                           <!-- <span class="inline-block w-4 h-4 bg-blue-500 rounded-full"></span> -->
                           <Building2 class="size-4"/>

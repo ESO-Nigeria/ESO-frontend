@@ -2,8 +2,8 @@
   <div>
     <LayoutsHeaderComponentsHeader />
     <div>
-      <div class="bg-primary h-[230px] text-white">
-        <div class="container mx-auto flex flex-col justify-center h-full">
+      <div v-show="layoutCustomProps.title" class="bg-primary h-[230px] text-white">
+        <div  class="container mx-auto flex flex-col justify-center h-full">
           <p class="text-[40px] font-bold">
             {{ layoutCustomProps.title }}
           </p>

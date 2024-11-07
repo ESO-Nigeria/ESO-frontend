@@ -37,7 +37,7 @@
                  
                  Organization Profile 
                 </TabsTrigger>
-                <TabsTrigger inner_class="flex items-center justify-center" value="dispensed" class="py-6 data-[state=active]:bg-primary-200 flex data-[state=active]:text-primary-700">
+                <TabsTrigger :disabled="!profile" inner_class="flex items-center justify-center" value="dispensed" class="py-6 data-[state=active]:bg-primary-200 flex data-[state=active]:text-primary-700">
                   <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
                     <span class="text-white">2</span>
                    </span>                  Certificates & Licences  </TabsTrigger>
@@ -75,18 +75,24 @@ import TabsContent from '~/components/ui/tabs/TabsContent.vue';
 import TabsList from '~/components/ui/tabs/TabsList.vue';
 import TabsTrigger from '~/components/ui/tabs/TabsTrigger.vue';
 import { useAuthStore } from '~/store/auth';
+import { useProfileStore } from '~/store/profile';
 
 const authStore = useAuthStore();
-
+const profileStore = useProfileStore()
 const user = computed(() => {
   return authStore.user;
 })
+const profile = computed(()=> {
+  return profileStore.profile
+})
+
 const loading = computed(() => {
   return authStore.loadingUser
 })
 
 onMounted(() => {
   authStore.getUser()
+
 })
 
 </script>

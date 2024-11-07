@@ -1,19 +1,100 @@
 <template>
   <div class="mt-4 flex flex-col gap-6">
+    <Alert v-show="success" class="bg-[#E2FEF0] border-0 flex items-center">
+      <CheckIcon class="text-[#05944F] size-5" />
+      <div class="">
+        <AlertTitle class="text-[#232E3F]">Details Submitted Successfully!</AlertTitle>
+        <AlertDescription class="text-[#5C6F7F]">
+          Your organization details have been submitted for verification. Please continue to complete the remaining sections to finalize your application.
+        </AlertDescription>
+      </div>
+     
+    </Alert>
     <p class="text-base text-secondary-body-500">Upload relevant certificates and licenses for verification.</p>
+    <!-- <div v-for="doc, index in certificates?.results" :key="index+1">
+      <div v-if="doc?.cac_certificate">
+        <div class="mb-4">
+          <p class="text-[#3F434A] text-base font-medium">CAC Certificate</p>
+          <p class="text-base text-[#98A2B3] font-normal">Upload CAC document and Enter Details</p>
+
+        </div>
+        <div  class="border border-primary w-[367px] text-sm h-[72px] p-4 rounded-md flex items-start ">
+          <div class="flex gap-4">
+            <img src="~/assets/images/icons/file.svg" />
+            <div>
+              <p class="text-[#344054] font-medium">{{ doc?.name }}</p>
+            </div>
+             </div>
+          <div class="ml-auto">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" fill="#31A962"/>
+              <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" stroke="#31A962"/>
+              <path d="M11.3337 5.5L6.75033 10.0833L4.66699 8" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              
+          </div>
+        </div>
+      </div>
+      <div v-if="doc?.tin_certificate">
+        <div class="mb-4">
+          <p class="text-[#3F434A] text-base font-medium">TIN Certificate</p>
+          <p class="text-base text-[#98A2B3] font-normal">Upload TIN document and Enter Details</p>
+
+        </div>
+        <div  class="border border-primary w-[367px] text-sm h-[72px] p-4 rounded-md flex items-start ">
+          <div class="flex gap-4">
+            <img src="~/assets/images/icons/file.svg" />
+            <div>
+              <p class="text-[#344054] font-medium">{{ doc?.name }}</p>
+            </div>
+             </div>
+          <div class="ml-auto">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" fill="#31A962"/>
+              <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" stroke="#31A962"/>
+              <path d="M11.3337 5.5L6.75033 10.0833L4.66699 8" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              
+          </div>
+        </div>
+      </div>
+      <div v-if="doc?.other_license">
+        <div class="mb-4">
+          <p class="text-[#3F434A] text-base font-medium">OTher Licence</p>
+          <p class="text-base text-[#98A2B3] font-normal">Upload TIN document and Enter Details</p>
+
+        </div>
+        <div  class="border border-primary w-[367px] text-sm h-[72px] p-4 rounded-md flex items-start ">
+          <div class="flex gap-4">
+            <img src="~/assets/images/icons/file.svg" />
+            <div>
+              <p class="text-[#344054] font-medium">{{ doc?.name }}</p>
+            </div>
+             </div>
+          <div class="ml-auto">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" fill="#31A962"/>
+              <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" stroke="#31A962"/>
+              <path d="M11.3337 5.5L6.75033 10.0833L4.66699 8" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              
+          </div>
+        </div>
+      </div>
+    </div> -->
     <form>
       <div class="flex gap-4 flex-col">
         <div>
           <div class="mb-4">
-            <p class="text-[#3F434A] text-base font-medium">CAC Certificate</p>
-            <p class="text-base text-[#98A2B3] font-normal">Upload CAC document and Enter Details</p>
+            <p class="text-[#3F434A] text-base font-medium">CAC Document</p>
+            <p class="text-base text-[#98A2B3] font-normal">Upload Registration Certificate</p>
           </div>
-          <div v-if="cac_doc?.name" class="border border-primary w-[367px] text-sm h-[72px] p-4 rounded-md flex items-start ">
+          <div v-if="cac_doc?.name " class="border border-primary w-[367px] text-sm h-[72px] p-4 rounded-md flex items-start ">
             <div class="flex gap-4">
               <img src="~/assets/images/icons/file.svg" />
               <div>
                 <p class="text-[#344054] font-medium">{{ cac_doc?.name }}</p>
-                <p class="text-secondary-body-regular-contrast">{{bytesToKilobytes(cac_doc?.size) }}KB – 100% uploaded -  <span @click="deleteCac" class="cursor-pointer text-destructive">Delete</span></p>
+                <p class="text-secondary-body-regular-contrast">{{bytesToKilobytes(cac_doc?.size) }}KB – 100% uploaded -  <span @click="deleteTin" class="cursor-pointer text-destructive">Delete</span></p>
               </div>
                </div>
             <div class="ml-auto">
@@ -22,15 +103,14 @@
                 <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" stroke="#31A962"/>
                 <path d="M11.3337 5.5L6.75033 10.0833L4.66699 8" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                
             </div>
           </div>
           <div v-else class="mb-4">
-            <p class="text-sm text-[#3F434A] font-medium">Upload CAC Document</p>
+            <p class="text-sm text-[#3F434A] font-medium">Upload CAC Certificate</p>
             <div class="mt-4">
               <!-- Dropzone 1 -->
-    <div v-bind="getRootProps1()" class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
-      <input v-bind="getInputProps1()" />
+    <div v-bind="getRootProps2()" class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
+      <input v-bind="getInputProps2()" />
       <img src="~/assets/images/icons/upload.svg" />
       <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
       <p class="text-xs">.pdf, .jpeg, .png (max.560kb)</p>
@@ -102,14 +182,14 @@
           <div v-else class="mb-4">
             <div class="mt-4">
               <!-- Dropzone 1 -->
-    <div v-bind="getRootProps3()" class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
-      <input v-bind="getInputProps3()" />
-      <img src="~/assets/images/icons/upload.svg" />
-      <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
-      <p class="text-xs">.pdf, .jpeg, .png (max.560kb)</p>
-      <p class="text-xs text-destructive capitalize mt-1">{{ license_doc_errors ? license_doc_errors.code : null }}</p>
+              <div v-bind="getRootProps3()" class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
+                <input v-bind="getInputProps3()" />
+                <img src="~/assets/images/icons/upload.svg" />
+                <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
+                <p class="text-xs">.pdf, .jpeg, .png (max.560kb)</p>
+                <p class="text-xs text-destructive capitalize mt-1">{{ license_doc_errors ? license_doc_errors.code : null }}</p>
 
-    </div>
+              </div>
             </div>
           </div>
         </div>
@@ -127,8 +207,11 @@
         <div class="mt-8 flex justify-end gap-6" >
           <Button type="button" size="lg" variant="outline" class="py-3 px-5 h-11 w-[145px]">Cancel</Button>
           <AlertDialog>
-            <AlertDialogTrigger class="">
-              <Button type="button" size="lg" class="py-3 px-5 h-11 w-[145px]">Save</Button>
+            <AlertDialogTrigger :disabled="loading || certificates?.results?.length > 0" class="">
+              <Button type="button" :disabled="loading || certificates?.results?.length > 0" size="lg" class="py-3 px-5 h-11 w-[145px]">
+                Save
+                <LoaderCircle v-show="loading" class="animate-spin h-4 w-4 ml-2" />
+              </Button>
             </AlertDialogTrigger>
             <AlertDialogContent class="max-w-[426px] pt-12">
               <AlertDialogHeader>
@@ -150,20 +233,37 @@
               </Alert>
               <AlertDialogFooter class="flex gap-2.5">
                 <AlertDialogCancel type="button" class="w-full h-11 py-3 px-6">Edit Details</AlertDialogCancel>
-                <AlertDialogAction type="button"  class="w-full h-11 py-3 px-6 bg-primary-600">Yes, Submit</AlertDialogAction>
+                <AlertDialogAction @click="onSubmit" type="button" class="w-full h-11 py-3 px-6 bg-primary-600">Yes, Submit</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
         </div>
+  
       </div>
+   
     </form>
   </div>
+  
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useDropzone } from "vue3-dropzone"; // Ensure to use the dropzone library compatible with Vue
+import { serialize } from "object-to-formdata";
+import { useForm } from "vee-validate";
+import { toTypedSchema } from "@vee-validate/zod";
+import * as z from "zod";
+import { useAuthStore } from '~/store/auth';
+import { useProfileStore } from '~/store/profile';
+import { LoaderCircle } from "lucide-vue-next";
 
+const { isFieldDirty, handleSubmit, values } = useForm({
+});
+const LSprofile = ref()
+
+const profileStore = useProfileStore()
+const loading  = ref(false);
+const success = ref(false)
 const cac_doc = ref({})
 const cac_doc_errors = ref({})
 const tin_doc = ref({})
@@ -171,6 +271,9 @@ const tin_doc_errors = ref({})
 const license_doc = ref({})
 const license_doc_errors = ref({})
 
+const certificates = computed(() => {
+  return profileStore.certificates
+})
 function bytesToKilobytes(bytes) {
   return Math.floor(bytes / 1024);
 }
@@ -213,6 +316,48 @@ const deleteLicense = () => {
 }
 const { getRootProps: getRootProps3, getInputProps: getInputProps3 } = useDropzone({ onDrop: onDrop3, maxSize: 560000, accept: ".pdf, .jpeg, .png", maxFiles: 1 });
 
+
+const onSubmit = handleSubmit(async(values) => {
+     
+  const formData = new FormData();
+  // Append each property to the FormData object
+  formData.append('cac_certificate', cac_doc.value);
+  formData.append('tin_certificate', tin_doc.value);
+  formData.append('profile', LSprofile?.value?.id);
+  formData.append('other_license', license_doc.value)
+    // const form = serialize(newBody);
+    console.log('values', values, formData, LSprofile.value?.id)
+      try {
+        loading.value = true;
+      const response =  await profileStore.uploadCertificates(LSprofile?.value?.id,formData);
+      console.log('response', response.data?.data)
+      if (response.data && response?.data?.data) {
+        loading.value = false;
+        success.value = true;
+        profileStore.getCertificates()
+        // redirect to dashboard
+        // console.log('here', response?.data?.data?.id)
+
+        } else {
+          loading.value = false;
+          // alert(response.data.message);
+          }
+        loading.value = false
+      }catch(error) {
+        loading.value = false
+        console.log('error', error)
+      }
+});
+onMounted(() => {
+  if (process.client) {
+        const storedProfile = getItem("profile");
+        if (storedProfile && storedProfile !== undefined) {
+          LSprofile.value  =  JSON.parse(storedProfile);
+          // = user
+        }
+      }
+  profileStore.getCertificates()
+})
 </script>
 
 <style lang="scss" scoped>

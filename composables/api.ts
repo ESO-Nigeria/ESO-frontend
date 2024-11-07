@@ -36,7 +36,7 @@ export const apiPostRequest = async (url: string, body: object): Promise<ApiResp
     const response = await axios.post(baseURL + url, body, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token, // Add your authorization header here
+        'Authorization': 'token ' + token, // Add your authorization header here
       },
     });
 
@@ -56,7 +56,7 @@ export const apiPostRequestForFormData = async (url: string, body: object): Prom
     const response = await axios.post(baseURL + url, body, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        'Authorization': 'Bearer ' + token, // Add your authorization header here
+        'Authorization': 'Token ' + token, // Add your authorization header here
       },
     });
 
@@ -76,7 +76,7 @@ export const apiPutRequest = async (url: string, body: object): Promise<ApiRespo
     const response = await axios.put(baseURL + url, body, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token, // Add your authorization header here
+        'Authorization': 'token ' + token, // Add your authorization header here
       },
     });
 
@@ -116,7 +116,7 @@ export const apiPatchRequestForFormData = async (url: string, body: object): Pro
     const response = await axios.patch(baseURL + url, body, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        'Authorization': 'Bearer ' + token, // Add your authorization header here
+        'Authorization': 'token ' + token, // Add your authorization header here
       },
     });
 

@@ -1,5 +1,17 @@
 <template>
   <div class="mt-4 flex flex-col gap-6">
+
+    <Alert v-show="success" class="bg-[#E2FEF0] border-0 flex items-center">
+      <CheckIcon class="text-[#05944F] size-5" />
+      <div class="">
+        <AlertTitle class="text-[#232E3F]">Details Submitted Successfully!</AlertTitle>
+        <AlertDescription class="text-[#5C6F7F]">
+          Your organization details have been submitted for verification. Please continue to complete the remaining sections to finalize your application.
+        </AlertDescription>
+      </div>
+     
+    </Alert>
+
     <p class="text-base text-secondary-body-500">Enter details about your organization for verification.</p>
     <div>
       <div class="flex gap-14 items-start ">
@@ -22,7 +34,7 @@
           </Avatar>
         </div>
         <div class="flex-1">
-          <form class="flex gap-4 flex-col ">
+          <form  class="flex gap-4 flex-col ">
             <FormField :modelValue="user?.organization_name" v-slot="{ componentField }" name="organization_name">
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">Organization Name</FormLabel>
@@ -67,6 +79,7 @@
               </FormItem>
             </FormField>
             <FormField
+            :modelValue="profile?.description"
             v-slot="{ componentField }"
             name="description">
             <FormItem class="space-y-1">
@@ -83,6 +96,7 @@
             </FormItem>
           </FormField>
           <FormField
+           :modelValue="profile?.services"
           v-slot="{ componentField }"
           name="services">
           <FormItem class="space-y-1">
@@ -100,7 +114,7 @@
         </FormField>
         <div>
           <div class="grid grid-cols-2 gap-4">
-            <FormField v-slot="{ componentField }" name="first_name">
+            <FormField :modelValue="user?.first_name" v-slot="{ componentField }" name="first_name">
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">First Name</FormLabel>
                 <FormControl>
@@ -110,7 +124,7 @@
                 </FormControl>
               </FormItem>
             </FormField>
-            <FormField v-slot="{ componentField }" name="last_name">
+            <FormField :modelValue="user?.last_name" v-slot="{ componentField }" name="last_name">
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">Last Name</FormLabel>
                 <FormControl>
@@ -159,7 +173,7 @@
               </FormControl>
             </FormItem>
           </FormField>
-          <FormField v-slot="{ componentField }" name="phone_number">
+          <FormField  :modelValue="profile?.company_phone" v-slot="{ componentField }" name="phone_number">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">Phone Number</FormLabel>
               <FormControl>
@@ -176,7 +190,7 @@
             </FormItem>
           </FormField>
         </div>
-        <FormField v-slot="{ componentField }" name="organization_address">
+        <FormField :modelValue="profile?.address" v-slot="{ componentField }" name="organization_address">
           <FormItem class="space-y-1">
             <FormLabel class="text-[#3F434A] text-base font-medium">Organization Address</FormLabel>
             <FormControl class=" relative w-full  items-center">
@@ -190,25 +204,23 @@
             
           </FormItem>
         </FormField>
+      
         <div class="grid grid-cols-3 gap-4">
-          <FormField v-slot="{ componentField }" name="country">
+          <FormField  v-slot="{ componentField }" name="country">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">Country</FormLabel>
               <FormControl>
-                <Select v-bind="componentField">
+                <Select v-model="selectedCountry"  @update:modelValue="onCountryChange" v-bind="componentField">
                   <SelectTrigger
                     class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                     <SelectValue placeholder="Select a country" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="primary care">
-                      Nigeria
+                    <SelectItem v-for="country in all_countries" :key="country.id" :value="country.name">
+                      {{ country.name }}
                     </SelectItem>
-                  
-                    
                   </SelectContent>
                 </Select>
-  
               </FormControl>
             </FormItem>
           </FormField>
@@ -216,38 +228,35 @@
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">State</FormLabel>
               <FormControl>
-                <Select v-bind="componentField">
+                <Select v-bind="componentField" :disabled="!selectedCountry" @update:modelValue="onStateChange" v-model="selectedState" >
                   <SelectTrigger
                     class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                     <SelectValue placeholder="Select a state" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="primary care">
-                      Lagos
+                    <SelectItem v-for="state in states" :key="state.id" :value="state.name">
+                      {{state?.name}}
                     </SelectItem>
-                  
-                    
                   </SelectContent>
                 </Select>
   
               </FormControl>
             </FormItem>
           </FormField>
+
           <FormField v-slot="{ componentField }" name="city">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">City</FormLabel>
               <FormControl>
-                <Select v-bind="componentField">
+                <Select v-bind="componentField" :disabled="!selectedState" v-model="selectedCity">
                   <SelectTrigger
                     class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                     <SelectValue placeholder="Select a city" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="primary care">
-                      Lagos
+                    <SelectItem v-for="city in cities" :key="city.id" :value="city.name">
+                      {{city?.name}}
                     </SelectItem>
-                  
-                    
                   </SelectContent>
                 </Select>
   
@@ -259,8 +268,11 @@
           <div class="mt-8 flex justify-end gap-6" >
             <Button size="lg" variant="outline" class="py-3 px-5 h-11 w-[145px]">Cancel</Button>
             <AlertDialog>
-              <AlertDialogTrigger class="">
-                <Button size="lg" class="py-3 px-5 h-11 w-[145px]">Save</Button>
+              <AlertDialogTrigger :disabled="loading || profile" class="">
+                <Button :disabled="loading || profile" size="lg" class="py-3 px-5 h-11 w-[145px]">
+                  Save
+                  <LoaderCircle v-show="loading" class="animate-spin h-4 w-4 ml-2" />
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent class="max-w-[426px] pt-12">
                 <AlertDialogHeader>
@@ -283,7 +295,7 @@
                 </Alert>
                 <AlertDialogFooter class="flex gap-2.5">
                   <AlertDialogCancel type="button" class="w-full h-11 py-3 px-6">Edit Details</AlertDialogCancel>
-                  <AlertDialogAction type="button"  class="w-full h-11 py-3 px-6 bg-primary-600">Yes, Submit</AlertDialogAction>
+                  <AlertDialogAction @click="onSubmit" type="button"  class="w-full h-11 py-3 px-6 bg-primary-600">Yes, Submit</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
@@ -295,10 +307,47 @@
 </template>
 
 <script setup>
-import { Mail, PhoneCall } from 'lucide-vue-next';
+import { CheckIcon, LoaderCircle, Mail, PhoneCall } from 'lucide-vue-next';
 import Avatar from '../ui/avatar/Avatar.vue';
 import AvatarFallback from '../ui/avatar/AvatarFallback.vue';
 import AvatarImage from '../ui/avatar/AvatarImage.vue';
+import { useForm } from "vee-validate";
+import { toTypedSchema } from "@vee-validate/zod";
+import * as z from "zod";
+import { useAuthStore } from '~/store/auth';
+import { useProfileStore } from '~/store/profile';
+import nigeria from '~/composables/nigeria.json';
+import { isProxy, toRaw } from 'vue';
+
+const all_countries = computed(()=>{
+  return nigeria
+});
+const loading  = ref(false);
+const selectedCountry = ref(null);
+const selectedState = ref(null);
+const selectedCity = ref(null);
+const profileStore = useProfileStore()
+const success = ref(false)
+const { isFieldDirty, handleSubmit, values } = useForm({
+});
+const states = ref([])
+const cities = ref([])
+
+const profile = computed(() => {
+  return profileStore.profile
+})
+
+// Methods to handle changes
+const onCountryChange = (newValue) => {
+  states.value = all_countries?.value?.find((c) => c.name == newValue)?.states;
+  selectedState.value = null; // Reset state selection
+  selectedCity.value = null; // Reset city selection
+};
+
+const onStateChange = (newValue) => {
+  cities.value = states.value.find((s) => s.name == newValue)?.cities;
+  selectedCity.value = null; // Reset city selection
+};
 
 const props = defineProps({
   user: {
@@ -306,6 +355,61 @@ const props = defineProps({
   }
 })
 
+const fetchProfile  = async (id) => {
+  await  profileStore.getProfile(id)
+}
+
+watch(
+  () => profileStore.profile,
+  (newPatient) => {
+    profile.value = newPatient;
+  }
+);
+
+const onSubmit = handleSubmit(async(values) => {
+      const body =    {
+    "country": values.country,
+    "state": values.state,
+    "city": values.city,
+    "address": values?.organization_address,
+    "company_email": values?.email,
+    "company_phone": values?.phone_number,
+    "company_website": "",
+    "description": values?.description,
+    "services": values?.services
+}
+console.log('values', values, body)
+      try {
+        loading.value = true;
+      const response =  await profileStore.createProfile(body);
+      console.log('response', response.data?.data)
+      if (response.data && response?.data?.data) {
+        loading.value = false;
+        success.value = true;
+        fetchProfile(response?.data?.data?.id)
+        // redirect to dashboard
+        // console.log('here', response?.data?.data?.id)
+
+        } else {
+          loading.value = false;
+          // alert(response.data.message);
+          }
+        loading.value = false
+      }catch(error) {
+        loading.value = false
+        console.log('error', error)
+      }
+});
+
+onMounted(() => {
+  if (process.client) {
+        const storedProfile = getItem("profile");
+        if (storedProfile && storedProfile !== undefined) {
+        const user  = JSON.parse(storedProfile);
+          fetchProfile(user?.id)
+        }
+      }
+})
 </script>
 
 <style lang="scss" scoped>

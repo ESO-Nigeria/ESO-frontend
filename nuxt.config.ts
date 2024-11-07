@@ -72,7 +72,7 @@ export default defineNuxtConfig({
   routeRules: {    
     // Render these routes on the client (SPA)
     '/dashboard/**': { ssr: false },    
-
+    'general/**':{ ssr: false}
   },
   build: {
     transpile: ['@vuepic/vue-datepicker']
