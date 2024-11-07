@@ -26,8 +26,7 @@ export const apiGetRequest = async (url: string): Promise<ApiResponse> => {
   }
 };
 
-
-  export const apiPostRequest = async (url: string, body: object): Promise<ApiResponse> => {
+export const apiPostRequest = async (url: string, body: object): Promise<ApiResponse> => {
   const config = useRuntimeConfig();
   const baseURL = config.public.apiUrl;
   const { getToken } = storeToRefs(useAuthStore());

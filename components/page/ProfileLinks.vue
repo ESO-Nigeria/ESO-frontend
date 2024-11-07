@@ -109,8 +109,8 @@
         <div class="mt-8 flex justify-end gap-6" >
           <Button size="lg" variant="outline" class="py-3 px-5 h-11 w-[145px]">Cancel</Button>
           <AlertDialog>
-            <AlertDialogTrigger :disabled="loading " class="">
-              <Button type="button" :disabled="loading " size="lg" class="py-3 px-5 h-11 w-[145px]">
+            <AlertDialogTrigger :disabled="loading || links?.results?.length > 0" class="">
+              <Button type="button" :disabled="loading || links?.results?.length > 0" size="lg" class="py-3 px-5 h-11 w-[145px]">
                 Save
                 <LoaderCircle v-show="loading" class="animate-spin h-4 w-4 ml-2" />
               </Button>
@@ -182,16 +182,39 @@ function convertToSocialLinks(obj) {
 const onSubmit = form.handleSubmit(async(values) => {
   console.log('values', values)
   const socialLinksArray = convertToSocialLinks(values);
-console.log(socialLinksArray);
- const body = [{
-  
- }]
+  console.log(socialLinksArray);
+ const body = [  {
+        "platform": "WEBSITE",
+        "url": values.website_url
+    },
+    {
+        "platform": "LINKEDIN",
+        "url": values.linkedIn
+    },
+    {
+        "platform": "INSTAGRAM",
+        "url": values?.instagram
+    },
+    {
+        "platform": "FACEBOOK",
+        "url": values?.facebook
+    },
+    {
+        "platform": "TWITTER",
+        "url": values?.twitter
+    }
+]
+
+console.log(body);
+
 try {
     loading.value = true;
-  const response =  await profileStore.socialLinks(socialLinksArray);
+  const response =  await profileStore.socialLinks(body);
   console.log('response', response?.data?.data)
   if (response.data && response?.data?.data) {
     loading.value = false;
+    success.value = true;
+    profileStore.getLinks()
     // redirect to dashboard
     // console.log('here', response?.data?.data?.auth_token)
     // router.push('/auth/otp-sent');

@@ -80,7 +80,6 @@ export const useProfileStore = defineStore("profile", {
         // this.submitting = false
         console.log("response", response.data);
         this.links = response.data.data
-        setItem('profile',JSON.stringify(response.data.data))
         return { data: response, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };

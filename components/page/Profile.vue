@@ -406,6 +406,7 @@ onMounted(() => {
         const storedProfile = getItem("profile");
         if (storedProfile && storedProfile !== undefined) {
         const user  = JSON.parse(storedProfile);
+        console.log(user)
           fetchProfile(user?.id)
         }
       }
