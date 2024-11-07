@@ -65,7 +65,7 @@ const date = ref();
 const deadline = ref()
 
 const steps = ['Program Overview', 'Program Details', 'Preview & Publish'];
-const currentStep = ref(1);
+const currentStep = ref(0);
 
 const progressValue = computed(() => ((currentStep.value + 1) / steps.length) * 100);
 const program_image = ref({})
@@ -463,7 +463,7 @@ async function handleFormSubmit() {
                           <div class="relative w-full  items-center">
                             <Input type="url"
                               class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                              placeholder="Enter Amount or Free" v-model="formFieldsDetails.registration_link" />
+                              placeholder="Enter Registration Link" v-model="formFieldsDetails.registration_link" />
 
                           </div>
 
@@ -477,7 +477,7 @@ async function handleFormSubmit() {
                           <div class="relative w-full  items-center">
                             <Input type="url"
                               class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                              placeholder="Enter Amount or Free" v-model="formFieldsDetails.website_link" />
+                              placeholder="Enter Website Link" v-model="formFieldsDetails.website_link" />
 
                           </div>
 

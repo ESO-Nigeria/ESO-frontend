@@ -30,6 +30,6 @@ export const financialSupport = [
 
 export const programMode = [
     { "id": 'ONLINE', "label": "Online" },
-    { "id": 'IN_PERSON', "label": "In-person" },
+    { "id": 'INPERSON', "label": "In person" },
     { "id": 'HYBRID', "label": "Hybrid" },
 ]

@@ -19,47 +19,46 @@ interface Programme {
 }
 
 interface ProgrammeDetails {
-    number_of_participants: number;
-    amount: number;
+    number_of_participants: number | string;
+    amount: number | string;
     start_date: string;
     end_date: string;
     application_deadline: string;
     city: string;
     country: string;
-    program_mode: 'ONLINE' | 'IN_PERSON' | 'HYBRID';
+    program_mode: 'ONLINE' | 'INPERSON' | 'HYBRID';
     registration_required: boolean;
     registration_link: string;
     website_link: string;
     application_status?: ApplicationStatus;
-    program: number;
+    program: number | string;
 }
 
 export const useProgrammeStore = defineStore("programme", {
-    persist: false,
     state: () => ({
         programme: {
-            "title": "Youth Empowerment Program",
-            "description": "A comprehensive program aimed at empowering youth through skills training.",
-            "brief_details": "Skills training for unemployed youth in the local community.",
+            "title": "",
+            "description": "",
+            "brief_details": "",
             "program_image": '',
-            "sectors": [2, 4],
-            "financial_supports": [1],
-            "non_financial_supports": [2, 3],
-            "target_audience": [1],  
+            "sectors": [],
+            "financial_supports": [],
+            "non_financial_supports": [],
+            "target_audience": [],  
         } as Programme,
         programme_details: {
-            "number_of_participants": 23,
-            "amount": 1000.00,
-            "start_date": "2024-12-01",
-            "end_date": "2024-12-10",
-            "application_deadline": "2024-11-25",
-            "city": "New York",
-            "country": "USA",
+            "number_of_participants": '',
+            "amount": '',
+            "start_date": "",
+            "end_date": "",
+            "application_deadline": "",
+            "city": "",
+            "country": "",
             "program_mode": "HYBRID",
-            "registration_required": true,
-            "registration_link": "http://example.com/register",
-            "website_link": "http://example.com/program",
-            "program": 4
+            "registration_required": false,
+            "registration_link": "",
+            "website_link": "",
+            "program": ''
         } as ProgrammeDetails,
         image: null,
         loading: false,
