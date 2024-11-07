@@ -9,6 +9,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Plus } from 'lucide-vue-next';
+import { useProgrammeStore } from '~/store/programmme';
+import { toast } from 'vue-sonner';
 
 const tableData = [
   {
@@ -49,9 +51,7 @@ const tableData = [
 // const stockInventoryStore = useStockInventoryStore()
 const isRequestStockOpen = ref(false)
 const isDetailsOpen = ref(false)
-const  isMultipleRequestOpen = ref(false)
-
-const requestLists = ref({})
+const isMultipleRequestOpen = ref(false)
 
 const loading = ref(false)
 
@@ -63,8 +63,28 @@ defineProps({
   }
 })
 
+const programmeStore = useProgrammeStore()
+const programmes = ref([])
+
+const fetchProgrammes  = async () => {
+  try {
+    loading.value = false
+    const response = await programmeStore.GET_PROGRAMMES()
+    if (response?.data?.data) {
+      programmes.value = response?.data?.data
+    }else if (response?.error){
+      toast.error(response?.error?.error?.[0] || "Unable to fetch programmes, please try again")
+    }
+  } catch (error) {
+    toast.error(error?.response?.data?.error?.[0] || "Unable to fetch programmes, please try again")
+  } finally {
+    loading.value = false
+  }
+}
+
+
 onMounted(() => {
-  // stockInventoryStore.getUngroupedOrdersList()
+  fetchProgrammes()
 })
 </script>
 
@@ -135,7 +155,6 @@ onMounted(() => {
         <TableHead class="text-center">Programme Title</TableHead>
         <TableHead class="text-center">Sector</TableHead>
         <TableHead class="text-center">Program Mode</TableHead>
-
         <TableHead class="text-center">Application Deadline</TableHead>
         <TableHead class="text-center">Approval Status</TableHead>
         <TableHead class="text-center">Action</TableHead>
@@ -145,10 +164,10 @@ onMounted(() => {
     <TableBody class="bg-white">
       <TableRow v-if="loading">
         <TableCell colspan="10" class="text-center">
-          <LayoutsPageLoader/>
+          <LayoutsPageLoader />
         </TableCell>
       </TableRow>
-      <TableRow  v-else-if="data && data?.length === 0" class="h-40">
+      <TableRow  v-else-if="programmes?.results && programmes?.results?.length === 0" class="h-40">
         <TableCell colspan="10" class="p-4 text-center">
           <div class=" flex items-center justify-center flex-col gap-2.5">
             <svg width="37" height="36" viewBox="0 0 37 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -170,7 +189,7 @@ onMounted(() => {
           </div>
         </TableCell>
       </TableRow>
-      <TableRow v-else v-for="item in requestLists?.data" class="text-sm text-gray-900 font-normal" :key="item.id">
+      <TableRow v-else v-for="item in programmes?.results" class="text-sm text-gray-900 font-normal" :key="item.id">
         <TableCell class="text-left py-4 px-6 w-[50px]">
           <div class="flex items-center justify-center h-full">
             <Checkbox id="terms"

@@ -1,38 +1,6 @@
 import { defineStore } from "pinia";
 import { toast } from 'vue-sonner';
-
-enum ApplicationStatus {
-    ONGOING = 'ONGOING',
-    CLOSED = 'CLOSED'
-}
-
-interface Programme {
-    title: string;
-    description: string;
-    program_image: string;
-    brief_details: string;
-    sectors: number[];
-    financial_supports: number[];
-    non_financial_supports: number[];
-    target_audience: number[];
-    application_status?: ApplicationStatus;
-}
-
-interface ProgrammeDetails {
-    number_of_participants: number | string;
-    amount: number | string;
-    start_date: string;
-    end_date: string;
-    application_deadline: string;
-    city: string;
-    country: string;
-    program_mode: 'ONLINE' | 'INPERSON' | 'HYBRID';
-    registration_required: boolean;
-    registration_link: string;
-    website_link: string;
-    application_status?: ApplicationStatus;
-    program: number | string;
-}
+import type { Programme, ProgrammeDetails } from "~/types";
 
 export const useProgrammeStore = defineStore("programme", {
     state: () => ({
@@ -44,7 +12,7 @@ export const useProgrammeStore = defineStore("programme", {
             "sectors": [],
             "financial_supports": [],
             "non_financial_supports": [],
-            "target_audience": [],  
+            "target_audience": [],
         } as Programme,
         programme_details: {
             "number_of_participants": '',
@@ -144,6 +112,14 @@ export const useProgrammeStore = defineStore("programme", {
             } catch (error: any) {
                 toast.error(error?.response?.data?.error?.[0] || "Unable to create programme details, please try again")
                 return { data: null, error: error ?? "Unknown error" };
+            }
+        },
+        async GET_PROGRAMMES() {
+            try {
+                const response = await apiGetRequest(`/api/programs/`);
+                return { data: response, error: response.error };
+            } catch (error) {
+                return { data: null, error: "Unknown error" }
             }
         }
     },
