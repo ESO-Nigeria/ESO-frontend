@@ -8,7 +8,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Plus } from 'lucide-vue-next';
+import { Plus, MoreVertical } from 'lucide-vue-next';
+import { useProgrammeStore } from '~/store/programmme';
+import { toast } from 'vue-sonner';
+import { sectors, targetAudience, nonFinancialSupport, financialSupport, programMode } from '~/lib/data';
+
 
 const tableData = [
   {
@@ -49,9 +53,7 @@ const tableData = [
 // const stockInventoryStore = useStockInventoryStore()
 const isRequestStockOpen = ref(false)
 const isDetailsOpen = ref(false)
-const  isMultipleRequestOpen = ref(false)
-
-const requestLists = ref({})
+const isMultipleRequestOpen = ref(false)
 
 const loading = ref(false)
 
@@ -63,8 +65,40 @@ defineProps({
   }
 })
 
+const programmeStore = useProgrammeStore()
+const programmes = ref([])
+
+const fetchProgrammes  = async () => {
+  try {
+    loading.value = false
+    const response = await programmeStore.GET_PROGRAMMES()
+    if (response?.data?.data) {
+      programmes.value = response?.data?.data
+    }else if (response?.error){
+      toast.error(response?.error?.error?.[0] || "Unable to fetch programmes, please try again")
+    }
+  } catch (error) {
+    toast.error(error?.response?.data?.error?.[0] || "Unable to fetch programmes, please try again")
+  } finally {
+    loading.value = false
+  }
+}
+
+const getBadgeColor = (status) => {
+  switch(status){
+    case 'PENDING':
+      return 'bg-[#FFFAEB] text-[#B54708]'
+    case 'APPROVED':
+      return 'bg-[#027A48] text-[#ECFDF3]'
+    case 'REJECTED':
+      return 'bg-[#FEF3F2] text-[#B42318]'
+    default:
+      return 'bg-[#F2F4F7] text-[#667085]'
+  }
+}
+
 onMounted(() => {
-  // stockInventoryStore.getUngroupedOrdersList()
+  fetchProgrammes()
 })
 </script>
 
@@ -132,23 +166,22 @@ onMounted(() => {
           </div>
         </TableHead>
         
-        <TableHead class="text-center">Programme Title</TableHead>
-        <TableHead class="text-center">Sector</TableHead>
-        <TableHead class="text-center">Program Mode</TableHead>
-
-        <TableHead class="text-center">Application Deadline</TableHead>
-        <TableHead class="text-center">Approval Status</TableHead>
-        <TableHead class="text-center">Action</TableHead>
+        <TableHead>Programme Title</TableHead>
+        <TableHead>Sector</TableHead>
+        <TableHead>Program Mode</TableHead>
+        <TableHead>Application Deadline</TableHead>
+        <TableHead>Approval Status</TableHead>
+        <TableHead>Action</TableHead>
        
       </TableRow>
     </TableHeader>
     <TableBody class="bg-white">
       <TableRow v-if="loading">
         <TableCell colspan="10" class="text-center">
-          <LayoutsPageLoader/>
+          <LayoutsPageLoader />
         </TableCell>
       </TableRow>
-      <TableRow  v-else-if="data && data?.length === 0" class="h-40">
+      <TableRow  v-else-if="programmes?.results && programmes?.results?.length === 0" class="h-40">
         <TableCell colspan="10" class="p-4 text-center">
           <div class=" flex items-center justify-center flex-col gap-2.5">
             <svg width="37" height="36" viewBox="0 0 37 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -170,51 +203,36 @@ onMounted(() => {
           </div>
         </TableCell>
       </TableRow>
-      <TableRow v-else v-for="item in requestLists?.data" class="text-sm text-gray-900 font-normal" :key="item.id">
+      <TableRow v-else v-for="item in programmes?.results" class="text-sm text-gray-900 font-normal" :key="item.id">
         <TableCell class="text-left py-4 px-6 w-[50px]">
           <div class="flex items-center justify-center h-full">
             <Checkbox id="terms"
               class="h-5 w-5 border border-gray-300 rounded-md data-[state=checked]:border-[#088AD8] data-[state=checked]:bg-primaryBlue-25 data-[state=checked]:text-primaryBlue-500" />
           </div>
         </TableCell>
-        <TableCell class=" py-4 px-6">{{item.order_number}}</TableCell>
-        <TableCell class="text-center py-4 px-6 capitalize"> {{ item.created_at ? formattedDate(item.created_at) : 'N/A' }} </TableCell>
-        
-        <TableCell class="text-center py-4 px-6 capitalize"> {{ item.category ? item.category : 'N/A' }} </TableCell>
-        <TableCell class="text-center py-4 px-6 capitalize"> {{ item.item_name ? item.item_name : 'N/A' }} </TableCell>
-        <TableCell class="text-center py-4 px-6 capitalize"> {{ item.quantity ? item.quantity : 'N/A' }} </TableCell>
-
-        <TableCell class="text-center py-4 px-6">
-          <div class="text-center">
-            <div>
-              <p class="text-gray-900 text-nowrap">
-                {{ item.requested_by_name }}
-              </p>
-              
-            </div>
+        <TableCell class="py-4 px-6">{{item.title}}</TableCell>
+        <TableCell class="py-4 px-6">
+          <div>
+           <span v-for="(sector, index) in item.sectors" :key="sector.id">
+            {{ sectors.find(s => s.id === sector)?.label }}
+            <span v-if="index < item.sectors.length - 1">, </span>
+           </span>
           </div>
         </TableCell>
-        <TableCell class="text-center py-4 px-6">
-          <div class="text-center">
-            <div>
-              <p class="text-gray-900 text-nowrap">
-                {{ item.supplied_by_name }}
-              </p>
-              
-            </div>
-          </div>
-        </TableCell>
-        <TableCell class="text-center py-4 px-6 capitalize"> {{ item.supplied_date ? formatDateTime(item.supplied_date) : 'N/A' }} </TableCell>
+        <TableCell class="py-4 px-6"> - </TableCell>
+        <TableCell class="py-4 px-6"> - </TableCell>
 
-        <TableCell class="text-center py-4 px-6">
-          <span class="px-2 py-1 text-sm font-normal capitalize rounded-full" :class="item?.status === 'completed'
-            ? 'bg-success-50 text-success-700'
-            : item?.status === 'pending' ? 'text-[#026AA2] bg-[#F0F9FF]' : 'text-error-700 bg-error-50'">
-            {{ item.status }}
-          </span>
-
+        <TableCell class="py-4 px-6">
+          <span class="text-sm rounded-full px-3 py-1" :class="getBadgeColor(item.approval_status)">{{ item.approval_status }}</span>
         </TableCell>
-        
+
+        <TableCell class="py-4 px-6">
+          <Button variant="ghost" size="icon">
+            <!-- More Icon  -->
+            <MoreVertical />
+          </Button>
+        </TableCell>
+
       </TableRow>
     </TableBody>
   </Table>

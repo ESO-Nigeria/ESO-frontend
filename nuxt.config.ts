@@ -75,7 +75,7 @@ export default defineNuxtConfig({
     'general/**':{ ssr: false}
   },
   build: {
-    transpile: ['@vuepic/vue-datepicker']
+    transpile: ['@vuepic/vue-datepicker', 'vue-sonner']
 },
   runtimeConfig:{
     public: {

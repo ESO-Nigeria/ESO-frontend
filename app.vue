@@ -1,7 +1,7 @@
 <template>
   <div class="antialised">
     <NuxtPage />
-    
+    <Toaster position="top-right" />
   </div>
 </template>
 
