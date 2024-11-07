@@ -26,7 +26,7 @@ export const apiGetRequest = async (url: string): Promise<ApiResponse> => {
   }
 };
 
-export const apiPostRequest = async (url: string, body: object): Promise<ApiResponse> => {
+export const apiPostRequest = async (url: string, body: object, options: { auth: boolean } = { auth: true }): Promise<ApiResponse> => {
   const config = useRuntimeConfig();
   const baseURL = config.public.apiUrl;
   const { getToken } = storeToRefs(useAuthStore());
@@ -36,7 +36,7 @@ export const apiPostRequest = async (url: string, body: object): Promise<ApiResp
     const response = await axios.post(baseURL + url, body, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'token ' + token, // Add your authorization header here
+        ...(options.auth && { 'Authorization': 'token ' + token }), // Add authorization header only if auth is true
       },
     });
 
