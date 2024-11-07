@@ -40,7 +40,7 @@ export const useProfileStore = defineStore("profile", {
     },
     async createProfile(body: any) {
       try {
-        const response = await apiPostRequest(`/api/profiles/`, body);
+        const response = await apiPostFormRequest(`/api/profiles/`, body);
         // this.submitting = false
         console.log("response", response.data);
         this.profile = response.data.data
@@ -76,11 +76,10 @@ export const useProfileStore = defineStore("profile", {
     },
     async socialLinks(body: any) {
       try {
-        const response = await apiPostRequest(`/api/social-links/`, body);
+        const response = await apiPostFormRequest(`/api/social-links/`, body);
         // this.submitting = false
         console.log("response", response.data);
         this.links = response.data.data
-        setItem('profile',JSON.stringify(response.data.data))
         return { data: response, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };

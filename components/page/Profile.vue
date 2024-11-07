@@ -386,7 +386,7 @@ console.log('values', values, body)
       if (response.data && response?.data?.data) {
         loading.value = false;
         success.value = true;
-        fetchProfile(response?.data?.data?.id)
+        fetchProfile(response?.data?.data?.data?.id)
         // redirect to dashboard
         // console.log('here', response?.data?.data?.id)
 
@@ -406,6 +406,7 @@ onMounted(() => {
         const storedProfile = getItem("profile");
         if (storedProfile && storedProfile !== undefined) {
         const user  = JSON.parse(storedProfile);
+        console.log(user)
           fetchProfile(user?.id)
         }
       }

@@ -112,12 +112,12 @@
         </FormField>
         <FormField v-slot="{ componentField }" :validate-on-blur="!isFieldDirty" name="whatsapp_number">
           <FormItem class="space-y-1">
-            <FormLabel class="text-[#3F434A] text-base font-medium">Whatsapp Number</FormLabel>
+            <FormLabel class="text-[#3F434A] text-base font-medium">WhatsApp Number</FormLabel>
             <FormControl>
               <div class="relative w-full  items-center">
                 <Input type="tel"
                   class="pl-10 h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                  placeholder="Enter Whatsapp Number" v-bind="componentField" />
+                  placeholder="Enter WhatsApp Number" v-bind="componentField" />
                 <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
 
                   <img src="~/assets/images/icons/chat.svg" class="size-5 text-muted-foreground" />
@@ -220,10 +220,9 @@ const formSchema = toTypedSchema(
     last_name: z.string({ required_error: "Last Name is required."}),
     email: z.string({ required_error: "Email is required."})
       .email({ message: "Must be a valid email" }),
-    whatsapp_number: z.string({required_error: "Whatsapp number is required"})
-      .min(10, { message: "Whatsapp Number must be at least 10 characters" }) // Minimum length of 10
+    whatsapp_number: z.string({required_error: "WhatsApp Number is required"}).min(10, { message: "Whatsapp Number must be at least 10 characters" }) // Minimum length of 10
       .max(15, { message: "Whatsapp Number cannot exceed 15 characters" }) // Optional: add a max length validation
-      .regex(/^\d+$/, { message: "Whatsapp Number must be digits only" }), // Ensure only digits
+    , // Ensure only digits
        
     password: z.string({ message: "Password is required" }),
       // This can stay to ensure there's some input
