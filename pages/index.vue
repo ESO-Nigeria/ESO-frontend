@@ -139,18 +139,16 @@
     </section>
 
     <section class="my-8">
-      <div class="px-4 mx-auto space-y-4 relativea sm:px-6 lg:px-8 max-w-7xl">
-        <div>
+      <div class="px-4 mx-auto space-y-4 relative sm:px-6 lg:px-8 max-w-7xl">
+
           <p class="text-primary text-xl">Upcoming Events</p>
-        </div>
-        <div class="grid grid-cols-2 gap-x-4">
+      
+        <div class="grid grid-cols-2 gap-4">
           <LayoutsEventsCard v-for="(item, index) in Array.from({length: 4})" :key="index"  />
         </div>
       </div>
     </section>
     </NuxtLayout>
-    
-    
   </div>
 </template>
 

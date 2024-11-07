@@ -183,7 +183,9 @@ const onSubmit = form.handleSubmit(async(values) => {
   console.log('values', values)
   const socialLinksArray = convertToSocialLinks(values);
 console.log(socialLinksArray);
- 
+ const body = [{
+  
+ }]
 try {
     loading.value = true;
   const response =  await profileStore.socialLinks(socialLinksArray);

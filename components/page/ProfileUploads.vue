@@ -109,8 +109,8 @@
             <p class="text-sm text-[#3F434A] font-medium">Upload CAC Certificate</p>
             <div class="mt-4">
               <!-- Dropzone 1 -->
-    <div v-bind="getRootProps2()" class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
-      <input v-bind="getInputProps2()" />
+    <div v-bind="getRootProps1()" class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
+      <input v-bind="getInputProps1()" />
       <img src="~/assets/images/icons/upload.svg" />
       <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
       <p class="text-xs">.pdf, .jpeg, .png (max.560kb)</p>

@@ -26,7 +26,27 @@ export const apiGetRequest = async (url: string): Promise<ApiResponse> => {
   }
 };
 
-export const apiPostRequest = async (url: string, body: object): Promise<ApiResponse> => {
+
+  export const apiPostRequest = async (url: string, body: object): Promise<ApiResponse> => {
+  const config = useRuntimeConfig();
+  const baseURL = config.public.apiUrl;
+  const { getToken } = storeToRefs(useAuthStore());
+  const token = getToken.value;
+  
+  try {
+    const response = await axios.post(baseURL + url, body, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token, // Add your authorization header here
+      },
+    });
+    return { data: response, error: null };
+  } catch (error: any) {
+    return { data: null, error: error?.response?.data ?? 'Unknown error' };
+  }
+};
+
+export const apiPostFormRequest = async (url: string, body: object): Promise<ApiResponse> => {
   const config = useRuntimeConfig();
   const baseURL = config.public.apiUrl;
   const { getToken } = storeToRefs(useAuthStore());
@@ -39,7 +59,6 @@ export const apiPostRequest = async (url: string, body: object): Promise<ApiResp
         'Authorization': 'token ' + token, // Add your authorization header here
       },
     });
-
     return { data: response, error: null };
   } catch (error: any) {
     return { data: null, error: error?.response?.data ?? 'Unknown error' };
