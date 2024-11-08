@@ -26,8 +26,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         'auth-reset-successful',
         'general-events',
         'general-programmes',
-        'general-event_id-details',
-        'general-program_id-details'
+        'general-event-event_id-details',
+        'general-programms-program_id-details',
+        'general-esos',
+        'general-eso-eso_id-details'
        
     ];
     

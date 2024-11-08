@@ -1,6 +1,6 @@
 <template>
   <div class="mb-4">
-    <Card   class=" rounded-lg px-0 py-0 overflow-hidden">
+    <Card   class="shadow-lg rounded-lg px-0 py-0 overflow-hidden">
       <CardHeader class="p-0 relative">
         <img
           src="~/assets/images/programmes.jpg"
@@ -44,6 +44,7 @@
 
 <script setup>
 import { Building2, CalendarDays } from 'lucide-vue-next';
+import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
 
 
 </script>

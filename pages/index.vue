@@ -140,9 +140,7 @@
 
     <section class="my-8">
       <div class="px-4 mx-auto space-y-4 relative sm:px-6 lg:px-8 max-w-7xl">
-
           <p class="text-primary text-xl">Upcoming Events</p>
-      
         <div class="grid grid-cols-2 gap-4">
           <LayoutsEventsCard :event="item" v-for="(item, index) in events?.results" :key="index"  />
         </div>
@@ -166,6 +164,7 @@ const loading = computed(() => {
 })
 onMounted(() => {
   profileStore.getEvents()
+  
 })
 </script>
 

@@ -1,7 +1,10 @@
 <template>
   <div>
     <NuxtLayout name="general" title="Enterprise Support Organisations (ESOs)" >
-          <div class="container py-4">
+      <div v-if="loading" class="flex h-screen justify-center items-center">
+        <LayoutsLoader />
+      </div>
+          <div v-else class="container py-4">
             <LayoutsBreadcrumb
             :breadcrumbs="[{ text: 'ESOs' }]"></LayoutsBreadcrumb>
             <div class="py-6 h-full">
@@ -158,47 +161,44 @@
                     </DropdownMenu>
                   </div>
 
-                  <div class="grid grid-cols-3 gap-7">
-                    <Card v-for="(item, index) in Array.from({length: 10})" :key="index"  class=" rounded-lg px-0 py-0 overflow-hidden">
+                  <div class="grid grid-cols-3 gap-6">
+                    <Card v-for="(item, index) in ESOs?.results" :key="index"  class="shadow-lg rounded-lg sm:px-3 py-0 overflow-hidden">
+                      <!-- <NuxtLink :to="`/general/eso/${item?.id}/details`"> -->
                       <CardHeader class="p-0 relative">
+                        <!-- assets\images\placeholderImg.png C:\Users\HomePC\Documents\work\eso\assets\images\placeholderImg.png-->
                         <img
-                          src="~/assets/images/esobanner.png"
-                          alt="Program Image"
-                          class="w-full h-[300px] object-cover rounded-lg"
+                           :src="item?.logo || placeholderImg"
+                          alt="ESOs Logo"
+                          class="w-full h-[115px] object-cover rounded-lg"
                         />  
+                        <!-- <NuxtImg
+                            :src="item?.logo || '~/assets/images/placeholderImg.png'" 
+                            alt="ESOs Logo" 
+                            class="w-full h-[115px] object-cover rounded-lg" 
+                          /> -->
                       </CardHeader>
                       <CardContent class="p-4 space-y-2">
-                        <div class=" flex divide-x-2">
-                          <div class=" text-xs text-[#FE7102] font-normal px-1 py-1">
-                            Free
+                        <div class=" flex ">
+                         
+                          <div class="text-secondary-body-contrast inline-flex items-center text-nowrap text-xs px-1 py-1">
+                            <MapPin class="size-4 mr-1" />  {{ item?.address }}
                           </div>
-                          <div class="text-secondary-body-contrast text-nowrap text-xs px-1 py-1">
-                            Startup (Post-revenue)
-                          </div>
-                          <span class="text-secondary-body-contrast  text-xs px-1 py-1">
-                            3 months
-                          </span>
+                          
                         </div>
-                        <NuxtLink to="/general/eso/1/details" class="text-base font-semibold text-primary">Access Bank Corners Business Accelerator</NuxtLink>
-                        <div class="text-sm text-[#475467] flex items-center space-x-2">
-                          <!-- <span class="inline-block w-4 h-4 bg-blue-500 rounded-full"></span> -->
-                          <Building2 class="size-4"/>
-                          <span>Access Bank</span>
+                        <div class=" space-y-2 mt-2">
+                          <p class="text-primary text-sm font-semibold">Organization Type</p>
+                          <p class="text-secondary-body-500">
+                            {{ item?.user?.organization_type }}
+                          </p>
+                          
                         </div>
-                        <div class="flex space-x-2 mt-2">
-                          <span
-                            v-for="tag in tags"
-                            :key="tag"
-                            class="bg-[#ECFDF3] text-secondary-body-500 text-xs px-2 py-1 rounded-md"
-                          >
-                            {{ tag }}
-                          </span>
-                        </div>
-                        <div class="text-sm flex gap-x-2 items-center text-secondary-body-500 mt-2">
-                          <CalendarDays class="size-4" />
-                          <span class="font-normal text-nowrap">Application Deadline: 2 Nov 2024</span>
+                        <div class="space-y-2 mt-2">
+                          <p class="text-primary text-sm font-semibold">Brief Description</p>
+                          <p class="text-secondary-body-500 truncate">{{item?.description}}</p>
+                          
                         </div>
                       </CardContent>
+                    <!-- </NuxtLink> -->
                     </Card>
                   </div>
                 </div>
@@ -210,7 +210,7 @@
 </template>
 
 <script setup>
-import { Building2, CalendarDays, FilterIcon, Search } from 'lucide-vue-next';
+import { Building2, CalendarDays, FilterIcon, MapPin, Search } from 'lucide-vue-next';
 import Card from '~/components/layouts/Card.vue';
 import CardContent from '~/components/ui/card/CardContent.vue';
 import CardFooter from '~/components/ui/card/CardFooter.vue';
@@ -222,6 +222,9 @@ import DropdownMenuRadioGroup from '~/components/ui/dropdown-menu/DropdownMenuRa
 import DropdownMenuRadioItem from '~/components/ui/dropdown-menu/DropdownMenuRadioItem.vue';
 import DropdownMenuTrigger from '~/components/ui/dropdown-menu/DropdownMenuTrigger.vue';
 import FormLabel from '~/components/ui/form/FormLabel.vue';
+import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
+
+import { useProfileStore } from '~/store/profile';
 const sectors = [
   { id: 1, name: 'Agriculture' },
   { id: 2, name: 'Healthcare ' },
@@ -266,6 +269,17 @@ const financial_support = [
   { id: 2, name: 'Equity' },
   { id: 3, name: 'Debt' },
 ]
+const profileStore = useProfileStore()
+
+const ESOs = computed(() => {
+  return profileStore.ESOs
+})
+const loading = computed(() => {
+  return profileStore.loading
+})
+onMounted(() => {
+  profileStore.getESOs()
+})
 </script>
 
 <style lang="scss" scoped>
