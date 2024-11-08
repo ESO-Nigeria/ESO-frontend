@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mb-4">
     <Card   class=" rounded-lg px-0 py-0 overflow-hidden">
       <CardHeader class="p-0 relative">
         <img

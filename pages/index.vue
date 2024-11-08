@@ -38,7 +38,7 @@
       <div class="container  mx-auto relativea max-w-7xl">
         <div class="shadow rounded-[25px]  px-4  sm:px-6 lg:px-8 ">
           <div>
-            <p class="text-[#257F4A]">
+            <p class="text-2xl text-[#257F4A]">
               About Us
             </p>
             <p class="text-base text-[#475467]">
@@ -132,7 +132,7 @@
         <div>
           <p class="text-primary text-xl">Top Trending Programmes</p>
         </div>
-        <div class="grid grid-cols-4 gap-x-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4">
           <LayoutsProgrammeCard v-for="(item, index) in Array.from({length: 4})" :key="index"  />
         </div>
       </div>
