@@ -115,17 +115,14 @@ function goToPreviousStep() {
 }
 
 function updateProgrammeState() {
-  if(currentStep.value === 0){
-    programmeStore.STORE_PROGRAMME(formFields.value)
-  }
-  if(currentStep.value === 1){
-    programmeStore.STORE_PROGRAMME_DETAILS({
-      ...formFieldsDetails.value,
-    start_date: formatDate(date.value[0]),
-    end_date: formatDate(date.value[1]),
-    application_deadline: formatDate(deadline.value)
-    })
-  }
+  programmeStore.STORE_PROGRAMME(formFields.value)
+
+  programmeStore.STORE_PROGRAMME_DETAILS({
+    ...formFieldsDetails.value,
+    start_date: date.value ? formatDate(date.value[0]) : '',
+    end_date: date.value ? formatDate(date.value[1]) : '',
+    application_deadline: deadline.value ? formatDate(deadline.value) : ''
+  })
 }
 
 
@@ -150,24 +147,19 @@ async function handleFormSubmit() {
     formData.append('target_audience', target_audience)
   }
 
-
-  // formData.append('sectors', JSON.stringify(programme.value?.sectors));
-  // formData.append('financial_supports', JSON.stringify(programme.value?.financial_supports));
-  // formData.append('non_financial_supports', JSON.stringify(programme.value?.non_financial_supports));
-  // formData.append('target_audience', JSON.stringify(programme.value?.target_audience));
   // formData.append('program_image', programmeStore.getProgrammeImage); 
-
 
   try {
     const programmeResponse = await programmeStore.CREATE_PROGRAMME(formData);
-    const programmeData = programmeResponse?.data?.data?.data;
-
+    const programmeData = programmeResponse?.data?.data;
+ 
     if (programmeData?.id) {
       const programme_id = programmeData.id;
-      const detailsResponse = await programmeStore.CREATE_PROGRAMME_DETAILS({
+      const data = {
         ...programme_details.value,
         program: programme_id
-      });
+      }
+      const detailsResponse = await programmeStore.CREATE_PROGRAMME_DETAILS(data);
       
       const detailsData = detailsResponse?.data?.data;
       if (detailsData) {
@@ -436,7 +428,7 @@ async function handleFormSubmit() {
                         </FormItem>
                       </FormField>
                     </div>
-                  
+                 
                     <MultiSelect
                       v-model="formFieldsDetails.location"
                       :options="locations"
