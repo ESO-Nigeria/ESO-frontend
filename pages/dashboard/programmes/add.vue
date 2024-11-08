@@ -1,4 +1,3 @@
-
 <script setup>
 import { Check, Edit, LoaderCircle } from 'lucide-vue-next';
 import { ref } from 'vue';
@@ -116,13 +115,17 @@ function goToPreviousStep() {
 }
 
 function updateProgrammeState() {
-  programmeStore.STORE_PROGRAMME(formFields.value)
-  programmeStore.STORE_PROGRAMME_DETAILS({
-    ...formFieldsDetails.value,
+  if(currentStep.value === 0){
+    programmeStore.STORE_PROGRAMME(formFields.value)
+  }
+  if(currentStep.value === 1){
+    programmeStore.STORE_PROGRAMME_DETAILS({
+      ...formFieldsDetails.value,
     start_date: formatDate(date.value[0]),
     end_date: formatDate(date.value[1]),
     application_deadline: formatDate(deadline.value)
-  })
+    })
+  }
 }
 
 
@@ -133,10 +136,25 @@ async function handleFormSubmit() {
   formData.append('title', programme.value?.title);
   formData.append('description', programme.value?.description);
   formData.append('brief_details', programme.value?.brief_details);
-  formData.append('sectors', JSON.stringify(programme.value?.sectors));
-  formData.append('financial_supports', JSON.stringify(programme.value?.financial_supports));
-  formData.append('non_financial_supports', JSON.stringify(programme.value?.non_financial_supports));
-  formData.append('target_audience', JSON.stringify(programme.value?.target_audience));
+
+  for(let sector of programme.value?.sectors){
+    formData.append('sectors', sector)
+  }
+  for(let financial_support of programme.value?.financial_supports){
+    formData.append('financial_supports', financial_support)
+  }
+  for(let non_financial_support of programme.value?.non_financial_supports){
+    formData.append('non_financial_supports', non_financial_support)
+  }
+  for(let target_audience of programme.value?.target_audience){
+    formData.append('target_audience', target_audience)
+  }
+
+
+  // formData.append('sectors', JSON.stringify(programme.value?.sectors));
+  // formData.append('financial_supports', JSON.stringify(programme.value?.financial_supports));
+  // formData.append('non_financial_supports', JSON.stringify(programme.value?.non_financial_supports));
+  // formData.append('target_audience', JSON.stringify(programme.value?.target_audience));
   // formData.append('program_image', programmeStore.getProgrammeImage); 
 
 
@@ -557,7 +575,7 @@ async function handleFormSubmit() {
 
                       <div class="space-y-2">
                         <p class="text-sm text-primary font-bold">Location*</p>
-                        <p class="text-sm text-[#3F434A] font-normal">{{ programme_details.location.join(', ') }}</p>
+                        <p class="text-sm text-[#3F434A] font-normal">{{ programme_details.locati }}</p>
                       </div>
                       <div class="grid grid-cols-2">
                         <div class="space-y-2">
