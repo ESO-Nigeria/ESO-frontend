@@ -132,7 +132,7 @@
         <div>
           <p class="text-primary text-xl">Top Trending Programmes</p>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4">
+        <div class="grid grid-cols-4 gap-x-4">
           <LayoutsProgrammeCard v-for="(item, index) in Array.from({length: 4})" :key="index"  />
         </div>
       </div>
@@ -148,6 +148,48 @@
         </div>
       </div>
     </section>
+
+    <section class="">
+      <div class="container  mx-auto  relative max-w-7xl">
+        <div class="bg-customGreen  rounded-[25px]  px-4  sm:px-6 lg:px-8 ">
+                  
+        
+          <div class="container pt-10 pb-10 mx-auto px-4">
+            <!-- First Section: Heading -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
+              <div>
+                <h3 class="text-3xl leading-snug my-3 text-[#fff]">
+                Ready to level up your<br /> programmes 
+              </h3>
+               <p class="text-base text-[#fff]">
+                    Support small business  with tailored < br>programme to increase productivity
+                </p>
+              </div>
+              <!-- Second Section: Buttons -->
+              <div class="lg:flex  lg:items-start lg:justify-start lg:space-x-5">
+                <NuxtLink to="/auth/login">
+                  <Button variant="outline" size="lg" class="text-base font-medium">
+                    Great Started Now
+                  </Button>
+                </NuxtLink>
+
+                <NuxtLink to="/about">
+                  <Button size="lg">
+                    Learn More
+                  </Button>
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
+         
+        
+        </div>
+       
+      </div>
+      
+    </section>
+
+
     </NuxtLayout>
   </div>
 </template>
