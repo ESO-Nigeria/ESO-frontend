@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="relative">
-                  <!-- <img class=" w-full  rounded-tl-[142px] " src="~/assets/images/home_banner.png" alt="" /> -->
+                  <img class=" w-full  rounded-tl-[142px] " src="~/assets/images/eso-hero-card.png" alt="" />
               </div>
               
             </div>
@@ -37,19 +37,19 @@
     <section>
       <div class="container  mx-auto relativea max-w-7xl">
         <div class="shadow rounded-[25px]  px-4  sm:px-6 lg:px-8 ">
-          <div>
-            <p class="text-[#257F4A]">
+          <div class="pt-8">
+            <p class="text-2xl text-[#257F4A] mb-3">
               About Us
             </p>
             <p class="text-base text-[#475467]">
               This platform is a community resource developed by the ESO Collaborative which brings together government, the Nigeria Hubs Network, and other enterprise support organisations. It provides entrepreneurs, startups, businesses, freelancers etc. with extensive details of programmes provided by Enterprise Support Organisations (ESOs) in Nigeria.
             </p>
           </div>
-          <h3 class="text-3xl leading-snug my-3">
+          <h3 class="text-3xl leading-snug my-3 pt-5">
             Opportunities that grow  <br /> with your journey
           </h3>
           <div class="flex flex-wrap">
-            <div class="xl:w-1/3 lg:w-1/2 md:w-full py-6 ">
+            <div class="xl:w-1/3 lg:w-1/2 md:w-full py-6 mt-1">
               <span class=" inline-flex items-center">
                
                   <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -70,7 +70,7 @@
               <p class="leading-relaxed text-base text-[#475467] mb-4">All Enterprise support organizations (ESOs)and their programmes on this platform have been carefully verified</p>
               
             </div>
-            <div class="xl:w-1/3 lg:w-1/2 md:w-full py-6 ">
+            <div class="xl:w-1/3 lg:w-1/2 md:w-full py-6 mt-1">
               <span class=" inline-flex items-center">
                
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +93,7 @@
               <p class="leading-relaxed text-base text-[#475467] mb-4">We provide extensive information about each (ESOs) and its programmes, for you to make informed decision.</p>
               
             </div>
-            <div class="xl:w-1/3 lg:w-1/2 md:w-full py-6 ">
+            <div class="xl:w-1/3 lg:w-1/2 md:w-full py-6 mt-1">
               <span class=" inline-flex items-center">
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_195_18704)">
@@ -132,7 +132,7 @@
         <div>
           <p class="text-primary text-xl">Top Trending Programmes</p>
         </div>
-        <div class="grid grid-cols-4 gap-x-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4">
           <LayoutsProgrammeCard v-for="(item, index) in Array.from({length: 4})" :key="index"  />
         </div>
       </div>
@@ -143,17 +143,72 @@
 
           <p class="text-primary text-xl">Upcoming Events</p>
       
-        <div class="grid grid-cols-2 gap-4">
-          <LayoutsEventsCard v-for="(item, index) in Array.from({length: 4})" :key="index"  />
+        <div class="grid lg:grid-cols-2 sm:grid-cols-1  gap-4">
+          <LayoutsEventsCard :event="item" v-for="(item, index) in events?.results" :key="index"  />
         </div>
       </div>
     </section>
+
+    <section class="">
+      <div class="container  mx-auto  relative max-w-7xl">
+        <div class="bg-customGreen  rounded-[25px]  px-4  sm:px-6 lg:px-8 ">
+                  
+        
+          <div class="container pt-10 pb-10 mx-auto px-4">
+            <!-- First Section: Heading -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
+              <div>
+                <h3 class="text-3xl leading-snug my-3 text-[#fff]">
+                Ready to level up your<br /> programmes 
+              </h3>
+               <p class="text-base text-[#fff]">
+                    Support small business  with tailored < br>programme to increase productivity
+                </p>
+              </div>
+              <!-- Second Section: Buttons -->
+              <div class="lg:flex  lg:items-start lg:justify-start lg:space-x-5">
+                <NuxtLink to="/auth/login">
+                  <Button variant="variant" size="lg" class="bg-customLightGreen mb-2 text-[#fff] text-base font-normal">
+                    Great Started Now
+                  </Button>
+                </NuxtLink>
+
+                <NuxtLink to="/auth/register">
+                  <Button class="border border-blue-50 " size="lg">
+                    Learn More
+                  </Button>
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
+         
+        
+        </div>
+       
+      </div>
+      
+    </section>
+
+
     </NuxtLayout>
   </div>
 </template>
 
 <script setup>
+import { useProfileStore } from '~/store/profile';
 
+
+const profileStore = useProfileStore()
+
+const events = computed(() => {
+  return profileStore.events
+})
+const loading = computed(() => {
+  return profileStore.loading
+})
+onMounted(() => {
+  profileStore.getEvents()
+})
 </script>
 
 <style lang="scss" scoped>

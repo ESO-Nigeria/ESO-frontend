@@ -18,7 +18,7 @@
               <LayoutsSubTitleHeader
                :title="`Welcome aboard🚀, ${user?.first_name ? user?.first_name : ''}`"
                />
-               <Progress :model-value="15 " class="bg-[#B1EDCA]" :indicator_class="'bg-[#257F4A]'"/>
+               <!-- <Progress :model-value="15 " class="bg-[#B1EDCA]" :indicator_class="'bg-[#257F4A]'"/> -->
             </div>
             <div>
               <p class="text-secondary-body-regular-contrast text-base">
@@ -41,7 +41,7 @@
                   <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
                     <span class="text-white">2</span>
                    </span>                  Certificates & Licences  </TabsTrigger>
-                <TabsTrigger inner_class="flex items-center justify-center" value="dispensed2" class="py-6 data-[state=active]:bg-primary-200 data-[state=active]:text-primary-700"> 
+                <TabsTrigger :disabled="!profile" inner_class="flex items-center justify-center" value="dispensed2" class="py-6 data-[state=active]:bg-primary-200 data-[state=active]:text-primary-700"> 
                   <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
                     <span class="text-white">3</span>
                    </span>

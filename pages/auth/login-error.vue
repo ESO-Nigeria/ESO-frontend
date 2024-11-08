@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="">
     <NuxtLayout name="auth">
       <div class="">
-        <div class="flex justify-center mx-auto">
+        <div class="flex justify-center ">
             <img class="w-auto " src="~/assets/images/icons/logo.svg" alt="logo">
         </div>
     </div>
-    <form class="flex gap-4 flex-col mt-8">
+    <form class="flex gap-4 pr-4 pl-4 sm:pr-6 sm:pl-6 gap-4 flex-col mt-8">
       <div class="flex flex-col gap-2">
         <h6 class="text-secondary-header3 text-3xl font-bold leading-[48px]">Multiple Login Attempts Detected</h6>
         <p class="text-secondary-body-300 font-medium text-lg">Hi,</p>

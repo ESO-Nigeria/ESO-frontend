@@ -17,7 +17,7 @@
               <LayoutsSubTitleHeader
               :title="`Welcome aboard🚀, ${user?.first_name ? user?.first_name : ''}`"
                />
-               <Progress :model-value="15 " class="bg-[#B1EDCA]" :indicator_class="'bg-[#257F4A]'"/>
+               <!-- <Progress :model-value="15 " class="bg-[#B1EDCA]" :indicator_class="'bg-[#257F4A]'"/> -->
             </div>
             <div>
               <p class="text-secondary-body-regular-contrast text-base">

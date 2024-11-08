@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4 flex flex-col gap-6">
 
-    <Alert v-show="success" class="bg-[#E2FEF0] border-0 flex items-center">
+    <!-- <Alert v-show="success" class="bg-[#E2FEF0] border-0 flex items-center">
       <CheckIcon class="text-[#05944F] size-5" />
       <div class="">
         <AlertTitle class="text-[#232E3F]">Details Submitted Successfully!</AlertTitle>
@@ -10,14 +10,26 @@
         </AlertDescription>
       </div>
      
+    </Alert> -->
+  
+    <Alert v-show="profile" class="bg-blue-100 border-0 flex items-center">
+      <CheckIcon class="text-[#05944F] size-5" />
+      <div class="">
+        <AlertTitle class="text-[#232E3F]">Details Awaiting Verification!</AlertTitle>
+        <AlertDescription class="text-[#5C6F7F]">
+          Your organization details have been submitted for verification.
+        </AlertDescription>
+      </div>
+     
     </Alert>
 
     <p class="text-base text-secondary-body-500">Enter details about your organization for verification.</p>
     <div>
       <div class="flex gap-14 items-start ">
-        <div>
+        <div v-bind="getRootProps1()" class="cursor-pointer">
           <Avatar size="xl">
-            <AvatarImage src="https://github.com/radix-vue.png" alt="@radix-vue" />
+            <AvatarImage :src="image_preview_link || profile?.logo" alt="@radix-vue" />
+            <input v-bind="getInputProps1()" :disabled="profile?.logo" />
             <AvatarFallback class="flex items-center justify-center flex-col">
               <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_17_26405)">
@@ -29,7 +41,7 @@
                 </clipPath>
                 </defs>
                 </svg>
-                <span class="text-sm text-secondary-body-regular ">Upload Logo</span>
+                <span class="text-sm text-secondary-body-regular ">Click to Upload Logo</span>
               </AvatarFallback>
           </Avatar>
         </div>
@@ -52,7 +64,7 @@
                 <FormControl>
                   <Select disabled v-bind="componentField">
                     <SelectTrigger
-                      class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
+                      class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                       <SelectValue placeholder="Select an organization type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -88,8 +100,9 @@
               >
               <FormControl>
                 <Textarea
+                :disabled="profile && profile?.description"
                 placeholder="Enter brief description about your organization"
-                class="border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
+                class="border-0 ring-[#D0D5DD]  disabled:bg-[#EAECF0]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                 v-bind="componentField"
               />
               </FormControl>
@@ -105,8 +118,9 @@
             >
             <FormControl>
               <Textarea
+              :disabled="profile && profile?.services"
               placeholder="Enter Services"
-              class="border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
+              class="border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5]  disabled:bg-[#EAECF0] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
               v-bind="componentField"
             />
             </FormControl>
@@ -118,8 +132,8 @@
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">First Name</FormLabel>
                 <FormControl>
-                  <Input type="text"
-                    class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
+                  <Input disabled type="text"
+                    class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                     placeholder="Enter First Name" v-bind="componentField" />
                 </FormControl>
               </FormItem>
@@ -128,8 +142,8 @@
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">Last Name</FormLabel>
                 <FormControl>
-                  <Input type="text"
-                    class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
+                  <Input disabled type="text"
+                    class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                     placeholder="Enter Last Name" v-bind="componentField" />
                 </FormControl>
               </FormItem>
@@ -158,7 +172,7 @@
         <div class="grid grid-cols-2 gap-4">
           <FormField :modelValue="user?.whatsapp_number" v-slot="{ componentField }" name="whatsapp_number">
             <FormItem class="space-y-1">
-              <FormLabel class="text-[#3F434A] text-base font-medium">Whatsapp Number</FormLabel>
+              <FormLabel class="text-[#3F434A] text-base font-medium">WhatsApp Number</FormLabel>
               <FormControl>
                 <div class="relative w-full  items-center">
                   <Input type="tel"
@@ -179,6 +193,7 @@
               <FormControl>
                 <div class="relative w-full  items-center">
                   <Input type="tel"
+                  :disabled="profile && profile?.company_phone"
                     class="pl-10 h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                     placeholder="Enter Whatsapp Number" v-bind="componentField" />
                   <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -196,7 +211,7 @@
             <FormControl class=" relative w-full  items-center">
               <div class="relative w-full  items-center">
                 <Input type="text"
-               
+                  :disabled="profile && profile?.address"
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="Organization Address" v-bind="componentField" />
               </div>
@@ -210,9 +225,9 @@
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">Country</FormLabel>
               <FormControl>
-                <Select v-model="selectedCountry"  @update:modelValue="onCountryChange" v-bind="componentField">
+                <Select :disabled="profile?.country" v-model="selectedCountry"  @update:modelValue="onCountryChange" v-bind="componentField">
                   <SelectTrigger
-                    class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
+                    class="h-11 border-0 ring-[#D0D5DD]  disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                     <SelectValue placeholder="Select a country" />
                   </SelectTrigger>
                   <SelectContent>
@@ -228,9 +243,9 @@
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">State</FormLabel>
               <FormControl>
-                <Select v-bind="componentField" :disabled="!selectedCountry" @update:modelValue="onStateChange" v-model="selectedState" >
+                <Select  v-bind="componentField" :disabled="!selectedCountry || profile?.state" @update:modelValue="onStateChange" v-model="selectedState" >
                   <SelectTrigger
-                    class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
+                    class="h-11 border-0 ring-[#D0D5DD]  disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                     <SelectValue placeholder="Select a state" />
                   </SelectTrigger>
                   <SelectContent>
@@ -248,9 +263,9 @@
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">City</FormLabel>
               <FormControl>
-                <Select v-bind="componentField" :disabled="!selectedState" v-model="selectedCity">
+                <Select v-bind="componentField" :disabled="!selectedState || profile?.city" v-model="selectedCity">
                   <SelectTrigger
-                    class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
+                    class="h-11 border-0 ring-[#D0D5DD]  disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                     <SelectValue placeholder="Select a city" />
                   </SelectTrigger>
                   <SelectContent>
@@ -318,6 +333,7 @@ import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
 import nigeria from '~/composables/nigeria.json';
 import { isProxy, toRaw } from 'vue';
+import { useDropzone } from "vue3-dropzone"; // Ensure to use the dropzone library compatible with Vue
 
 const all_countries = computed(()=>{
   return nigeria
@@ -328,6 +344,10 @@ const selectedState = ref(null);
 const selectedCity = ref(null);
 const profileStore = useProfileStore()
 const success = ref(false)
+const logo = ref()
+const logo_errors = ref({})
+const image_preview_link = ref()
+
 const { isFieldDirty, handleSubmit, values } = useForm({
 });
 const states = ref([])
@@ -336,6 +356,30 @@ const cities = ref([])
 const profile = computed(() => {
   return profileStore.profile
 })
+// Dropzone 1
+function onDrop1(acceptedFiles, rejectReasons) {
+  logo.value = acceptedFiles[0]
+  if (rejectReasons[0]) {
+    logo_errors.value = rejectReasons[0].errors[0];
+  } else {
+    // Create a FileReader to read the image file
+    const file = acceptedFiles[0];
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+      image_preview_link.value = event.target.result; // Save the data URL to the ref
+    };
+
+    // Read the file as a data URL
+    reader.readAsDataURL(file);
+  }
+}
+const deleteLogo = () => {
+  logo.value = {}
+  logo_errors.value = {}
+}
+
+const { getRootProps: getRootProps1, getInputProps: getInputProps1 } = useDropzone({ onDrop: onDrop1, maxSize: 560000, accept: ".pdf, .jpeg, .png", maxFiles: 1});
 
 // Methods to handle changes
 const onCountryChange = (newValue) => {
@@ -367,26 +411,41 @@ watch(
 );
 
 const onSubmit = handleSubmit(async(values) => {
-      const body =    {
-    "country": values.country,
-    "state": values.state,
-    "city": values.city,
-    "address": values?.organization_address,
-    "company_email": values?.email,
-    "company_phone": values?.phone_number,
-    "company_website": "",
-    "description": values?.description,
-    "services": values?.services
-}
-console.log('values', values, body)
+//       const body =    {
+//     "country": values.country,
+//     "state": values.state,
+//     "city": values.city,
+//     "address": values?.organization_address,
+//     "company_email": values?.email,
+//     "company_phone": values?.phone_number,
+//     "company_website": "",
+//     "description": values?.description,
+//     "services": values?.services,
+//     "logo": logo.value
+// }
+const formData = new FormData();
+
+// Append each key-value pair to FormData
+formData.append("country", values.country);
+formData.append("state", values.state);
+formData.append("city", values.city);
+formData.append("address", values?.organization_address);
+formData.append("company_email", values?.email);
+formData.append("company_phone", values?.phone_number);
+formData.append("company_website", ""); // Empty string as specified
+formData.append("description", values?.description);
+formData.append("logo", logo.value);
+formData.append("services", values.services);
+
+console.log('values', values, formData)
       try {
         loading.value = true;
-      const response =  await profileStore.createProfile(body);
+      const response =  await profileStore.createProfile(formData);
       console.log('response', response.data?.data)
       if (response.data && response?.data?.data) {
         loading.value = false;
         success.value = true;
-        fetchProfile(response?.data?.data?.data?.id)
+        fetchProfile(response?.data?.data?.id)
         // redirect to dashboard
         // console.log('here', response?.data?.data?.id)
 
@@ -410,6 +469,7 @@ onMounted(() => {
           fetchProfile(user?.id)
         }
       }
+      
 })
 </script>
 
