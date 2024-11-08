@@ -22,12 +22,11 @@ export interface ProgrammeDetails {
     start_date: string;
     end_date: string;
     application_deadline: string;
-    city: string;
-    country: string;
     program_mode: 'ONLINE' | 'INPERSON' | 'HYBRID';
     registration_required: boolean;
     registration_link: string;
     website_link: string;
+    location: string[];
     application_status?: ApplicationStatus;
     program: number | string;
 }
