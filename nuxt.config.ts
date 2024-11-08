@@ -58,6 +58,9 @@ export default defineNuxtConfig({
   'shadcn-nuxt', 
   'dayjs-nuxt'
   ],
+  dayjs:{
+    plugins: ['utc', 'localizedFormat'],
+   },
   shadcn: {
     /**
      * Prefix for all the imported component

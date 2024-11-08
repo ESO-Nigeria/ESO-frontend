@@ -10,6 +10,16 @@
       </div>
      
     </Alert>
+    <Alert v-show="certificates?.results?.length > 0" class="bg-blue-100 border-0 flex items-center">
+      <CheckIcon class="text-[#05944F] size-5" />
+      <div class="">
+        <AlertTitle class="text-[#232E3F]">Details Awaiting Verification!</AlertTitle>
+        <AlertDescription class="text-[#5C6F7F]">
+          Your organization details have been submitted for verification.
+        </AlertDescription>
+      </div>
+     
+    </Alert>
     <p class="text-base text-secondary-body-500">Upload relevant certificates and licenses for verification.</p>
     <!-- <div v-for="doc, index in certificates?.results" :key="index+1">
       <div v-if="doc?.cac_certificate">
@@ -108,9 +118,12 @@
           <div v-else class="mb-4">
             <p class="text-sm text-[#3F434A] font-medium">Upload CAC Certificate</p>
             <div class="mt-4">
+             
               <!-- Dropzone 1 -->
-    <div v-bind="getRootProps1()" class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
-      <input v-bind="getInputProps1()" />
+    <div v-bind="getRootProps1()" 
+    :class="['dropzone', { 'bg-[#EAECF0]': certificates?.results?.[0]?.cac_certificate, 'cursor-not-allowed': certificates?.results?.[0]?.cac_certificate}]" 
+    class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
+      <input  v-bind="getInputProps1()" />
       <img src="~/assets/images/icons/upload.svg" />
       <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
       <p class="text-xs">.pdf, .jpeg, .png (max.560kb)</p>
@@ -146,7 +159,10 @@
             <p class="text-sm text-[#3F434A] font-medium">Upload TIN Certificate</p>
             <div class="mt-4">
               <!-- Dropzone 1 -->
-    <div v-bind="getRootProps2()" class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
+    <div v-bind="getRootProps2()" 
+    :class="['dropzone', { 'bg-[#EAECF0]': certificates?.results?.[0]?.tin_certificate, 'cursor-not-allowed': certificates?.results?.[0]?.tin_certificate}]" 
+
+    class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
       <input v-bind="getInputProps2()" />
       <img src="~/assets/images/icons/upload.svg" />
       <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
@@ -182,7 +198,10 @@
           <div v-else class="mb-4">
             <div class="mt-4">
               <!-- Dropzone 1 -->
-              <div v-bind="getRootProps3()" class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
+              <div v-bind="getRootProps3()" 
+              :class="['dropzone', { 'bg-[#EAECF0]': certificates?.results?.[0]?.other_license, 'cursor-not-allowed': certificates?.results?.[0]?.other_license}]" 
+
+              class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
                 <input v-bind="getInputProps3()" />
                 <img src="~/assets/images/icons/upload.svg" />
                 <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
@@ -255,7 +274,7 @@ import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
-import { LoaderCircle } from "lucide-vue-next";
+import { CheckIcon, LoaderCircle } from "lucide-vue-next";
 
 const { isFieldDirty, handleSubmit, values } = useForm({
 });
