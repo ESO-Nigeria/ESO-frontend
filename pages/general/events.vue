@@ -59,7 +59,7 @@
                     </DropdownMenu>
                   </div>
 
-                  <div class="grid grid-cols-2 gap-7">
+                  <div class="grid lg:grid-cols-2 sm:grid-cols-1  gap-7">
                     
                     <LayoutsEventsCard :event="item" v-for="(item, index) in events?.results" :key="index" />
                   </div>
