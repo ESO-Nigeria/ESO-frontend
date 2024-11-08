@@ -146,8 +146,7 @@ async function handleFormSubmit() {
   for(let target_audience of programme.value?.target_audience){
     formData.append('target_audience', target_audience)
   }
-
-  // formData.append('program_image', programmeStore.getProgrammeImage); 
+  formData.append('program_image', program_image.value); 
 
   try {
     const programmeResponse = await programmeStore.CREATE_PROGRAMME(formData);
@@ -163,6 +162,7 @@ async function handleFormSubmit() {
       
       const detailsData = detailsResponse?.data?.data;
       if (detailsData) {
+        programmeStore.RESET_PROGRAMME()
         navigateTo(`/dashboard/programmes`);
       }
     }
@@ -215,8 +215,7 @@ async function handleFormSubmit() {
 
                 <form action="">
                   <div v-if="currentStep === 0" class="flex gap-4 flex-col mt-10">
-                    <!-- TOOD: Add Programme Image Uploader  -->
-                    <!-- <div>
+                    <div>
                       <p class="text-base text-[#3F434A] font-medium">Upload Programme Image</p>
                       <div v-if="program_image?.name"
                         class="border border-primary text-sm h-[72px] p-4 rounded-md flex items-start ">
@@ -254,7 +253,7 @@ async function handleFormSubmit() {
                           </div>
                         </div>
                       </div>
-                    </div> -->
+                    </div>
              
                     <FormField v-slot="{ componentField }" name="title">
                       <FormItem class="space-y-1">
