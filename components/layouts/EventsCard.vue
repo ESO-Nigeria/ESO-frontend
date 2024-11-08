@@ -4,7 +4,7 @@
     <Card class="grid md:grid-cols-[160px_minmax(0,1fr)] border border-primary rounded-lg p-4 overflow-hidden">
       <CardHeader class="p-0 relative">
         <img
-          :src="event?.event_image ||''"
+          :src="event?.event_image || placeholderImg"
           alt="Program Image"
           class="w-full h-full object-cover "
         />  
@@ -17,7 +17,7 @@
         <div class="text-sm text-[#475467] flex items-center space-x-2">
           <!-- <span class="inline-block w-4 h-4 bg-blue-500 rounded-full"></span> -->
           <Building2 class="size-4"/>
-          <span> {{ event?.user.organization_name|| 'N/A' }}</span>
+          <span> {{ event?.organization_name|| 'N/A' }}</span>
         </div>
         <p class="text-secondary-body-contrast text-sm px-1 py-1 truncate">
          {{ event?.description|| 'N/A' }}
@@ -38,6 +38,7 @@
 <script setup>
 import { Building2, CalendarDays } from 'lucide-vue-next';
 import { useDayjs } from '#dayjs' // not need if you are using auto import
+import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
 
 const dayjs = useDayjs()
 

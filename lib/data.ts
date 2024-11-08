@@ -76,4 +76,10 @@ export const locations = [
     { "id": "Yobe", "label": "Yobe" },
     { "id": "Zamfara", "label": "Zamfara" }
   ]
-  
+
+  export const organization_type = [
+    { id: 'NGO', label: 'NGO'},
+    {},
+    {},
+    {},
+  ]

@@ -26,6 +26,25 @@ export const apiGetRequest = async (url: string): Promise<ApiResponse> => {
   }
 };
 
+export const apiGetUnRestrictedRequest = async (url: string): Promise<ApiResponse> => {
+  const config = useRuntimeConfig();
+  const baseURL = config.public.apiUrl;
+  const { getToken } = storeToRefs(useAuthStore());
+  const token = getToken.value;
+  const storedToken = getItem("token");
+  try {
+    const response = await axios.get(baseURL + url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + JSON.parse(storedToken), // Add your authorization header here
+      },
+    });
+    
+    return { data: response.data, error: null };
+  } catch (error: any) {
+    return { data: null, error: error?.response?.data ?? 'Unknown error' };
+  }
+};
 export const apiPostRequest = async (url: string, body: object, options: { auth: boolean } = { auth: true }): Promise<ApiResponse> => {
   const config = useRuntimeConfig();
   const baseURL = config.public.apiUrl;

@@ -172,9 +172,14 @@
 
 <script setup>
 import { useAuthStore } from '~/store/auth';
+import { useProfileStore } from '~/store/profile';
 
 const authStore = useAuthStore();
+const profileStore = useProfileStore()
 
+const profile = computed(() => {
+  return profileStore.org_profile
+})
 const user = computed(() => {
   return authStore.user;
 })
@@ -183,6 +188,7 @@ const loading = computed(() => {
 })
 onMounted(() => {
   authStore.getUser()
+  profileStore.getProfile()
 })
 
 </script>

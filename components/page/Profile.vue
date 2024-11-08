@@ -400,7 +400,7 @@ const props = defineProps({
 })
 
 const fetchProfile  = async (id) => {
-  await  profileStore.getProfile(id)
+  await  profileStore.getProfile()
 }
 
 watch(
@@ -445,7 +445,7 @@ console.log('values', values, formData)
       if (response.data && response?.data?.data) {
         loading.value = false;
         success.value = true;
-        fetchProfile(response?.data?.data?.id)
+        fetchProfile()
         // redirect to dashboard
         // console.log('here', response?.data?.data?.id)
 
@@ -461,15 +461,15 @@ console.log('values', values, formData)
 });
 
 onMounted(() => {
-  if (process.client) {
-        const storedProfile = getItem("profile");
-        if (storedProfile && storedProfile !== undefined) {
-        const user  = JSON.parse(storedProfile);
-        console.log(user)
-          fetchProfile(user?.id)
-        }
-      }
-      
+  // if (process.client) {
+  //       const storedProfile = getItem("profile");
+  //       if (storedProfile && storedProfile !== undefined) {
+  //       const user  = JSON.parse(storedProfile);
+  //       console.log(user)
+         
+  //       }
+  //     }
+      fetchProfile()
 })
 </script>
 

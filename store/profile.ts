@@ -16,7 +16,9 @@ export const useProfileStore = defineStore("profile", {
     events:[],
     event:{},
     programs:[],
-    program: {}
+    program: {},
+    ESOs: [],
+    singleESO: {},
   }),
   getters: {
     getToken(state) {
@@ -35,9 +37,10 @@ export const useProfileStore = defineStore("profile", {
       this.loadingProfile = true
       try{
         const response = await apiGetRequest(`/api/profiles/`);
-        this.profile = response.data
+        this.profile = response.data?.results[0]
+        this.org_profile = response.data?.results[0]
         this.loadingProfile = false
-        console.log('response.data', response.data, this.profile)
+        console.log('response.data', response.data?.results[0], )
         return { data: response, error: response.error };
       }catch (error){
         return { data: null, error: "Unknown error" }
@@ -103,7 +106,7 @@ export const useProfileStore = defineStore("profile", {
     async getEvents(){
       this.loading = true
       try{
-        const response = await apiGetRequest(`/api/events/`);
+        const response = await apiGetUnRestrictedRequest(`/api/events/` );
         // this.links = response.data
         this.events = response.data
         this.loading = false
@@ -116,7 +119,7 @@ export const useProfileStore = defineStore("profile", {
     async getSingleEvents(id: any){
       this.loading = true
       try{
-        const response = await apiGetRequest(`/api/events/${id}`);
+        const response = await apiGetUnRestrictedRequest(`/api/events/${id}`);
         // this.links = response.data
         this.event = response.data
         this.loading = false
@@ -129,7 +132,7 @@ export const useProfileStore = defineStore("profile", {
     async getProgrammes(){
       this.loading = true
       try{
-        const response = await apiGetRequest(`/api/programs/`);
+        const response = await apiGetUnRestrictedRequest(`/api/programs/`);
         // this.links = response.data
         this.programs = response.data
         this.loading = false
@@ -142,9 +145,35 @@ export const useProfileStore = defineStore("profile", {
     async getSingleProgramme(id: any){
       this.loading = true
       try{
-        const response = await apiGetRequest(`/api/events/${id}`);
+        const response = await apiGetUnRestrictedRequest(`/api/events/${id}`);
         // this.links = response.data
         this.program = response.data
+        this.loading = false
+        console.log('response.data', response.data)
+        return { data: response, error: response.error };
+      }catch (error){
+        return { data: null, error: "Unknown error" }
+      }
+    },
+    async getESOs(){
+      this.loading = true
+      try{
+        const response = await apiGetUnRestrictedRequest(`/api/profiles/`);
+        // this.links = response.data
+        this.ESOs = response.data
+        this.loading = false
+        console.log('response.data', response.data)
+        return { data: response, error: response.error };
+      }catch (error){
+        return { data: null, error: "Unknown error" }
+      }
+    },
+    async getSingleESO(id: any){
+      this.loading = true
+      try{
+        const response = await apiGetUnRestrictedRequest(`/api/events/${id}`);
+        // this.links = response.data
+        this.singleESO = response.data
         this.loading = false
         console.log('response.data', response.data)
         return { data: response, error: response.error };

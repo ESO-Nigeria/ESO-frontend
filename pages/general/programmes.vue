@@ -1,7 +1,10 @@
 <template>
   <div>
     <NuxtLayout name="general" title="ESO Programmes" >
-          <div class="container py-4">
+      <div v-if="loading" class="flex h-screen justify-center items-center">
+        <LayoutsLoader />
+      </div>
+          <div v-else class="container py-4">
             <LayoutsBreadcrumb
             :breadcrumbs="[{ text: 'Programmes' }]"></LayoutsBreadcrumb>
             <div class="py-6 h-full">
@@ -159,10 +162,10 @@
                   </div>
                     
                   <div class="grid grid-cols-3 gap-7">
-                    <Card v-for="(item, index) in Array.from({length: 10})" :key="index"  class=" rounded-lg px-4 py-0 overflow-hidden">
+                    <Card v-for="(item, index) in programs?.results"  :key="index"  class="shadow-lg rounded-lg px-4 py-0 overflow-hidden">
                       <CardHeader class="p-0 relative">
                         <img
-                          src="~/assets/images/programmes.jpg"
+                          :src="item?.program_image || placeholderImg"
                           alt="Program Image"
                           class="w-full h-[300px] object-cover rounded-lg"
                         />  
@@ -170,7 +173,7 @@
                       <CardContent class="p-4 space-y-2">
                         <div class=" flex divide-x-2">
                           <div class=" text-xs text-[#FE7102] font-normal px-1 py-1">
-                            Free
+                            {{item?.payment_mode}}
                           </div>
                           <div class="text-secondary-body-contrast text-nowrap text-xs px-1 py-1">
                             Startup (Post-revenue)
@@ -179,7 +182,7 @@
                             3 months
                           </span>
                         </div>
-                        <NuxtLink to="/general/programms/1/details" class="text-base font-semibold text-primary">Access Bank Corners Business Accelerator</NuxtLink>
+                        <NuxtLink to="/general/programms/1/details" class="text-base font-semibold text-primary">{{item?.title}}</NuxtLink>
                         <div class="text-sm text-[#475467] flex items-center space-x-2">
                           <!-- <span class="inline-block w-4 h-4 bg-blue-500 rounded-full"></span> -->
                           <Building2 class="size-4"/>
@@ -196,7 +199,7 @@
                         </div>
                         <div class="text-sm flex gap-x-2 items-center text-secondary-body-500 mt-2">
                           <CalendarDays class="size-4" />
-                          <span class="font-normal text-nowrap">Application Deadline: 2 Nov 2024</span>
+                          <span class="font-normal text-nowrap">Application Deadline: {{item?.application_deadline}}</span>
                         </div>
                       </CardContent>
                     </Card>
@@ -222,6 +225,8 @@ import DropdownMenuRadioGroup from '~/components/ui/dropdown-menu/DropdownMenuRa
 import DropdownMenuRadioItem from '~/components/ui/dropdown-menu/DropdownMenuRadioItem.vue';
 import DropdownMenuTrigger from '~/components/ui/dropdown-menu/DropdownMenuTrigger.vue';
 import FormLabel from '~/components/ui/form/FormLabel.vue';
+import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
+
 import { useProfileStore } from '~/store/profile';
 const sectors = [
   { id: 1, name: 'Agriculture' },
