@@ -469,6 +469,7 @@ onMounted(() => {
           fetchProfile(user?.id)
         }
       }
+      
 })
 </script>
 

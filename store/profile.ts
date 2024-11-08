@@ -34,7 +34,7 @@ export const useProfileStore = defineStore("profile", {
     async getProfile(id: any){
       this.loadingProfile = true
       try{
-        const response = await apiGetRequest(`/api/profiles/${id}`);
+        const response = await apiGetRequest(`/api/profiles/`);
         this.profile = response.data
         this.loadingProfile = false
         console.log('response.data', response.data, this.profile)
