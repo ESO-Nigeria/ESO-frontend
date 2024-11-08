@@ -15,7 +15,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import AlertDialogTrigger from '~/components/ui/alert-dialog/AlertDialogTrigger.vue';
 import AlertDialogFooter from '~/components/ui/alert-dialog/AlertDialogFooter.vue';
 import { useProgrammeStore } from '~/store/programmme';
-import { sectors, targetAudience, nonFinancialSupport, financialSupport, programMode } from '~/lib/data';
+import { sectors, targetAudience, nonFinancialSupport, financialSupport, programMode, countries, cities } from '~/lib/data';
 import { formatDate } from '~/lib/utils';
 
 
@@ -414,10 +414,18 @@ async function handleFormSubmit() {
                       <FormItem class="space-y-1">
                         <FormLabel class="text-[#3F434A] text-base font-medium">Country</FormLabel>
                         <FormControl>
-                          <div class="relative w-full items-center">
-                            <Input type="text"
-                              class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                              placeholder="Location" v-model="formFieldsDetails.country" />
+                          <div class="relative w-full  items-center">
+                            <Select v-model="formFieldsDetails.country">
+                              <SelectTrigger
+                                class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
+                                <SelectValue placeholder="Select Country" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem v-for="country in countries" :key="country.id" :value="country.id">
+                                  {{ country.label }}
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
                           </div>
                         </FormControl>
                       </FormItem>
@@ -427,9 +435,17 @@ async function handleFormSubmit() {
                         <FormLabel class="text-[#3F434A] text-base font-medium">City</FormLabel>
                         <FormControl>
                           <div class="relative w-full items-center">
-                            <Input type="text"
-                              class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                              placeholder="Location" v-model="formFieldsDetails.city" />
+                            <Select v-model="formFieldsDetails.city">
+                              <SelectTrigger
+                                class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
+                                <SelectValue placeholder="Select City" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem v-for="city in cities" :key="city.id" :value="city.id">
+                                  {{ city.label }}
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
                           </div>
                         </FormControl>
                       </FormItem>
@@ -464,9 +480,7 @@ async function handleFormSubmit() {
                             <Input type="url"
                               class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                               placeholder="Enter Registration Link" v-model="formFieldsDetails.registration_link" />
-
                           </div>
-
                         </FormControl>
                       </FormItem>
                     </FormField>
@@ -478,9 +492,7 @@ async function handleFormSubmit() {
                             <Input type="url"
                               class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                               placeholder="Enter Website Link" v-model="formFieldsDetails.website_link" />
-
                           </div>
-
                         </FormControl>
                       </FormItem>
                     </FormField>

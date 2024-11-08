@@ -33,3 +33,47 @@ export const programMode = [
     { "id": 'INPERSON', "label": "In person" },
     { "id": 'HYBRID', "label": "Hybrid" },
 ]
+
+export const countries = [
+    { "id": 'Nigeria', "label": "Nigeria" },
+]
+
+export const cities = [
+    { "id": "Abia", "label": "Abia" },
+    { "id": "Adamawa", "label": "Adamawa" },
+    { "id": "Akwa Ibom", "label": "Akwa Ibom" },
+    { "id": "Anambra", "label": "Anambra" },
+    { "id": "Bauchi", "label": "Bauchi" },
+    { "id": "Bayelsa", "label": "Bayelsa" },
+    { "id": "Benue", "label": "Benue" },
+    { "id": "Borno", "label": "Borno" },
+    { "id": "Cross River", "label": "Cross River" },
+    { "id": "Delta", "label": "Delta" },
+    { "id": "Ebonyi", "label": "Ebonyi" },
+    { "id": "Edo", "label": "Edo" },
+    { "id": "Ekiti", "label": "Ekiti" },
+    { "id": "Enugu", "label": "Enugu" },
+    { "id": "Gombe", "label": "Gombe" },
+    { "id": "Imo", "label": "Imo" },
+    { "id": "Jigawa", "label": "Jigawa" },
+    { "id": "Kaduna", "label": "Kaduna" },
+    { "id": "Kano", "label": "Kano" },
+    { "id": "Katsina", "label": "Katsina" },
+    { "id": "Kebbi", "label": "Kebbi" },
+    { "id": "Kogi", "label": "Kogi" },
+    { "id": "Kwara", "label": "Kwara" },
+    { "id": "Lagos", "label": "Lagos" },
+    { "id": "Nasarawa", "label": "Nasarawa" },
+    { "id": "Niger", "label": "Niger" },
+    { "id": "Ogun", "label": "Ogun" },
+    { "id": "Ondo", "label": "Ondo" },
+    { "id": "Osun", "label": "Osun" },
+    { "id": "Oyo", "label": "Oyo" },
+    { "id": "Plateau", "label": "Plateau" },
+    { "id": "Rivers", "label": "Rivers" },
+    { "id": "Sokoto", "label": "Sokoto" },
+    { "id": "Taraba", "label": "Taraba" },
+    { "id": "Yobe", "label": "Yobe" },
+    { "id": "Zamfara", "label": "Zamfara" }
+  ]
+  

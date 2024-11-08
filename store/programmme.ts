@@ -92,7 +92,7 @@ export const useProgrammeStore = defineStore("programme", {
             try {
                 const payload = body
                 delete payload?.program_image // TODO: Remove this later
-                const response = await apiPostRequest(`/api/programs/`, payload);
+                const response = await apiPostFormRequest(`/api/programs/`, payload);
                 if (response.error) {
                     toast.error(response?.error?.error?.[0] || "Unable to create programme, please try again")
                 }
@@ -104,7 +104,7 @@ export const useProgrammeStore = defineStore("programme", {
         },
         async CREATE_PROGRAMME_DETAILS(body: any) {
             try {
-                const response = await apiPostRequest(`/api/programdetails/`, body);
+                const response = await apiPostFormRequest(`/api/programdetails/`, body);
                 if (response.error) {
                     toast.error(response?.error?.error?.[0] || "Unable to create programme details, please try again")
                 }
