@@ -79,7 +79,7 @@ const toggleOption = (id) => {
                             <span class="text-sm">Select All</span>
                         </div>
                         <CommandGroup>
-                            <CommandItem v-for="option in options" :key="option.id"
+                            <CommandItem v-for="option in options" :key="option.id" :value="option.id"
                                 @select="() => toggleOption(option.id)">
                                 <div class="flex items-center space-x-2 py-1">
                                     <Checkbox :checked="modelValue.includes(option.id)" />

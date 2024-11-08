@@ -20,12 +20,11 @@ export const useProgrammeStore = defineStore("programme", {
             "start_date": "",
             "end_date": "",
             "application_deadline": "",
-            "city": "",
-            "country": "",
             "program_mode": "HYBRID",
             "registration_required": false,
             "registration_link": "",
             "website_link": "",
+            "location": [],
             "program": ''
         } as ProgrammeDetails,
         image: null,
@@ -73,12 +72,11 @@ export const useProgrammeStore = defineStore("programme", {
                 start_date: '',
                 end_date: '',
                 application_deadline: '',
-                city: '',
-                country: '',
                 program_mode: 'HYBRID',
                 registration_required: false,
                 registration_link: '',
                 website_link: '',
+                location: [],
                 program: 0
             }
         },
@@ -90,9 +88,7 @@ export const useProgrammeStore = defineStore("programme", {
         },
         async CREATE_PROGRAMME(body: any) {
             try {
-                const payload = body
-                delete payload?.program_image // TODO: Remove this later
-                const response = await apiPostFormRequest(`/api/programs/`, payload);
+                const response = await apiPostRequestForFormData(`/api/programs/`, body);
                 if (response.error) {
                     toast.error(response?.error?.error?.[0] || "Unable to create programme, please try again")
                 }
