@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="relative">
-                  <!-- <img class=" w-full  rounded-tl-[142px] " src="~/assets/images/home_banner.png" alt="" /> -->
+                  <img class=" w-full  rounded-tl-[142px] " src="~/assets/images/eso-hero-card.png" alt="" />
               </div>
               
             </div>
@@ -144,7 +144,7 @@
           <p class="text-primary text-xl">Upcoming Events</p>
       
         <div class="grid grid-cols-2 gap-4">
-          <LayoutsEventsCard v-for="(item, index) in Array.from({length: 4})" :key="index"  />
+          <LayoutsEventsCard :event="item" v-for="(item, index) in events?.results" :key="index"  />
         </div>
       </div>
     </section>
@@ -153,7 +153,20 @@
 </template>
 
 <script setup>
+import { useProfileStore } from '~/store/profile';
 
+
+const profileStore = useProfileStore()
+
+const events = computed(() => {
+  return profileStore.events
+})
+const loading = computed(() => {
+  return profileStore.loading
+})
+onMounted(() => {
+  profileStore.getEvents()
+})
 </script>
 
 <style lang="scss" scoped>

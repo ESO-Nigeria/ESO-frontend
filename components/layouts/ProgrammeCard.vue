@@ -3,7 +3,7 @@
     <Card   class=" rounded-lg px-0 py-0 overflow-hidden">
       <CardHeader class="p-0 relative">
         <img
-          src="~/assets/images/image.png"
+          src="~/assets/images/programmes.jpg"
           alt="Program Image"
           class="w-full h-[300px] object-cover rounded-lg"
         />  

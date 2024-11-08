@@ -157,12 +157,12 @@
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
-
+                    
                   <div class="grid grid-cols-3 gap-7">
                     <Card v-for="(item, index) in Array.from({length: 10})" :key="index"  class=" rounded-lg px-4 py-0 overflow-hidden">
                       <CardHeader class="p-0 relative">
                         <img
-                          src="~/assets/images/image.png"
+                          src="~/assets/images/programmes.jpg"
                           alt="Program Image"
                           class="w-full h-[300px] object-cover rounded-lg"
                         />  
@@ -222,6 +222,7 @@ import DropdownMenuRadioGroup from '~/components/ui/dropdown-menu/DropdownMenuRa
 import DropdownMenuRadioItem from '~/components/ui/dropdown-menu/DropdownMenuRadioItem.vue';
 import DropdownMenuTrigger from '~/components/ui/dropdown-menu/DropdownMenuTrigger.vue';
 import FormLabel from '~/components/ui/form/FormLabel.vue';
+import { useProfileStore } from '~/store/profile';
 const sectors = [
   { id: 1, name: 'Agriculture' },
   { id: 2, name: 'Healthcare ' },
@@ -266,6 +267,17 @@ const financial_support = [
   { id: 2, name: 'Equity' },
   { id: 3, name: 'Debt' },
 ]
+
+const profileStore = useProfileStore()
+const programs = computed(() => {
+  return profileStore.programs
+})
+const loading = computed(() => {
+  return profileStore.loading
+})
+onMounted(() => {
+  profileStore.getProgrammes()
+})
 </script>
 
 <style lang="scss" scoped>
