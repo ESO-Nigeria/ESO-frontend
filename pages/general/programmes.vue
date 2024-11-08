@@ -159,7 +159,7 @@
                   </div>
 
                   <div class="grid grid-cols-3 gap-7">
-                    <Card v-for="(item, index) in Array.from({length: 10})" :key="index"  class=" rounded-lg px-0 py-0 overflow-hidden">
+                    <Card v-for="(item, index) in Array.from({length: 10})" :key="index"  class=" rounded-lg px-4 py-0 overflow-hidden">
                       <CardHeader class="p-0 relative">
                         <img
                           src="~/assets/images/image.png"
