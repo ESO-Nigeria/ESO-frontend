@@ -116,7 +116,6 @@ function goToPreviousStep() {
   updateProgrammeState()
 }
 
-// YYYY-MM-DD
 function updateProgrammeState() {
   programmeStore.STORE_PROGRAMME(formFields.value)
   programmeStore.STORE_PROGRAMME_DETAILS({
@@ -131,8 +130,19 @@ function updateProgrammeState() {
 async function handleFormSubmit() {
   programmeStore.SET_LOADING(true);
 
+  const formData = new FormData();
+  formData.append('title', programme.value?.title);
+  formData.append('description', programme.value?.description);
+  formData.append('brief_details', programme.value?.brief_details);
+  formData.append('sectors', JSON.stringify(programme.value?.sectors));
+  formData.append('financial_supports', JSON.stringify(programme.value?.financial_supports));
+  formData.append('non_financial_supports', JSON.stringify(programme.value?.non_financial_supports));
+  formData.append('target_audience', JSON.stringify(programme.value?.target_audience));
+  // formData.append('program_image', programmeStore.getProgrammeImage); 
+
+
   try {
-    const programmeResponse = await programmeStore.CREATE_PROGRAMME(programme.value);
+    const programmeResponse = await programmeStore.CREATE_PROGRAMME(formData);
     const programmeData = programmeResponse?.data?.data?.data;
 
     if (programmeData?.id) {
