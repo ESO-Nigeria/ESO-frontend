@@ -20,12 +20,11 @@ export const useProgrammeStore = defineStore("programme", {
             "start_date": "",
             "end_date": "",
             "application_deadline": "",
-            "city": "",
-            "country": "",
             "program_mode": "HYBRID",
             "registration_required": false,
             "registration_link": "",
             "website_link": "",
+            "location": [],
             "program": ''
         } as ProgrammeDetails,
         image: null,
@@ -73,12 +72,11 @@ export const useProgrammeStore = defineStore("programme", {
                 start_date: '',
                 end_date: '',
                 application_deadline: '',
-                city: '',
-                country: '',
                 program_mode: 'HYBRID',
                 registration_required: false,
                 registration_link: '',
                 website_link: '',
+                location: [],
                 program: 0
             }
         },
