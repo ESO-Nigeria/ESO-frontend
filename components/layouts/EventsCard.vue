@@ -19,7 +19,7 @@
           <Building2 class="size-4"/>
           <span>Access Bank</span>
         </div>
-        <p class="text-secondary-body-contrast text-sm px-1 py-1">
+        <p class="text-secondary-body-contrast text-sm px-1 py-1 truncate">
          {{ event?.description|| 'N/A' }}
         </p>
         <div class=" text-xs text-[#FE7102] capitalize font-normal px-1 py-1">

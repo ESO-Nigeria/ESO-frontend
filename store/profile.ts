@@ -14,7 +14,9 @@ export const useProfileStore = defineStore("profile", {
     certificates: [],
     links:[],
     events:[],
-    event:{}
+    event:{},
+    programs:[],
+    program: {}
   }),
   getters: {
     getToken(state) {
@@ -117,6 +119,32 @@ export const useProfileStore = defineStore("profile", {
         const response = await apiGetRequest(`/api/events/${id}`);
         // this.links = response.data
         this.event = response.data
+        this.loading = false
+        console.log('response.data', response.data)
+        return { data: response, error: response.error };
+      }catch (error){
+        return { data: null, error: "Unknown error" }
+      }
+    },
+    async getProgrammes(){
+      this.loading = true
+      try{
+        const response = await apiGetRequest(`/api/programs/`);
+        // this.links = response.data
+        this.programs = response.data
+        this.loading = false
+        console.log('response.data', response.data)
+        return { data: response, error: response.error };
+      }catch (error){
+        return { data: null, error: "Unknown error" }
+      }
+    },
+    async getSingleProgramme(id: any){
+      this.loading = true
+      try{
+        const response = await apiGetRequest(`/api/events/${id}`);
+        // this.links = response.data
+        this.program = response.data
         this.loading = false
         console.log('response.data', response.data)
         return { data: response, error: response.error };
