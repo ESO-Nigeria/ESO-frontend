@@ -171,7 +171,7 @@ export const useProfileStore = defineStore("profile", {
     async getSingleESO(id: any){
       this.loading = true
       try{
-        const response = await apiGetUnRestrictedRequest(`/api/events/${id}`);
+        const response = await apiGetUnRestrictedRequest(`/api/profiles/${id}`);
         // this.links = response.data
         this.singleESO = response.data
         this.loading = false

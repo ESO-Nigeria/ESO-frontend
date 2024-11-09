@@ -163,7 +163,7 @@
 
                   <div class="grid grid-cols-3 gap-6">
                     <Card v-for="(item, index) in ESOs?.results" :key="index"  class="shadow-lg rounded-lg sm:px-3 py-0 overflow-hidden">
-                      <!-- <NuxtLink :to="`/general/eso/${item?.id}/details`"> -->
+                      <NuxtLink :to="`/general/eso/${item?.id}/details`">
                       <CardHeader class="p-0 relative">
                         <!-- assets\images\placeholderImg.png C:\Users\HomePC\Documents\work\eso\assets\images\placeholderImg.png-->
                         <img
@@ -188,7 +188,7 @@
                         <div class=" space-y-2 mt-2">
                           <p class="text-primary text-sm font-semibold">Organization Type</p>
                           <p class="text-secondary-body-500">
-                            {{organization_types?.find(type => type.id == item?.user?.organization_type).label }}
+                            {{organization_types?.find(type => type.id == item?.user?.organization_type)?.label }}
                           </p>
                           
                         </div>
@@ -198,7 +198,7 @@
                           
                         </div>
                       </CardContent>
-                    <!-- </NuxtLink> -->
+                    </NuxtLink>
                     </Card>
                   </div>
                 </div>

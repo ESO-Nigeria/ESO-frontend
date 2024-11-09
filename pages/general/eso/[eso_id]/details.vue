@@ -1,12 +1,16 @@
 <template>
   <div>
     <NuxtLayout name="general" title="Access Banks ">
-      <div class="container py-6">
+      <div v-if="loading" class="flex h-screen justify-center items-center">
+        <LayoutsLoader />
+      </div>
+      <div v-else class="container py-6">
         <LayoutsBreadcrumb
           :breadcrumbs="[
-            { text: 'ESOs' },
+            { text: 'ESOs', href: '/general/esos' },
             {text: 'Access Banks '}
             ]"></LayoutsBreadcrumb>
+            {{ ESO }}
         <div class="py-3 h-full">
           <div class="grid h-full items-stretch gap-8 md:grid-cols-[260px_minmax(0,1fr)]">
             <div class=" bg-white rounded-md ">
@@ -128,6 +132,24 @@
 </template>
 
 <script setup>
+import { CalendarDays } from 'lucide-vue-next';
+import { useProfileStore } from '~/store/profile';
+import { useDayjs } from '#dayjs' // not need if you are using auto import
+
+const dayjs = useDayjs()
+
+const { eso_id } = useRoute().params
+const profileStore = useProfileStore()
+
+const ESO = computed(() => {
+  return profileStore.singleESO
+})
+const loading = computed(() => {
+  return profileStore.loading
+})
+onMounted(() => {
+  profileStore.getSingleESO(eso_id)
+})
 
 </script>
 
