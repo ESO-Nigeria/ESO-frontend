@@ -10,7 +10,7 @@
             { text: 'ESOs', href: '/general/esos' },
             {text: `${ESO?.user?.organization_name}`}
             ]"></LayoutsBreadcrumb>
-            {{ ESO }}
+            
         <div class="py-3 h-full">
           <div class="grid h-full items-stretch gap-8 md:grid-cols-[260px_minmax(0,1fr)]">
             <div class=" bg-white rounded-md ">
@@ -70,7 +70,7 @@
           </span>
         </div> -->
                  
-        <a :href="" target="_blank" class="w-full mt-3">
+        <a :href="'#'" target="_blank" class="w-full mt-3">
                     <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
                    Visit Website
                   </Button>
