@@ -167,7 +167,7 @@
                       <CardHeader class="p-0 relative">
                         <!-- assets\images\placeholderImg.png C:\Users\HomePC\Documents\work\eso\assets\images\placeholderImg.png-->
                         <img
-                           :src="item?.logo || placeholderImg"
+                           :src="item?.logo_url || placeholderImg"
                           alt="ESOs Logo"
                           class="w-full h-[115px] object-cover rounded-lg"
                         />  

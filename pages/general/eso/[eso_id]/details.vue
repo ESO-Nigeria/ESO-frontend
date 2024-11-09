@@ -17,7 +17,7 @@
               <div>
                 <div>
                   <div class="h-[290px] bg-[#EAECF0] mt-4"> 
-                    <img src="~/assets/images/esobanner.png" class="h-full w-full rounded-md object-cover"/>
+                    <img :src="ESO?.logo_url || '~/assets/images/placeholderImg.png'" class="h-full w-full rounded-md object-cover"/>
                   </div>
                   <div class="mt-3">
                     <div class="space-y-3">
