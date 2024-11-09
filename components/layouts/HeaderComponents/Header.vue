@@ -4,7 +4,7 @@
         <div class="flex items-center justify-between">
             <div class="flex-shrink-0">
                 <a href="/" title="" class="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-                    <img class="w-auto h-14" src="~/assets/images/icons/logo.svg" alt="logo" />
+                    <img class="w-auto h-20" src="~/assets/images/Main-Logo.png" alt="logo" />
                 </a>
             </div>
 
@@ -35,17 +35,17 @@
 
             </div>
 
-            <div class="hidden lg:ml-auto lg:flex lg:items-center lg:space-x-5">
-              <NuxtLink to="/auth/login">
-                <Button variant="outline" size="lg" title="" class="text-base font-medium ">  
+            <div v-if="token" class="hidden lg:ml-auto lg:flex lg:items-center lg:space-x-5">
+              <NuxtLink to="/dashboard">
+                <Button size="lg" title="" class="text-base font-medium ">  
                  
                
-                  Login 
+                  Dashboard
                 
                 </Button>
               </NuxtLink>
 
-              <NuxtLink to="/auth/register">
+              <!-- <NuxtLink to="/auth/register">
                 <Button
                     class=""
                     size="lg"
@@ -56,8 +56,32 @@
                
                     
                 </Button>
-              </NuxtLink>
+              </NuxtLink> -->
             </div>
+            
+            <div v-else class="hidden lg:ml-auto lg:flex lg:items-center lg:space-x-5">
+                <NuxtLink to="/auth/login">
+                  <Button variant="outline" size="lg" title="" class="text-base font-medium ">  
+                   
+                 
+                    Login 
+                  
+                  </Button>
+                </NuxtLink>
+  
+                <NuxtLink to="/auth/register">
+                  <Button
+                      class=""
+                      size="lg"
+                  >
+                  
+                  
+                    Create Account
+                 
+                      
+                  </Button>
+                </NuxtLink>
+              </div>
         </div>
 
         <nav class="hidden" x-show="expanded" x-collapse>
@@ -88,7 +112,17 @@
 </template>
 
 <script setup>
+const token = ref()
 
+
+onMounted(() => {
+  if (process.client) {
+        const storedToken = getItem("token");
+        if (storedToken && storedToken !== undefined) {
+          token.value = JSON.parse(storedToken);
+        }
+      }
+})
 </script>
 
 <style lang="scss" scoped>

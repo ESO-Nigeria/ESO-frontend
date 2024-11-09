@@ -6,7 +6,8 @@
             <div class="grid items-center grid-cols-1 gap-y-12 lg:grid-cols-2 gap-x-16">
                 <div>
                     <h1 class="text-4xl font-bold  sm:text-5xl ">Enterprise Support Organisations (ESO) Collaborative</h1>
-                    <p class="mt-4 text-xl font-normal text-[#475467]  sm:mt-8">We are a collaborative that bring values to your company with global scales experiences.</p>
+                    <p class="mt-4 text-xl font-normal text-[#475467]  sm:mt-8">We are a group of Professionals providing support to MSMEs in Nigeria and building a stronger ecosystem 
+                    </p>
                     <form action="#" method="POST" class="relative mt-8 rounded-md">
                         <div class="relative">
                             <div class="relative border flex rounded-md">
@@ -24,7 +25,7 @@
                        
                     </form>
                     <div class="mt-4 ">
-                        <NuxtLink to="/auth/register" class="text-base text-primary font-normal ">Create account to add programme</NuxtLink>
+                        <NuxtLink to="/general/programmes" class="text-base text-[#257F4A] font-normal ">View all programmes</NuxtLink>
                     </div>
                 </div>
                 <div class="relative">
@@ -150,11 +151,9 @@
       </div>
     </section>
 
-    <section class="">
+    <section class="my-8">
       <div class="container  mx-auto  relative max-w-7xl">
         <div class="bg-customGreen  rounded-[25px]  px-4  sm:px-6 lg:px-8 ">
-                  
-        
           <div class="container pt-10 pb-10 mx-auto px-4">
             <!-- First Section: Heading -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
@@ -190,7 +189,42 @@
       
     </section>
 
+    <section class="my-8 ">
+      <div class="container  mx-auto  relative max-w-7xl">
+        <div class="space-y-4">
+          <h6 class="text-3xl text-[#257F4A]">
+            Featured Articles
+          </h6>
+          <p class="text-base text-[#475467]">
+            Our featured articles showcase the expertise and perspectives of our team, providing timely and informative content to help you stay ahead of the curve. Explore our curated collection of stories, analysis, and commentary to gain a deeper understanding of the topics that matter most.
+          </p>
+        </div>
 
+        <div class="grid grid-cols-2 gap-4 mt-8">
+          <LayoutsArticleCard class="" v-for="item, index in Array.from({length: 2})" :key="index" />
+        </div>
+      </div>
+    </section>
+    <section class="my-8 mt-16">
+      <div class="container  mx-auto  relative max-w-7xl">
+        <div class="space-y-4">
+          <h6 class="text-3xl text-center text-[#257F4A]">
+           Sponsors
+          </h6>
+        </div>
+
+        <div class="flex items-center  gap-4 justify-center">
+          <div class="w-2/12">
+            <img src="~/assets/images/risa.png" alt="Sponsor 1" class="w-full" />
+          </div>
+          <div class="w-2/12">
+            <img src="~/assets/images/ukaid.png" alt="Sponsor 1" />
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <LayoutsFooter />
     </NuxtLayout>
   </div>
 </template>

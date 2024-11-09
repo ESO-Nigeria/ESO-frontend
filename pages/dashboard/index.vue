@@ -12,7 +12,8 @@
             :title="`${user?.organization_name ? user?.organization_name : ''}`"
              />
         </div>
-        <div class="bg-white p-8 rounded-md flex flex-col gap-4 ">
+
+        <div v-if="profile?.approval_status !== 'APPROVED'" class="bg-white p-8 rounded-md flex flex-col gap-4 ">
             <div class="grid grid-cols-2 items-center">
               <LayoutsSubTitleHeader
               :title="`Welcome aboard🚀, ${user?.first_name ? user?.first_name : ''}`"
@@ -101,7 +102,14 @@
               </div>
             </div>
         </div>
-
+        <div v-else class="bg-white p-8 rounded-md flex flex-col gap-4 ">
+          <p class="text-[22px] text-header5 font-medium ">
+            Congratulations
+          </p>
+          <p>
+            Your Organization has been verified and approved. you can now add <NuxtLink to="/dashboard/programmes/add" class="text-primary">programmes</NuxtLink> 
+          </p>
+        </div>
         <div class="flex-col flex gap-3">
           <LayoutsSubTitleHeader
           :title="'Programmes'"

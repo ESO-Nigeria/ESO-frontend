@@ -34,11 +34,11 @@
         </div> -->
         <div>
           <span class="text-secondary-body-contrast  text-sm px-1 ">
-            Status: <span class="text-[#257F4A] capitalize">{{  program?.application_status }}</span>
+            Status: <span class="text-[#257F4A] capitalize">{{  program?.program_details?.application_status }}</span>
           </span>
         </div>
                  
-        <a :href="program?.registration_link" target="_blank" class="w-full mt-3">
+        <a :href="program?.program_details?.registration_link" target="_blank" class="w-full mt-3">
                     <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
                     Apply Now
                   </Button>
@@ -77,8 +77,8 @@
                   <div class="flex gap-5 justify-between w-1/2">
                     <div class="space-y-2">
                       <p class="text-sm text-primary font-bold">Application Deadline</p>
-                      <p class="text-sm text-[#3F434A] font-normal">
-                        {{ program.application_deadline }}
+                      <p class="text-sm text-[#3F434A] font-normal capitalize">
+                        {{ program?.program_details?.application_deadline }}
                       </p>
                     </div>
                     <div class="space-y-2">
@@ -90,7 +90,7 @@
                     <div class="space-y-2">
                       <p class="text-sm text-primary font-bold">Program Mode</p>
                       <p class="text-sm text-[#3F434A] font-normal capitalize">
-                        {{ program.program_mode }}
+                        {{ program?.program_details?.program_mode }}
                       </p>
                     </div>
                   </div>
@@ -98,22 +98,24 @@
                     <div class="space-y-2">
                       <p class="text-sm text-primary font-bold">No of participant accepted per cohort(Optional)</p>
                       <p class="text-sm text-[#3F434A] font-normal">
-
+                        {{ program?.program_details?.number_of_participants }}
                       </p>
                     </div>
                     <div class="space-y-2">
                       <p class="text-sm text-primary font-bold">Participation Fee</p>
                       <p class="text-sm text-[#3F434A] font-normal">
-
+                        {{program?.program_details?.amount &&  formatToNaira(program?.program_details?.amount) }}
                       </p>
                     </div>
                   </div>
                   
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Location</p>
-                    <p class="text-sm text-[#3F434A] font-normal">
-
-                    </p>
+                    <div class="text-sm flex flex-wrap  text-[#3F434A] font-normal">
+                      <p class=" px-2 py-1 text-nowrap" v-for="location, index in program?.program_details?.location" :key="index" >
+                        {{ location }}
+                      </p>
+                    </div>
                   </div>
                  <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Program Description</p>
@@ -153,12 +155,18 @@
                   </div>
                 </div>
                 <div class="flex justify-end mt-6 gap-4">
-                  <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
-                    Apply Now
-                  </Button>
-                  <Button class="py-3 px-5 h-11 w-full bg-[#257F4A]" size="lg" type="button">
-                    Visit Website
-                  </Button>
+                  <a :href="program?.program_details?.registration_link" class="w-full"  target="_blank">
+                    <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
+                      Apply Now
+                    </Button>
+                  </a>
+                 
+                  <a :href="program?.program_details?.website_link" target="_blank" class="w-full" rel="noopener noreferrer">
+                    <Button class="py-3 px-5 h-11 w-full bg-[#257F4A]" size="lg" type="button">
+                      Visit Website
+                    </Button>
+                  </a>
+                  
                 
                 </div>
               </div>
@@ -176,6 +184,7 @@ import { useProfileStore } from '~/store/profile';
 import { useDayjs } from '#dayjs' // not need if you are using auto import
 import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
 import { targetAudience, sectors, nonFinancialSupport, financialSupport, programMode, organization_types } from '~/lib/data';
+import { formatToNaira } from '~/lib/utils';
 const dayjs = useDayjs()
 
 const { program_id } = useRoute().params

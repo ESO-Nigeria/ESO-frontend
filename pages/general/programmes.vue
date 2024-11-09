@@ -200,7 +200,7 @@
                         </div>
                         <div class="text-sm flex gap-x-2 items-center text-secondary-body-500 mt-2">
                           <CalendarDays class="size-4" />
-                          <span class="font-normal text-nowrap">Application Deadline: {{item?.application_deadline}}</span>
+                          <span class="font-normal text-nowrap">Application Deadline: {{item?.program_details?.application_deadline}}</span>
                         </div>
                       </CardContent>
                     </Card>
