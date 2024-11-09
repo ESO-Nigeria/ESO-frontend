@@ -10,7 +10,7 @@
         />  
       </CardHeader>
       <CardContent class="p-4 space-y-2">
-        <NuxtLink :to="`/general/event/${event?.id}/details`" class="text-base font-semibold text-primary">
+        <NuxtLink :to="`/general/event/${event?.id}/details`" class="capitalize text-base font-semibold text-primary">
         
           {{ event?.title || 'N/A' }}
         </NuxtLink>

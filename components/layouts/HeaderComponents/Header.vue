@@ -3,7 +3,7 @@
     <div class="container px-4 mx-auto sm:px-6 lg:px-8">
         <div class="flex items-center justify-between">
             <div class="flex-shrink-0">
-                <a href="#" title="" class="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
+                <a href="/" title="" class="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
                     <img class="w-auto h-14" src="~/assets/images/icons/logo.svg" alt="logo" />
                 </a>
             </div>

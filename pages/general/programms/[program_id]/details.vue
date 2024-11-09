@@ -23,7 +23,27 @@
                     
                     class="h-full w-full rounded-md"/>
                   </div>
-    
+                  <div class="mt-3">
+                    <!-- <div class=" flex divide-x-2">
+          <p class=" text-sm text-[#FE7102] font-normal px-1 ">
+            Free
+          </p>
+          <p class="text-secondary-body-contrast text-nowrap text-sm px-1 ">
+            Startup (Post-revenue)
+          </p>
+        </div> -->
+        <div>
+          <span class="text-secondary-body-contrast  text-sm px-1 ">
+            Status: <span class="text-[#257F4A] capitalize">{{  program?.application_status }}</span>
+          </span>
+        </div>
+                 
+        <a :href="program?.registration_link" target="_blank" class="w-full mt-3">
+                    <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
+                    Apply Now
+                  </Button>
+                </a>
+      </div>
                 </div>
               </div>
             </div>
