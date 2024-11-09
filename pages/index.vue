@@ -130,8 +130,9 @@
 
     <section class="my-8">
       <div class="px-4 mx-auto space-y-4 relativea sm:px-6 lg:px-8 max-w-7xl">
-        <div>
-          <p class="text-primary text-xl">Top Trending Programmes</p>
+        <div class="flex justify-between items-center">
+          <p class="text-primary text-xl font-medium">Top Trending Programmes </p>
+          <NuxtLink to="/general/programmes" class="text-primary text-xl font-medium">See all</NuxtLink>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4">
           <LayoutsProgrammeCard :program="item" v-for="(item, index) in programs?.results?.slice(0,4)" :key="index"  />
@@ -141,9 +142,12 @@
 
     <section class="my-8">
       <div class="px-4 mx-auto space-y-4 relative sm:px-6 lg:px-8 max-w-7xl">
-          <p class="text-primary text-xl">Upcoming Events</p>
+          
 
-      
+          <div class="flex justify-between items-center">
+            <p class="text-primary text-xl font-medium">Upcoming Events</p>
+            <NuxtLink to="/general/events" class="text-primary text-xl font-medium">See all</NuxtLink>
+          </div>
         <div class="grid lg:grid-cols-2 sm:grid-cols-1  gap-4">
 
           <LayoutsEventsCard :event="item" v-for="(item, index) in events?.results" :key="index"  />
@@ -200,7 +204,7 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 mt-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
           <LayoutsArticleCard class="" v-for="item, index in Array.from({length: 2})" :key="index" />
         </div>
       </div>
@@ -208,13 +212,13 @@
     <section class="my-8 mt-16">
       <div class="container  mx-auto  relative max-w-7xl">
         <div class="space-y-4">
-          <h6 class="text-3xl text-center text-[#257F4A]">
+          <h6 class="text-xl lg:text-3xl text-center text-[#257F4A]">
            Sponsors
           </h6>
         </div>
 
-        <div class="flex items-center  gap-4 justify-center">
-          <div class="w-2/12">
+        <div class="flex flex-wrap items-center  gap-4 justify-center">
+          <div class="w-2/12 ">
             <img src="~/assets/images/risa.png" alt="Sponsor 1" class="w-full" />
           </div>
           <div class="w-2/12">

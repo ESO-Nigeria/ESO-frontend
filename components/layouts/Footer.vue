@@ -1,14 +1,14 @@
 <template>
   <div>
     <footer class="text-white body-font bg-primary">
-      <div class="mx-auto  relative max-w-7xl container px-5 py-24  flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
-        <div class="lg:w-1/3 md:w-1/2 w-full px-4">
+      <div class="mx-auto  relative max-w-7xl container px-5 py-16 md:py-24   flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
+        <div class="lg:w-1/3 md:w-1/2 w-full px-4 mb-4 md:mb-0 ">
           <NuxtLink to="/" class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
             <img src="~/assets/images/Footer-logo.png" />
           </NuxtLink>
           <p class="mt-2 text-base ">The Nigerian ESO Collaborative, a Programme of Impact Investors Foundation is a platform of Enterprise Support Organizations building a stronger MSME network in Nigeria</p>
         </div>
-        <div class="lg:w-1/3 md:w-1/2 w-full px-4 text-base space-y-3">
+        <div class="lg:w-1/3 md:w-1/2 w-full mb-4 md:mb-0 px-4  text-base space-y-3">
           <h2 class="title-font font-semibold  tracking-widest  ">Get Involved</h2>
           <nav class="list-none space-y-3">
             <li>
@@ -25,7 +25,7 @@
             </li>
           </nav>
         </div>
-        <div class="lg:w-1/3 md:w-1/2 w-full px-4 text-base space-y-3">
+        <div class="lg:w-1/3 md:w-1/2 w-full px-4  mb-4 md:mb-0 text-base space-y-3">
           <h2 class="title-font font-semibold  tracking-widest  ">Contact Us</h2>
           <nav class="list-none space-y-3">
             <li class="inline-flex items-start gap-2">
