@@ -165,36 +165,37 @@
                     <Card v-for="(item, index) in programs?.results"  :key="index"  class="shadow-lg rounded-lg px-4 py-0 overflow-hidden">
                       <CardHeader class="p-0 relative">
                         <img
-                          :src="item?.program_image || placeholderImg"
+                          :src="  item?.program_image?.url || item?.program_image_url || placeholderImg"
                           alt="Program Image"
                           class="w-full h-[300px] object-cover rounded-lg"
                         />  
                       </CardHeader>
                       <CardContent class="p-4 space-y-2">
                         <div class=" flex divide-x-2">
-                          <div class=" text-xs text-[#FE7102] font-normal px-1 py-1">
+                          <!-- <div class=" text-xs text-[#FE7102] font-normal px-1 py-1">
                             {{item?.payment_mode}}
+                          </div> -->
+                          <div class="text-secondary-body-contrast text-nowrap text-xs py-1">
+                            <!-- Startup (Post-revenue) -->
+                            {{targetAudience?.find(type => type.id == item?.target_audience)?.label }}
                           </div>
-                          <div class="text-secondary-body-contrast text-nowrap text-xs px-1 py-1">
-                            Startup (Post-revenue)
-                          </div>
-                          <span class="text-secondary-body-contrast  text-xs px-1 py-1">
+                          <!-- <span class="text-secondary-body-contrast  text-xs px-1 py-1">
                             3 months
-                          </span>
+                          </span> -->
                         </div>
-                        <NuxtLink to="/general/programms/1/details" class="text-base font-semibold text-primary">{{item?.title}}</NuxtLink>
+                        <NuxtLink :to="`/general/programms/${item.id}/details`" class="text-base font-semibold text-primary">{{item?.title}}</NuxtLink>
                         <div class="text-sm text-[#475467] flex items-center space-x-2">
                           <!-- <span class="inline-block w-4 h-4 bg-blue-500 rounded-full"></span> -->
                           <Building2 class="size-4"/>
-                          <span>Access Bank</span>
+                          <span>{{ item?.organization_name}}</span>
                         </div>
                         <div class="flex space-x-2 mt-2">
                           <span
-                            v-for="tag in tags"
+                            v-for="tag in item.sectors?.slice(0,3)"
                             :key="tag"
                             class="bg-[#ECFDF3] text-secondary-body-500 text-xs px-2 py-1 rounded-md"
                           >
-                            {{ tag }}
+                          {{sectors?.find(type => type.id == tag).name }}
                           </span>
                         </div>
                         <div class="text-sm flex gap-x-2 items-center text-secondary-body-500 mt-2">
@@ -226,8 +227,10 @@ import DropdownMenuRadioItem from '~/components/ui/dropdown-menu/DropdownMenuRad
 import DropdownMenuTrigger from '~/components/ui/dropdown-menu/DropdownMenuTrigger.vue';
 import FormLabel from '~/components/ui/form/FormLabel.vue';
 import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
-
+import { targetAudience } from '~/lib/data';
+// import { sectors } from '~/lib/data';
 import { useProfileStore } from '~/store/profile';
+
 const sectors = [
   { id: 1, name: 'Agriculture' },
   { id: 2, name: 'Healthcare ' },
@@ -239,8 +242,8 @@ const sectors = [
   { id: 8, name: 'Consulting' },
   { id: 9, name: 'Services' },
   { id: 10, name: 'Others' },
-
 ]
+
 const filterOption = ref('Date Created')
 const tags = ['Agriculture', 'Education'];
 

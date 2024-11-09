@@ -188,7 +188,7 @@
                         <div class=" space-y-2 mt-2">
                           <p class="text-primary text-sm font-semibold">Organization Type</p>
                           <p class="text-secondary-body-500">
-                            {{ item?.user?.organization_type }}
+                            {{organization_types?.find(type => type.id == item?.user?.organization_type).label }}
                           </p>
                           
                         </div>
@@ -223,6 +223,7 @@ import DropdownMenuRadioItem from '~/components/ui/dropdown-menu/DropdownMenuRad
 import DropdownMenuTrigger from '~/components/ui/dropdown-menu/DropdownMenuTrigger.vue';
 import FormLabel from '~/components/ui/form/FormLabel.vue';
 import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
+import { organization_types } from '~/lib/data';
 
 import { useProfileStore } from '~/store/profile';
 const sectors = [

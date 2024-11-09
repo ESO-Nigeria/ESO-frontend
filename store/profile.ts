@@ -52,7 +52,7 @@ export const useProfileStore = defineStore("profile", {
         // this.submitting = false
         console.log("response", response.data);
         this.profile = response.data
-        setItem('profile',JSON.stringify(response.data))
+        // setItem('profile',JSON.stringify(response.data))
         return { data: response, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };
@@ -132,7 +132,7 @@ export const useProfileStore = defineStore("profile", {
     async getProgrammes(){
       this.loading = true
       try{
-        const response = await apiGetUnRestrictedRequest(`/api/programs/`);
+        const response = await apiGetUnRestrictedRequest(`/api/programs/?page=`);
         // this.links = response.data
         this.programs = response.data
         this.loading = false
@@ -145,7 +145,7 @@ export const useProfileStore = defineStore("profile", {
     async getSingleProgramme(id: any){
       this.loading = true
       try{
-        const response = await apiGetUnRestrictedRequest(`/api/events/${id}`);
+        const response = await apiGetUnRestrictedRequest(`/api/programs/${id}`);
         // this.links = response.data
         this.program = response.data
         this.loading = false
