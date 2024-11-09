@@ -1,4 +1,3 @@
-
 <script setup>
 import { Check, Edit, LoaderCircle } from 'lucide-vue-next';
 import { ref } from 'vue';
@@ -15,7 +14,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import AlertDialogTrigger from '~/components/ui/alert-dialog/AlertDialogTrigger.vue';
 import AlertDialogFooter from '~/components/ui/alert-dialog/AlertDialogFooter.vue';
 import { useProgrammeStore } from '~/store/programmme';
-import { sectors, targetAudience, nonFinancialSupport, financialSupport, programMode, countries, cities } from '~/lib/data';
+import { sectors, targetAudience, nonFinancialSupport, financialSupport, programMode, countries, locations } from '~/lib/data';
 import { formatDate } from '~/lib/utils';
 
 
@@ -39,8 +38,7 @@ const formFieldsDetails = ref({
   "start_date": '',
   "end_date": '',
   "application_deadline": '',
-  "city": '',
-  "country": '',
+  "location": [],
   "program_mode": "",
   "registration_link": '',
   "website_link": '',
@@ -116,14 +114,14 @@ function goToPreviousStep() {
   updateProgrammeState()
 }
 
-// YYYY-MM-DD
 function updateProgrammeState() {
   programmeStore.STORE_PROGRAMME(formFields.value)
+
   programmeStore.STORE_PROGRAMME_DETAILS({
     ...formFieldsDetails.value,
-    start_date: formatDate(date.value[0]),
-    end_date: formatDate(date.value[1]),
-    application_deadline: formatDate(deadline.value)
+    start_date: date.value ? formatDate(date.value[0]) : '',
+    end_date: date.value ? formatDate(date.value[1]) : '',
+    application_deadline: deadline.value ? formatDate(deadline.value) : ''
   })
 }
 
@@ -131,19 +129,40 @@ function updateProgrammeState() {
 async function handleFormSubmit() {
   programmeStore.SET_LOADING(true);
 
-  try {
-    const programmeResponse = await programmeStore.CREATE_PROGRAMME(programme.value);
-    const programmeData = programmeResponse?.data?.data?.data;
+  const formData = new FormData();
+  formData.append('title', programme.value?.title);
+  formData.append('description', programme.value?.description);
+  formData.append('brief_details', programme.value?.brief_details);
 
+  for(let sector of programme.value?.sectors){
+    formData.append('sectors', sector)
+  }
+  for(let financial_support of programme.value?.financial_supports){
+    formData.append('financial_supports', financial_support)
+  }
+  for(let non_financial_support of programme.value?.non_financial_supports){
+    formData.append('non_financial_supports', non_financial_support)
+  }
+  for(let target_audience of programme.value?.target_audience){
+    formData.append('target_audience', target_audience)
+  }
+  formData.append('program_image', program_image.value); 
+
+  try {
+    const programmeResponse = await programmeStore.CREATE_PROGRAMME(formData);
+    const programmeData = programmeResponse?.data?.data;
+ 
     if (programmeData?.id) {
       const programme_id = programmeData.id;
-      const detailsResponse = await programmeStore.CREATE_PROGRAMME_DETAILS({
+      const data = {
         ...programme_details.value,
         program: programme_id
-      });
+      }
+      const detailsResponse = await programmeStore.CREATE_PROGRAMME_DETAILS(data);
       
       const detailsData = detailsResponse?.data?.data;
       if (detailsData) {
+        programmeStore.RESET_PROGRAMME()
         navigateTo(`/dashboard/programmes`);
       }
     }
@@ -196,8 +215,7 @@ async function handleFormSubmit() {
 
                 <form action="">
                   <div v-if="currentStep === 0" class="flex gap-4 flex-col mt-10">
-                    <!-- TOOD: Add Programme Image Uploader  -->
-                    <!-- <div>
+                    <div>
                       <p class="text-base text-[#3F434A] font-medium">Upload Programme Image</p>
                       <div v-if="program_image?.name"
                         class="border border-primary text-sm h-[72px] p-4 rounded-md flex items-start ">
@@ -235,7 +253,7 @@ async function handleFormSubmit() {
                           </div>
                         </div>
                       </div>
-                    </div> -->
+                    </div>
              
                     <FormField v-slot="{ componentField }" name="title">
                       <FormItem class="space-y-1">
@@ -409,48 +427,13 @@ async function handleFormSubmit() {
                         </FormItem>
                       </FormField>
                     </div>
-                   <div class="grid grid-cols-2 gap-4">
-                    <FormField v-slot="{ componentField }" name="location">
-                      <FormItem class="space-y-1">
-                        <FormLabel class="text-[#3F434A] text-base font-medium">Country</FormLabel>
-                        <FormControl>
-                          <div class="relative w-full  items-center">
-                            <Select v-model="formFieldsDetails.country">
-                              <SelectTrigger
-                                class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
-                                <SelectValue placeholder="Select Country" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem v-for="country in countries" :key="country.id" :value="country.id">
-                                  {{ country.label }}
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </FormControl>
-                      </FormItem>
-                    </FormField>
-                    <FormField v-slot="{ componentField }" name="location">
-                      <FormItem class="space-y-1">
-                        <FormLabel class="text-[#3F434A] text-base font-medium">City</FormLabel>
-                        <FormControl>
-                          <div class="relative w-full items-center">
-                            <Select v-model="formFieldsDetails.city">
-                              <SelectTrigger
-                                class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
-                                <SelectValue placeholder="Select City" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem v-for="city in cities" :key="city.id" :value="city.id">
-                                  {{ city.label }}
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </FormControl>
-                      </FormItem>
-                    </FormField>
-                   </div>
+                 
+                    <MultiSelect
+                      v-model="formFieldsDetails.location"
+                      :options="locations"
+                      title="Locations"
+                      placeholder="Select locations..."
+                    />
 
                     <FormField v-slot="{ componentField }" name="fee">
                       <FormItem class="space-y-1">
@@ -583,7 +566,7 @@ async function handleFormSubmit() {
 
                       <div class="space-y-2">
                         <p class="text-sm text-primary font-bold">Location*</p>
-                        <p class="text-sm text-[#3F434A] font-normal">{{ programme_details.city }}, {{ programme_details.country }}</p>
+                        <p class="text-sm text-[#3F434A] font-normal">{{ programme_details.locati }}</p>
                       </div>
                       <div class="grid grid-cols-2">
                         <div class="space-y-2">

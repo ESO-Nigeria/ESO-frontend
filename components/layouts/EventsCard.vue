@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="grid sm:grid-cols-1">
    
-    <Card   class="grid md:grid-cols-[160px_minmax(0,1fr)] border border-primary rounded-lg p-4 overflow-hidden">
+    <Card class="grid md:grid-cols-[160px_minmax(0,1fr)] border border-primary rounded-lg p-4 overflow-hidden">
       <CardHeader class="p-0 relative">
         <img
           :src="event?.event_image || placeholderImg"

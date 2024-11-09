@@ -38,7 +38,7 @@ export const countries = [
     { "id": 'Nigeria', "label": "Nigeria" },
 ]
 
-export const cities = [
+export const locations = [
     { "id": "Abia", "label": "Abia" },
     { "id": "Adamawa", "label": "Adamawa" },
     { "id": "Akwa Ibom", "label": "Akwa Ibom" },
