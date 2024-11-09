@@ -19,7 +19,7 @@
                 <div>
                   <div class="h-[290px] bg-[#EAECF0] mt-4"> 
                     <img 
-                     :src="  item?.program_image?.url || item?.program_image_url || placeholderImg"
+                     :src=" program?.program_image_url || placeholderImg"
                     
                     class="h-full w-full rounded-md"/>
                   </div>

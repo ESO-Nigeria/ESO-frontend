@@ -5,7 +5,7 @@
       <CardHeader class="p-0 relative">
        
         <img
-          :src="event?.event_image?.url || placeholderImg"
+          :src="event?.event_image_url || placeholderImg"
           alt="Program Image"
           class="w-full h-full object-cover "
         />  

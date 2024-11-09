@@ -21,6 +21,12 @@
                   </div>
                   <div class="mt-3">
                     <div class="space-y-3">
+                      <div class="space-y-1 text-center">
+                    <p class="text-[32px] text-primary font-bold">50</p>
+                    <p class="text-sm text-[#3F434A] font-normal">
+                      Programmes
+                    </p>
+                  </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Organization Type</p>
                     <p class="text-sm text-[#3F434A] font-normal">
@@ -55,6 +61,14 @@
                       {{ ESO?.company_phone }}
                     </p>
                   </div>
+                  <div>
+                    <a :href="'#'" target="_blank" class="w-full mt-3">
+                    <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
+                   Visit Website
+                  </Button>
+                </a>
+                  </div>
+                  
                   </div>
                     <!-- <div class=" flex divide-x-2">
           <p class=" text-sm text-[#FE7102] font-normal px-1 ">
@@ -70,11 +84,7 @@
           </span>
         </div> -->
                  
-        <a :href="'#'" target="_blank" class="w-full mt-3">
-                    <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
-                   Visit Website
-                  </Button>
-                </a>
+       
       </div>
                 </div>
               </div>

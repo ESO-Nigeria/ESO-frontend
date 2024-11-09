@@ -3,7 +3,7 @@
     <Card class="shadow-lg rounded-lg px-4 py-0 overflow-hidden">
       <CardHeader class="p-0 relative">
         <img
-          :src="  program?.program_image?.url || program?.program_image_url || placeholderImg"
+          :src="  program?.program_image_url || placeholderImg"
           alt="Program Image"
           class="w-full h-[300px] object-cover rounded-lg"
         />  
