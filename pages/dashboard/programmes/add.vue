@@ -147,25 +147,42 @@ async function handleFormSubmit() {
     formData.append('target_audience', target_audience)
   }
   formData.append('program_image', program_image.value); 
+  
+  formData.append('program_details.number_of_participants', programme_details.value?.number_of_participants);
+  formData.append('program_details.amount', programme_details.value?.amount);
+  formData.append('program_details.start_date', programme_details.value?.start_date);
+  formData.append('program_details.end_date', programme_details.value?.end_date);
+  formData.append('program_details.application_deadline', programme_details.value?.application_deadline);
+  formData.append('program_details.program_mode', programme_details.value?.program_mode);
+  formData.append('program_details.registration_link', programme_details.value?.registration_link);
+  formData.append('program_details.website_link', programme_details.value?.website_link);
+  for(let location of programme_details.value?.location){
+    formData.append('program_details.location', location)
+  }
 
   try {
     const programmeResponse = await programmeStore.CREATE_PROGRAMME(formData);
     const programmeData = programmeResponse?.data?.data;
- 
-    if (programmeData?.id) {
-      const programme_id = programmeData.id;
-      const data = {
-        ...programme_details.value,
-        program: programme_id
-      }
-      const detailsResponse = await programmeStore.CREATE_PROGRAMME_DETAILS(data);
-      
-      const detailsData = detailsResponse?.data?.data;
-      if (detailsData) {
-        programmeStore.RESET_PROGRAMME()
-        navigateTo(`/dashboard/programmes`);
-      }
+
+    if(programmeData){
+      programmeStore.RESET_PROGRAMME()
+      navigateTo(`/dashboard/programmes`);
     }
+ 
+    // if (programmeData?.id) {
+    //   const programme_id = programmeData.id;
+    //   const data = {
+    //     ...programme_details.value,
+    //     program: programme_id
+    //   }
+    //   const detailsResponse = await programmeStore.CREATE_PROGRAMME_DETAILS(data);
+      
+    //   const detailsData = detailsResponse?.data?.data;
+    //   if (detailsData) {
+    //     programmeStore.RESET_PROGRAMME()
+    //     navigateTo(`/dashboard/programmes`);
+    //   }
+    // }
   } catch (error) {
     console.error("Error creating programme:", error);
   } finally {
