@@ -566,7 +566,7 @@ async function handleFormSubmit() {
 
                       <div class="space-y-2">
                         <p class="text-sm text-primary font-bold">Location*</p>
-                        <p class="text-sm text-[#3F434A] font-normal">{{ programme_details.locati }}</p>
+                        <p class="text-sm text-[#3F434A] font-normal">{{ programme_details.location.join(', ') }}</p>
                       </div>
                       <div class="grid grid-cols-2">
                         <div class="space-y-2">

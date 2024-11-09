@@ -219,8 +219,8 @@ onMounted(() => {
            </span>
           </div>
         </TableCell>
-        <TableCell class="py-4 px-6"> {{ item.program_mode }} </TableCell>
-        <TableCell class="py-4 px-6">{{ item.application_deadline }}</TableCell>
+        <TableCell class="py-4 px-6"> {{ item?.program_details?.program_mode }} </TableCell>
+        <TableCell class="py-4 px-6">{{ item?.program_details?.application_deadline }}</TableCell>
 
         <TableCell class="py-4 px-6">
           <span class="text-sm rounded-full px-3 py-1" :class="getBadgeColor(item.approval_status)">{{ item.approval_status }}</span>
