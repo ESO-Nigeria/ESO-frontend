@@ -38,7 +38,7 @@
         </div>
         <div class="text-sm flex gap-x-2 programs-center text-secondary-body-500 mt-2">
           <CalendarDays class="size-4" />
-          <span class="font-normal text-nowrap">Application Deadline: {{program?.application_deadline}}</span>
+          <span class="font-normal text-nowrap">Application Deadline: {{program?.program_details?.application_deadline}}</span>
         </div>
       </CardContent>
     </Card>

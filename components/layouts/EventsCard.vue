@@ -26,20 +26,30 @@
         <div class=" text-xs text-[#FE7102] capitalize font-normal px-1 py-1">
           {{ event?.payment_mode || 'N/A' }}
         </div>
-        
-        <div class="text-sm flex gap-x-2 items-center text-secondary-body-500 mt-2">
+        <div class="flex space-x-3">
+          <div class="text-sm flex gap-x-2 items-center text-secondary-body-500 mt-2">
+            <CalendarDays class="size-4" />
+            <span class="font-normal text-nowrap">{{ dayjs(event?.start_date).format('LL')  || 'N/A'}} -  {{ dayjs(event?.end_date).format('LL')  || 'N/A'}}</span>
+          </div>
+          <div class="text-sm flex gap-x-2 items-center text-secondary-body-500 mt-2">
+            <Clock11 class="size-4" />
+            <span class="font-normal text-nowrap">{{convertToAMPM(event?.start_time) }} </span>
+          </div>
+        </div>
+        <!-- <div class="text-sm flex gap-x-2 items-center text-secondary-body-500 mt-2">
           <CalendarDays class="size-4" />
           <span class="font-normal text-nowrap">{{ dayjs(event?.start_date).format('LL')  || 'N/A'}} -  {{ dayjs(event?.end_date).format('LL')  || 'N/A'}}</span>
-        </div>
+        </div> -->
       </CardContent>
     </Card>
   </div>
 </template>
 
 <script setup>
-import { Building2, CalendarDays } from 'lucide-vue-next';
+import { Building2, CalendarDays, Clock11 } from 'lucide-vue-next';
 import { useDayjs } from '#dayjs' // not need if you are using auto import
 import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
+import { convertToAMPM } from '~/lib/utils';
 
 const dayjs = useDayjs()
 

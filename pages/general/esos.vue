@@ -32,85 +32,24 @@
                       </div>
                     </div>
                     <div>
-                      <p class="text-primary text-base font-medium">Stages</p>
+                      <p class="text-primary text-base font-medium">Organization Type</p>
                       <div>
-                        <FormField v-for="item in stages" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" :name="item.name">
+                        <FormField v-for="item in organization_types" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" 
+                        :name="item.label">
                           <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
                             <FormControl>
                               <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
                             </FormControl>
                             <div class=" leading-none text-secondary-body-500 text-sm">
-                              <FormLabel class="text-secondary-body-500">{{item.name}}</FormLabel>
+                              <FormLabel class="text-secondary-body-500">{{item.label}}</FormLabel>
                             </div>
                           </FormItem>
                         </FormField>
                         
                       </div>
                     </div>
-                    <div>
-                      <p class="text-primary text-base font-medium">Participation</p>
-                      <div>
-                        <FormField v-for="item in participations" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" :name="item.name">
-                          <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
-                            <FormControl>
-                              <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
-                            </FormControl>
-                            <div class=" leading-none text-secondary-body-500 text-sm">
-                              <FormLabel class="text-secondary-body-500">{{item.name}}</FormLabel>
-                            </div>
-                          </FormItem>
-                        </FormField>
-                        
-                      </div>
-                    </div>
-                    <div>
-                      <p class="text-primary text-base font-medium">Attendance Mode</p>
-                      <div>
-                        <FormField v-for="item in mode" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" :name="item.name">
-                          <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
-                            <FormControl>
-                              <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
-                            </FormControl>
-                            <div class=" leading-none text-secondary-body-500 text-sm">
-                              <FormLabel class="text-secondary-body-500">{{item.name}}</FormLabel>
-                            </div>
-                          </FormItem>
-                        </FormField>
-                        
-                      </div>
-                    </div>
-                    <div>
-                      <p class="text-primary text-base font-medium">Non Financial Support Provided</p>
-                      <div>
-                        <FormField v-for="item in non_financial_support" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" :name="item.name">
-                          <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
-                            <FormControl>
-                              <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
-                            </FormControl>
-                            <div class=" leading-none text-secondary-body-500 text-sm">
-                              <FormLabel class="text-secondary-body-500">{{item.name}}</FormLabel>
-                            </div>
-                          </FormItem>
-                        </FormField>
-                        
-                      </div>
-                    </div>
-                    <div>
-                      <p class="text-primary text-base font-medium">Financial Support Provided</p>
-                      <div>
-                        <FormField v-for="item in financial_support" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" :name="item.name">
-                          <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
-                            <FormControl>
-                              <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
-                            </FormControl>
-                            <div class=" leading-none text-secondary-body-500 text-sm">
-                              <FormLabel class="text-secondary-body-500">{{item.name}}</FormLabel>
-                            </div>
-                          </FormItem>
-                        </FormField>
-                        
-                      </div>
-                    </div>
+                 
+                
                   </div>
                 </div>
                 <div class="space-y-5">
@@ -185,6 +124,7 @@
                           </div>
                           
                         </div>
+                        <p class="text-primary text-base font-semibold">{{item?.user?.organization_name}}</p>
                         <div class=" space-y-2 mt-2">
                           <p class="text-primary text-sm font-semibold">Organization Type</p>
                           <p class="text-secondary-body-500">
@@ -242,34 +182,7 @@ const sectors = [
 const filterOption = ref('Date Created')
 const tags = ['Agriculture', 'Education'];
 
-const stages = [
-  { id: 1, name: 'Start-up (Post-revenue)' },
-  { id: 2, name: 'Early Stage' },
-  { id: 3, name: 'Growth Stage' },
-]
 
-const participations = [
-  { id: 1, name: 'Start-up (Post-revenue)' },
-  { id: 2, name: 'Early Stage' },
-  { id: 3, name: 'Growth Stage' },
-]
-
-const mode = [
-  { id: 1, name: 'In-Person' },
-  { id: 2, name: 'Online' },
-  { id: 3, name: 'Hybrid' },
-]
-
-const non_financial_support = [
-  { id: 1, name: 'Accelerator' },
-  { id: 2, name: 'Fellowships' },
-  { id: 3, name: 'Technical Assistance & Capacity Building' },
-]
-const financial_support = [
-  { id: 1, name: 'Grant' },
-  { id: 2, name: 'Equity' },
-  { id: 3, name: 'Debt' },
-]
 const profileStore = useProfileStore()
 
 const ESOs = computed(() => {
