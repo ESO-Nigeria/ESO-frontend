@@ -133,7 +133,7 @@
           <p class="text-primary text-xl">Top Trending Programmes</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4">
-          <LayoutsProgrammeCard v-for="(item, index) in Array.from({length: 4})" :key="index"  />
+          <LayoutsProgrammeCard :program="item" v-for="(item, index) in programs?.results?.slice(0,4)" :key="index"  />
         </div>
       </div>
     </section>
@@ -204,12 +204,15 @@ const profileStore = useProfileStore()
 const events = computed(() => {
   return profileStore.events
 })
+const programs = computed(() => {
+  return profileStore.programs
+})
 const loading = computed(() => {
   return profileStore.loading
 })
 onMounted(() => {
   profileStore.getEvents()
-  
+  profileStore.getProgrammes()
 })
 </script>
 

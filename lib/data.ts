@@ -77,9 +77,11 @@ export const locations = [
     { "id": "Zamfara", "label": "Zamfara" }
   ]
 
-  export const organization_type = [
-    { id: 'NGO', label: 'NGO'},
-    {},
-    {},
-    {},
+  export const organization_types = [
+    { id: 'FCM', label: 'Financial Management Services'},
+    {id: 'LS', label: 'Legal Services '},
+    {id: 'IRS', label: 'Investment-Readiness Services'},
+    // {id: 'MD', label: 'Management Consulting'},
+    {id: 'MC', label: 'Management Consulting'},
+    {id: 'ORS', label: 'Other Relevant Services'},
   ]

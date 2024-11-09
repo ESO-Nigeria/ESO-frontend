@@ -89,19 +89,6 @@ const loading = computed(() => {
   return profileStore.loading
 })
 
-watch(
-  () => profileStore.events,
-  (newEvents) => {
-  
-    // profile.value = newPatient;
-  const even =  newEvents?.results?.map(item => {
-      return  profileStore.getSingleESO(item.user) 
-    })
-    console.log('first', newEvents, even)
-    profileStore.getESOs()
-  }
-);
-
 onMounted(() => {
   profileStore.getEvents()
   // profileStore.

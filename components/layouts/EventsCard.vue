@@ -3,14 +3,15 @@
    
     <Card class="grid md:grid-cols-[160px_minmax(0,1fr)] border border-primary rounded-lg p-4 overflow-hidden">
       <CardHeader class="p-0 relative">
+       
         <img
-          :src="event?.event_image || placeholderImg"
+          :src="event?.event_image_url || placeholderImg"
           alt="Program Image"
           class="w-full h-full object-cover "
         />  
       </CardHeader>
       <CardContent class="p-4 space-y-2">
-        <NuxtLink :to="`/general/event/${event?.id}/details`" class="text-base font-semibold text-primary">
+        <NuxtLink :to="`/general/event/${event?.id}/details`" class="capitalize text-base font-semibold text-primary">
         
           {{ event?.title || 'N/A' }}
         </NuxtLink>

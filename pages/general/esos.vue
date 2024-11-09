@@ -163,11 +163,11 @@
 
                   <div class="grid grid-cols-3 gap-6">
                     <Card v-for="(item, index) in ESOs?.results" :key="index"  class="shadow-lg rounded-lg sm:px-3 py-0 overflow-hidden">
-                      <!-- <NuxtLink :to="`/general/eso/${item?.id}/details`"> -->
+                      <NuxtLink :to="`/general/eso/${item?.id}/details`">
                       <CardHeader class="p-0 relative">
                         <!-- assets\images\placeholderImg.png C:\Users\HomePC\Documents\work\eso\assets\images\placeholderImg.png-->
                         <img
-                           :src="item?.logo || placeholderImg"
+                           :src="item?.logo_url || placeholderImg"
                           alt="ESOs Logo"
                           class="w-full h-[115px] object-cover rounded-lg"
                         />  
@@ -188,7 +188,7 @@
                         <div class=" space-y-2 mt-2">
                           <p class="text-primary text-sm font-semibold">Organization Type</p>
                           <p class="text-secondary-body-500">
-                            {{ item?.user?.organization_type }}
+                            {{organization_types?.find(type => type.id == item?.user?.organization_type)?.label }}
                           </p>
                           
                         </div>
@@ -198,7 +198,7 @@
                           
                         </div>
                       </CardContent>
-                    <!-- </NuxtLink> -->
+                    </NuxtLink>
                     </Card>
                   </div>
                 </div>
@@ -223,6 +223,7 @@ import DropdownMenuRadioItem from '~/components/ui/dropdown-menu/DropdownMenuRad
 import DropdownMenuTrigger from '~/components/ui/dropdown-menu/DropdownMenuTrigger.vue';
 import FormLabel from '~/components/ui/form/FormLabel.vue';
 import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
+import { organization_types } from '~/lib/data';
 
 import { useProfileStore } from '~/store/profile';
 const sectors = [

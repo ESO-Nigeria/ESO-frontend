@@ -8,7 +8,7 @@
       <div v-else class="container py-6">
         <LayoutsBreadcrumb
           :breadcrumbs="[
-            { text: 'Events' },
+            { text: 'Events', href: '/general/events' },
             {text: `${event?.title}`}
             ]"></LayoutsBreadcrumb>
         <div class="py-3 h-full">
@@ -17,7 +17,7 @@
               <div>
                 <div >
                   <div class="h-[290px] bg-[#EAECF0] mt-4 rounded-lg"> 
-                    <img :src="event_image || '~/assets/images/placeholderImg.png'" class="h-full w-full rounded-md"/>
+                    <img :src="event?.event_image_url || '~/assets/images/placeholderImg.png'" class="h-full w-full rounded-md"/>
                   </div>
                   <div class="mt-3">
                     <div class=" flex divide-x-2">
