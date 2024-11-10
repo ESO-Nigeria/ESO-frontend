@@ -3,8 +3,8 @@
     <NuxtLayout name="auth">
       <div class="">
         <div class="flex justify-center mx-auto">
-            <img class="w-auto " src="~/assets/images/icons/logo.svg" alt="logo">
-        </div>
+          <img class="w-auto " src="~/assets/images/Main-Logo.png" alt="logo">
+                </div>
     </div>
     <div v-if="loading">
       Loading ...

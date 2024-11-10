@@ -4,7 +4,7 @@
       <div class="">
         <div class="flex justify-center mx-auto">
           <NuxtLink to="/">
-            <img class="w-auto " src="~/assets/images/icons/logo.svg" alt="logo">
+            <img class="w-auto " src="~/assets/images/Main-Logo.png" alt="logo">
           </NuxtLink>
           
         </div>

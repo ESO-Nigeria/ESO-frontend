@@ -89,6 +89,7 @@
 import { CalendarDays } from 'lucide-vue-next';
 import { useProfileStore } from '~/store/profile';
 import { useDayjs } from '#dayjs' // not need if you are using auto import
+import { reverseTransform } from '~/lib/utils';
 
 const dayjs = useDayjs()
 
@@ -102,7 +103,7 @@ const loading = computed(() => {
   return profileStore.loading
 })
 onMounted(() => {
-  profileStore.getSingleEvents(event_id)
+  profileStore.getSingleEvents(reverseTransform(event_id) )
 })
 </script>
 

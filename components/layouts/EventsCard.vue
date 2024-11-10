@@ -11,8 +11,7 @@
         />  
       </CardHeader>
       <CardContent class="p-4 space-y-2">
-        <NuxtLink :to="`/general/event/${event?.title}/details`" class="capitalize text-base font-semibold text-primary">
-        
+        <NuxtLink :to="`/general/event/${transformHref(event?.title)}`" class="capitalize text-base font-semibold text-primary">
           {{ event?.title || 'N/A' }}
         </NuxtLink>
         <div class="text-sm text-[#475467] flex items-center space-x-2">
@@ -20,9 +19,7 @@
           <Building2 class="size-4"/>
           <span> {{ event?.organization_name|| 'N/A' }}</span>
         </div>
-        <p class="text-secondary-body-contrast text-sm px-1 py-1 truncate">
-         {{ event?.description|| 'N/A' }}
-        </p>
+        <p class="text-secondary-body-contrast text-sm px-1 py-1 truncate" v-html="event?.description" />
         <div class=" text-xs text-[#FE7102] capitalize font-normal px-1 py-1">
           {{ event?.payment_mode || 'N/A' }}
         </div>
@@ -49,7 +46,7 @@
 import { Building2, CalendarDays, Clock11 } from 'lucide-vue-next';
 import { useDayjs } from '#dayjs' // not need if you are using auto import
 import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
-import { convertToAMPM } from '~/lib/utils';
+import { convertToAMPM, transformHref } from '~/lib/utils';
 
 const dayjs = useDayjs()
 

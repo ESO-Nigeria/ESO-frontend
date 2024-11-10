@@ -3,7 +3,7 @@
     <NuxtLayout name="auth">
       <div class="">
         <div class="flex justify-center mx-auto">
-          <img class="w-auto " src="~/assets/images/icons/logo.svg" alt="logo">
+          <img class="w-auto " src="~/assets/images/Main-Logo.png" alt="logo">
         </div>
       </div>
       <form @submit="onSubmit" class="flex gap-4 flex-col mt-8">

@@ -205,7 +205,7 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-          <LayoutsArticleCard class="" v-for="item, index in Array.from({length: 2})" :key="index" />
+          <LayoutsArticleCard class="" :article="item" v-for="item, index in articlesDetails?.slice(0,2)" :key="index" />
         </div>
       </div>
     </section>
@@ -228,14 +228,13 @@
         </div>
       </div>
     </section>
-    <LayoutsFooter />
     </NuxtLayout>
   </div>
 </template>
 
 <script setup>
 import { useProfileStore } from '~/store/profile';
-
+import { articlesDetails } from '~/lib/data';
 
 const profileStore = useProfileStore()
 

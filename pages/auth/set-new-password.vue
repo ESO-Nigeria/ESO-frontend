@@ -3,7 +3,7 @@
     <NuxtLayout name="auth">
       <div class="">
         <div class="flex justify-center mx-auto">
-          <img class="w-auto " src="~/assets/images/icons/logo.svg" alt="logo">
+          <img class="w-auto " src="~/assets/images/Main-Logo.png" alt="logo">
         </div>
       </div>
       <form @submit="onSubmit" class="flex gap-4 flex-col mt-8">
@@ -69,6 +69,7 @@ import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 import { useAuthStore } from '~/store/auth';
 const authStore = useAuthStore()
+import { toast } from 'vue-sonner';
 const form = useForm({
   // validationSchema: formSchema,
 });
@@ -93,16 +94,22 @@ const onSubmit = form.handleSubmit(async(values) => {
 
   try {
     loading.value = true;
-  const response =  await authStore.change_password( body );
-  console.log('response', response?.data?.data?.status)
+    const response =  await authStore.change_password( body );
   if (response.data &&  response?.data?.data?.status == 204) {
     loading.value = false;
     // redirect to dashboard
-    console.log('here', response?.data?.data?.auth_token)
     router.push('/auth/reset-successful');
-
     } else {
       loading.value = false;
+      if (response.error && response?.error?.new_password) {
+        const joined = response?.error?.new_password.join(' ');
+        toast.error(joined || 'Error resetting, please contact admin')
+        }
+        else if(response?.error && response?.error?.token ){
+          const joined = response?.error?.token.join(' ');
+          toast.error(joined|| "Error resetting, please contact admin")
+        }
+
       // alert(response.data.message);
       }
     loading.value = false
@@ -111,6 +118,10 @@ const onSubmit = form.handleSubmit(async(values) => {
     console.log('error', error)
   }
 });
+
+onMounted(() => {
+  console.log('object :>> ', useRoute().query?.uid.split('/'));
+})
 </script>
 
 <style lang="scss" scoped></style>

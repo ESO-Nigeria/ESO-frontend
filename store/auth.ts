@@ -64,14 +64,26 @@ export const useAuthStore = defineStore("auth", {
     },
     async email_verified(body: any) {
       try {
-        // /auth/users/reset_password/
         const response = await apiPostRequest("/auth/users/activation/", body);
         return { data: response, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
+    
     async change_password(body: any) {
+      try {
+        const response = await apiPostRequest(
+          "/auth/users/reset_password_confirm/",
+          body
+        );
+        return { data: response, error: response.error };
+      } catch (error) {
+        return { data: null, error: error ?? "Unknown error" };
+      }
+    },
+
+    async new_password(body: any) {
       try {
         // /auth/users/reset_password/
         const response = await apiPostRequest(
@@ -83,6 +95,7 @@ export const useAuthStore = defineStore("auth", {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
+
     async getUser(){
       this.loadingUser = true
       try{
