@@ -1,6 +1,6 @@
 <template>
   <div class="mb-4">
-    <Card class="shadow-lg rounded-lg px-4 py-0 overflow-hidden">
+    <Card class="shadow-lg rounded-lg px-4 py-0 py-4 overflow-hidden">
       <CardHeader class="p-0 relative">
         <img
           :src="  program?.program_image_url || placeholderImg"
@@ -21,7 +21,7 @@
             3 months
           </span> -->
         </div>
-        <NuxtLink :to="`/general/programms/${program.id}/details`" class="text-base font-semibold text-primary capitalize">{{program?.title}}</NuxtLink>
+        <NuxtLink :to="`/general/programms/${transformHref(program?.title)}/details`" class="text-base font-semibold text-primary capitalize">{{program?.title}}</NuxtLink>
         <div class="text-sm text-[#475467] flex programs-center space-x-2">
           <!-- <span class="inline-block w-4 h-4 bg-blue-500 rounded-full"></span> -->
           <Building2 class="size-4"/>
@@ -36,9 +36,9 @@
           {{sectors?.find(type => type.id == tag).label }}
           </span>
         </div>
-        <div class="text-sm flex gap-x-2 programs-center text-secondary-body-500 mt-2">
-          <CalendarDays class="size-4" />
-          <span class="font-normal text-nowrap">Application Deadline: {{program?.program_details?.application_deadline}}</span>
+        <div class="text-sm flex gap-x-2 items-center text-secondary-body-500 mt-2">
+          <CalendarDays class="size-4 flex-shrink-0" />
+          <span class="font-normal ">Application Deadline: {{program?.program_details?.application_deadline}}</span>
         </div>
       </CardContent>
     </Card>
@@ -50,6 +50,7 @@ import { Building2, CalendarDays } from 'lucide-vue-next';
 import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
 // import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
 import { targetAudience, sectors } from '~/lib/data';
+import { transformHref } from '~/lib/utils';
 const props = defineProps({
   program:{
     type: Object
