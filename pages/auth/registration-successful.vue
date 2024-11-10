@@ -3,7 +3,7 @@
     <NuxtLayout name="auth">
       <div class="">
         <div class="flex justify-center mx-auto">
-            <img class="w-auto " src="~/assets/images/icons/logo.svg" alt="logo">
+          <img class="w-auto " src="~/assets/images/Main-Logo.png" alt="logo">
         </div>
     </div>
     <form class="flex pr-4 pl-4 sm:pr-6 sm:pl-6 gap-4 flex-col mt-8">

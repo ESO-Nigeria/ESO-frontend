@@ -3,7 +3,7 @@
     <NuxtLayout name="auth">
       <div class="">
         <div class="flex justify-center mx-auto">
-            <img class="w-auto " src="~/assets/images/icons/logo.svg" alt="logo">
+          <img class="w-auto " src="~/assets/images/Main-Logo.png" alt="logo">
         </div>
     </div>
     <form @submit="onSubmit" class="flex gap-4 flex-col mt-8">
@@ -40,6 +40,7 @@ import { ArrowLeft } from 'lucide-vue-next';
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
+import { toast } from 'vue-sonner';
 import { useAuthStore } from '~/store/auth';
 const authStore = useAuthStore()
 const router = useRouter()
@@ -61,12 +62,15 @@ const onSubmit = form.handleSubmit(async(values) => {
   if (response.data && response?.data?.data?.status == 204) {
     loading.value = false;
     // redirect to dashboard
-    console.log('here', response?.data?.data?.auth_token)
     router.push('/auth/otp-sent');
 
     } else {
       loading.value = false;
+      console.log('res[onse] :>> ', response);
       // alert(response.data.message);
+      if (response.error) {
+        toast.error(response?.error?.[0] || "Error sending email, please try again")
+        }
       }
     loading.value = false
   }catch(error) {

@@ -41,3 +41,14 @@ export function convertToAMPM(timeString) {
   // Format the time string
   return `${convertedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
 }
+
+export function transformHref(href) {
+  // Replace spaces and periods with hyphens
+  return href.replace(/[\s.]+/g, '-');
+}
+
+export function reverseTransform(href) {
+  // Replace hyphens back to spaces and periods
+  // Assuming periods are not part of the original string, we can replace hyphens to spaces
+  return href.replace(/-/g, ' '); // Replace hyphens with spaces
+}

@@ -13,6 +13,8 @@
       </div>
       <slot />
     </div>
+
+    <LayoutsFooter />
   </div>
 </template>
 
