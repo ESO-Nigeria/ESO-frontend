@@ -213,7 +213,7 @@
       <div class="container  mx-auto  relative max-w-7xl">
         <div class="space-y-4">
           <h6 class="text-xl lg:text-3xl text-center text-[#257F4A]">
-           Sponsors
+           Funded by
           </h6>
         </div>
 
