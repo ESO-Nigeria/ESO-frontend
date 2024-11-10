@@ -9,7 +9,7 @@
       <form @submit="onSubmit" class="flex gap-4 flex-col mt-8">
         <div class="flex flex-col gap-2">
           <h6 class="text-secondary-header3 text-3xl font-bold">Set a new password</h6>
-          <p class=" text-secondary-body-300 font-medium text-lg ">Create a secure password to protect your account. </p>
+          <p class=" text-secondary-body-300 font-medium text-lg ">Create a secure password to protect your account.</p>
         </div>
 
 
@@ -51,7 +51,7 @@
         </FormField>
         <!-- </div> -->
 
-        <Button :disabled="loading" class="text-base py-3 h-11 mt-2">Reset Password
+        <Button :disabled="loading" class="text-base py-3 h-11 mt-2">Set Password
 
           <LoaderCircle v-show="loading" class="animate-spin h-4 w-4 ml-2" />
         </Button>

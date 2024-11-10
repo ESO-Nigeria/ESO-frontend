@@ -18,6 +18,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         'auth-login',
         'auth-register',
         'auth-new-password',
+        'auth-set-new-password',
         'auth-otp-sent',
         'auth-registration-successful',
         'auth-forgot',
