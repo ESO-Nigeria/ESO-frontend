@@ -3,10 +3,12 @@
     <NuxtLayout name="auth">
       <div class="">
         <div class="flex justify-center mx-auto">
-          <img class="w-auto " src="~/assets/images/Main-Logo.png" alt="logo">
+          <NuxtLink to="/">
+            <img class="w-auto " src="~/assets/images/Main-Logo.png" alt="logo">
+          </NuxtLink>
         </div>
     </div>
-    <form class="flex gap-4 flex-col mt-8">
+    <form class="flex pr-4 pl-4 sm:pr-6 sm:pl-6 gap-4 flex-col mt-8">
       <div class="flex flex-col gap-2">
         <h6 class="text-secondary-header3 text-3xl font-bold">OTP Sent</h6>
         <p class="text-primary-success font-medium text-lg">Success!</p>

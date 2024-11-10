@@ -184,7 +184,7 @@ import { useProfileStore } from '~/store/profile';
 import { useDayjs } from '#dayjs' // not need if you are using auto import
 import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
 import { targetAudience, sectors, nonFinancialSupport, financialSupport, programMode, organization_types } from '~/lib/data';
-import { formatToNaira } from '~/lib/utils';
+import { formatToNaira, reverseTransform } from '~/lib/utils';
 const dayjs = useDayjs()
 
 const { program_id } = useRoute().params
@@ -197,7 +197,7 @@ const loading = computed(() => {
   return profileStore.loading
 })
 onMounted(() => {
-  profileStore.getSingleProgramme(program_id)
+  profileStore.getSingleProgramme(reverseTransform(program_id))
 })
 </script>
 
