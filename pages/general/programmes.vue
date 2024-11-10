@@ -183,7 +183,7 @@
                             3 months
                           </span> -->
                         </div>
-                        <NuxtLink :to="`/general/programms/${item.id}/details`" class="text-base font-semibold text-primary">{{item?.title}}</NuxtLink>
+                        <NuxtLink :to="`/general/programms/${transformHref(item?.title) }/details`" class="text-base font-semibold text-primary">{{item?.title}}</NuxtLink>
                         <div class="text-sm text-[#475467] flex items-center space-x-2">
                           <!-- <span class="inline-block w-4 h-4 bg-blue-500 rounded-full"></span> -->
                           <Building2 class="size-4"/>
@@ -230,6 +230,7 @@ import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the p
 import { targetAudience } from '~/lib/data';
 // import { sectors } from '~/lib/data';
 import { useProfileStore } from '~/store/profile';
+import { transformHref } from '~/lib/utils';
 
 const sectors = [
   { id: 1, name: 'Agriculture' },
