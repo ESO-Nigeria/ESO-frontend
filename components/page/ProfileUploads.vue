@@ -93,7 +93,7 @@
       </div>
     </div> -->
     <form>
-      <div class="flex gap-4 flex-col">
+      <div class="flex gap-4 flex-col px-2 lg:px-0">
         <div>
           <div class="mb-4">
             <p class="text-[#3F434A] text-base font-medium">CAC Document</p>
@@ -214,7 +214,7 @@
         </div>
 
         <FormField v-slot="{ componentField }" name="organization_name" class="">
-          <FormItem class="space-y-1 w-1/2">
+          <FormItem class="space-y-1 w-full lg:w-1/2">
             <FormLabel class="text-[#3F434A] text-base font-medium">Number of Years in Operation</FormLabel>
             <FormControl>
               <Input type="number"
@@ -232,7 +232,7 @@
                 <LoaderCircle v-show="loading" class="animate-spin h-4 w-4 ml-2" />
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent class="max-w-[426px] pt-12">
+            <AlertDialogContent class="w-10/12 lg:max-w-[426px] pt-12">
               <AlertDialogHeader>
                 <AlertDialogTitle
                   class=" pt-4 pb-2 text-3xl text-center text-gray-950"

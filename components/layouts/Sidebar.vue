@@ -5,7 +5,7 @@
     <!-- SIDEBAR HEADER -->
     <div class="flex items-center justify-between px-10">
       <NuxtLink to="/">
-        <img src="~/assets/images/icons/logo.svg" alt="Logo" class="w-20 h-10" />
+        <img src="~/assets/images/Main-Logo.png" alt="Logo" class="w-auto h-16" />
         <!-- <span class="text-2xl font-bold dark:text-boxdark">Logo</span> -->
       </NuxtLink>
     </div>

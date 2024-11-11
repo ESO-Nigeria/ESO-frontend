@@ -13,7 +13,7 @@
      
         <div class="flex-col flex gap-3">
           
-          <div class="grid grid-cols-3 gap-4 ">
+          <div class="grid lg:grid-cols-3 gap-4 ">
             <LayoutsCard>
               <LayoutsAnalyticalCard
                 title="All"

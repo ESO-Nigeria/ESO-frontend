@@ -31,7 +31,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         'general-programms-program_id-details',
         'general-esos',
         'general-eso-eso_id-details',
-        
+        'general-about-us'
        
     ];
     

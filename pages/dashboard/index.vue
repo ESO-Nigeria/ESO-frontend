@@ -13,8 +13,8 @@
              />
         </div>
 
-        <div v-if="profile?.approval_status !== 'APPROVED'" class="bg-white p-8 rounded-md flex flex-col gap-4 ">
-            <div class="grid grid-cols-2 items-center">
+        <div v-if="profile?.approval_status !== 'APPROVED'" class="bg-white p-4 lg:p-8 rounded-md flex flex-col gap-4 ">
+            <div class="grid lg:grid-cols-2 items-center">
               <LayoutsSubTitleHeader
               :title="`Welcome aboard🚀, ${user?.first_name ? user?.first_name : ''}`"
                />
@@ -26,7 +26,7 @@
               </p>
             </div>
             <div>
-              <div class="grid grid-cols-3 gap-4 ">
+              <div class="grid lg:grid-cols-3 gap-4 ">
                 <div class="px-8 py-8 flex flex-col gap-2.5 border rounded border-[#D0D5DD]">
                   <div>
                     <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -114,7 +114,7 @@
           <LayoutsSubTitleHeader
           :title="'Programmes'"
            />
-          <div class="grid grid-cols-3 gap-4 ">
+          <div class="grid lg:grid-cols-3 gap-4 ">
             <LayoutsCard>
               <LayoutsAnalyticalCard
                 title="All"

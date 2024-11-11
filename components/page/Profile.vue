@@ -25,7 +25,7 @@
 
     <p class="text-base text-secondary-body-500">Enter details about your organization for verification.</p>
     <div>
-      <div class="flex gap-14 items-start ">
+      <div class="flex flex-col lg:flex-row gap-5 lg:gap-14 items-start ">
         <div v-bind="getRootProps1()" class="cursor-pointer">
           <Avatar size="xl">
             <AvatarImage :src="image_preview_link || profile?.logo" alt="@radix-vue" />
@@ -45,8 +45,8 @@
               </AvatarFallback>
           </Avatar>
         </div>
-        <div class="flex-1">
-          <form  class="flex gap-4 flex-col ">
+        <div class="lg:flex-1">
+          <form  class="flex gap-4 flex-col px-2 lg:px-0">
             <FormField :modelValue="user?.organization_name" v-slot="{ componentField }" name="organization_name">
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">Organization Name</FormLabel>
@@ -289,7 +289,7 @@
                   <LoaderCircle v-show="loading" class="animate-spin h-4 w-4 ml-2" />
                 </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent class="max-w-[426px] pt-12">
+              <AlertDialogContent class=" w-10/12 lg:max-w-[426px] pt-12">
                 <AlertDialogHeader>
                   <AlertDialogTitle
                     class=" pt-4 pb-2 text-3xl text-center text-gray-950"

@@ -13,8 +13,8 @@
            :title="`${user?.organization_name ? user?.organization_name : ''}`"
              />
         </div>
-        <div class="bg-white p-8 rounded-md flex flex-col gap-4 ">
-            <div class="grid grid-cols-2 items-center">
+        <div class="bg-white p-4 lg:p-8 rounded-md flex flex-col gap-4 ">
+            <div class="grid lg:grid-cols-2 items-center">
               <LayoutsSubTitleHeader
                :title="`Welcome aboard🚀, ${user?.first_name ? user?.first_name : ''}`"
                />
@@ -26,10 +26,63 @@
               </p>
             </div>
             <div>
+              <Accordion type="single" class="lg:hidden space-y-4" collapsible default-value="item-1">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger class="p-6 whitespace-nowrap bg-[#F2F4F7] text-[#667085] rounded-t-xl data-state=open  data-[state=open]:bg-primary-200  data-[state=open]:text-primary-700">
+                    
+                    <div class="">
+
+                      <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
+                        <span class="text-white">1</span>
+                       </span>
+                       
+                       Organization Profile
+                    </div>
+                    
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <PageProfile :user="user" />
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger class="p-6 whitespace-nowrap bg-[#F2F4F7] text-[#667085] rounded-t-xl data-state=open  data-[state=open]:bg-primary-200  data-[state=open]:text-primary-700">
+                    
+                    <div class="">
+
+                      <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
+                        <span class="text-white">2</span>
+                       </span>
+                       
+                       Certificates & Licences
+                    </div>
+                    
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <PageProfileUploads :user="user" />
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                  <AccordionTrigger class="p-6 whitespace-nowrap bg-[#F2F4F7] text-[#667085] rounded-t-xl data-state=open  data-[state=open]:bg-primary-200  data-[state=open]:text-primary-700">
+                    
+                    <div class="">
+
+                      <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
+                        <span class="text-white">3</span>
+                       </span>
+                       
+                       Web & Socials
+                    </div>
+                    
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <PageProfileLinks :user="user" />
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
               <Tabs
               default-value="orders"
-              class="">
-              <TabsList class="grid grid-cols-3 justify-start gap-1">
+              class="hidden lg:block">
+              <TabsList class="grid lg:grid-cols-3 justify-start gap-1">
                 <TabsTrigger inner_class="flex items-center justify-center" value="orders" class="py-6 data-[state=active]:bg-primary-200  data-[state=active]:text-primary-700">
                  <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
                   <span class="text-white">1</span>
@@ -37,11 +90,13 @@
                  
                  Organization Profile 
                 </TabsTrigger>
-                <TabsTrigger :disabled="!profile" inner_class="flex items-center justify-center" value="dispensed" class="py-6 data-[state=active]:bg-primary-200 flex data-[state=active]:text-primary-700">
+                <!-- :disabled="!profile" -->
+                <TabsTrigger :disabled="!profile"  inner_class="flex items-center justify-center" value="dispensed" class="py-6 data-[state=active]:bg-primary-200 flex data-[state=active]:text-primary-700">
                   <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
                     <span class="text-white">2</span>
                    </span>                  Certificates & Licences  </TabsTrigger>
-                <TabsTrigger :disabled="!profile" inner_class="flex items-center justify-center" value="dispensed2" class="py-6 data-[state=active]:bg-primary-200 data-[state=active]:text-primary-700"> 
+                   <!-- :disabled="!profile" -->
+                   <TabsTrigger :disabled="!profile" inner_class="flex items-center justify-center" value="dispensed2" class="py-6 data-[state=active]:bg-primary-200 data-[state=active]:text-primary-700"> 
                   <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
                     <span class="text-white">3</span>
                    </span>
@@ -59,6 +114,8 @@
                 <PageProfileLinks :user="user" />
               </TabsContent>
             </Tabs>
+
+           
             </div>
         </div>
 
@@ -70,6 +127,10 @@
 </template>
 
 <script setup>
+import Accordion from '~/components/ui/accordion/Accordion.vue';
+import AccordionContent from '~/components/ui/accordion/AccordionContent.vue';
+import AccordionItem from '~/components/ui/accordion/AccordionItem.vue';
+import AccordionTrigger from '~/components/ui/accordion/AccordionTrigger.vue';
 import Tabs from '~/components/ui/tabs/Tabs.vue';
 import TabsContent from '~/components/ui/tabs/TabsContent.vue';
 import TabsList from '~/components/ui/tabs/TabsList.vue';
