@@ -184,7 +184,7 @@ async function handleFormSubmit() {
         </div>
         <div class="h-full py-6">
           <div class="grid h-full items-stretch gap-6 md:grid-cols-[minmax(0,1fr)_300px]">
-            <div class=" bg-white rounded-md py-6 px-10">
+            <div class=" bg-white rounded-md px-3 py-4 lg:py-6 lg:px-10">
               <div class="space-y-5">
                 <LayoutsSubTitleHeader title="Add Programme" :custom_class="'text-[#3F434A]'" />
                 <div class="relative mb-6">
@@ -213,7 +213,7 @@ async function handleFormSubmit() {
 
                 </div>
 
-                <form action="">
+                <form>
                   <div v-if="currentStep === 0" class="flex gap-4 flex-col mt-10">
                     <div>
                       <p class="text-base text-[#3F434A] font-medium">Upload Programme Image</p>
@@ -362,10 +362,10 @@ async function handleFormSubmit() {
                   </div>
 
                   <div v-if="currentStep === 1" class="flex gap-4 flex-col mt-10">
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid lg:grid-cols-2 gap-4">
                       <FormField v-slot="{ componentField }" name="participants">
                         <FormItem class="space-y-1">
-                          <FormLabel class="text-[#3F434A] text-base font-medium text-nowrap">No of participant accepted
+                          <FormLabel class="text-[#3F434A] text-base font-medium lg:text-nowrap">No of participant accepted
                             per cohort(Optional)</FormLabel>
                           <FormControl>
                             <div class="relative w-full  items-center">
@@ -394,7 +394,7 @@ async function handleFormSubmit() {
                       </FormField>
                     </div>
                   
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid lg:grid-cols-2 gap-4">
                       <FormField v-slot="{ componentField }" name="participants">
                         <FormItem class="space-y-1">
                           <FormLabel class="text-[#3F434A] text-base font-medium">Timeline / Duration</FormLabel>
@@ -543,7 +543,7 @@ async function handleFormSubmit() {
                     </div>
                     <div class="space-y-6">
                       <p class="text-lg text-[#071827] font-medium">Program Overview</p>
-                      <div class="grid grid-cols-2">
+                      <div class="grid gap-y-2 lg:grid-cols-2">
                         <div class="space-y-2">
                           <p class="text-sm text-primary font-bold">No of participant accepted per cohort(Optional)</p>
                           <p class="text-sm text-[#3F434A] font-normal">{{ programme_details.number_of_participants }}</p>
@@ -553,7 +553,7 @@ async function handleFormSubmit() {
                           <p class="text-sm text-[#3F434A] font-normal">{{ programme_details.amount }}</p>
                         </div>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid gap-y-2 lg:grid-cols-2">
                         <div class="space-y-2">
                           <p class="text-sm text-primary font-bold">Timeline/Duration</p>
                           <p class="text-sm text-[#3F434A] font-normal">{{ programme_details.start_date }} - {{ programme_details.end_date }}</p>
@@ -568,7 +568,7 @@ async function handleFormSubmit() {
                         <p class="text-sm text-primary font-bold">Location*</p>
                         <p class="text-sm text-[#3F434A] font-normal">{{ programme_details.location.join(', ') }}</p>
                       </div>
-                      <div class="grid grid-cols-2">
+                      <div class="grid gap-y-2 lg:grid-cols-2">
                         <div class="space-y-2">
                           <p class="text-sm text-primary font-bold">Program Mode</p>
                           <p class="text-sm text-[#3F434A] font-normal">{{ programme_details.program_mode }}</p>

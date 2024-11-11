@@ -13,8 +13,8 @@
              :title="`${user?.organization_name ? user?.organization_name : ''}`"
                />
           </div>
-          <div class="bg-white p-8 rounded-md flex flex-col gap-4 ">
-              <div class="grid grid-cols-2 items-center">
+          <div class="bg-white px-3 py-4 lg:p-8 rounded-md flex flex-col gap-4 ">
+              <div class="grid lg:grid-cols-2 items-center">
                 <LayoutsSubTitleHeader
                  :title="`Settings`"
                  />
@@ -25,7 +25,7 @@
                 <Tabs
                 default-value="orders"
                 class="">
-                <TabsList class="grid grid-cols-4 justify-start gap-1">
+                <TabsList class="grid lg:grid-cols-4 justify-start gap-1">
                   <TabsTrigger inner_class="flex items-center justify-center" value="orders" class="py-6 data-[state=active]:bg-primary-200  data-[state=active]:text-primary-700">
                    <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
                     <span class="text-white">1</span>
@@ -33,7 +33,7 @@
                    
                    Organization Profile 
                   </TabsTrigger>
-                  <TabsTrigger :disabled="!profile" inner_class="flex items-center justify-center" value="dispensed" class="py-6 data-[state=active]:bg-primary-200 flex data-[state=active]:text-primary-700">
+                  <TabsTrigger inner_class="flex items-center justify-center" value="dispensed" class="py-6 data-[state=active]:bg-primary-200 flex data-[state=active]:text-primary-700">
                     <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
                       <span class="text-white">2</span>
                      </span>                  Certificates & Licences  </TabsTrigger>
@@ -60,7 +60,7 @@
                   <PageProfileLinks :user="user" />
                 </TabsContent>
                 <TabsContent value="change_password">
-                    <form @submit="onSubmit" class="w-1/2 mx-auto flex gap-4 flex-col mt-8">
+                    <form @submit="onSubmit" class="w-full lg:w-1/2 mx-auto flex gap-4 flex-col mt-8">
         <div class="flex flex-col gap-2">
           <h6 class="text-secondary-header3 text-xl font-bold">Set a new password</h6>
         </div>

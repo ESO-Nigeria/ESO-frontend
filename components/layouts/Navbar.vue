@@ -1,8 +1,15 @@
 <script setup lang="ts">
+import Sheet from '../ui/sheet/Sheet.vue';
+import SheetContent from '../ui/sheet/SheetContent.vue';
+import SheetDescription from '../ui/sheet/SheetDescription.vue';
+import SheetHeader from '../ui/sheet/SheetHeader.vue';
+import SheetTitle from '../ui/sheet/SheetTitle.vue';
+import SheetTrigger from '../ui/sheet/SheetTrigger.vue';
 import AvatarDropDown from './HeaderComponents/AvatarDropDown.vue'
 import { useAuthStore } from '~/store/auth';
 
 const authStore = useAuthStore();
+const expanded = ref(false); // Step 1: Add state for mobile nav
 
 const user = computed(() => {
   return authStore.user;
@@ -16,6 +23,32 @@ const user = computed(() => {
     class="sticky top-0 z-40 flex w-full bg-white drop-shadow-1 "
   >
     <div class="flex flex-grow items-center justify-between py-4 px-4 shadow-2 md:px-6 2xl:px-11">
+      <div class="flex lg:hidden">
+      
+        <Sheet>
+          <SheetTrigger>
+            <span aria-hidden="true">
+              <!-- Hamburger Icon -->
+              <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </span>
+          </SheetTrigger>
+          <SheetContent side="left">
+            <SheetHeader>
+              
+            </SheetHeader>
+            <LayoutsSidebar />
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      <div class="flex lg:hidden items-center justify-between  ml-4">
+        <NuxtLink to="/">
+          <img src="~/assets/images/Main-Logo.png" alt="Logo" class="w-auto h-10" />
+          <!-- <span class="text-2xl font-bold dark:text-boxdark">Logo</span> -->
+        </NuxtLink>
+      </div>
       <div class="flex items-center gap-3 ml-auto">
         <ul class="flex items-center gap-3 ">
           <li class="">

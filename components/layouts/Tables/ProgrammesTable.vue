@@ -106,8 +106,8 @@ onMounted(() => {
   <div>
     <div class="bg-white border-t">
       <div
-      class="flex justify-between items-center px-6 py-[19px] border-b-[1.5px] border-gray-200">
-      <div class="flex items-center space-x-2">
+      class="flex flex-col lg:flex-col lg:justify-between gap-3 lg:items-center px-6 py-[19px] border-b-[1.5px] border-gray-200">
+      <div class="flex flex-col lg:flex-col lg:items-center space-y-2 lg:space-x-2">
         <div
           class="relative flex gap-1.5 items-center px-4 bg-[#F9FAFB] rounded-lg border">
           <span class="">

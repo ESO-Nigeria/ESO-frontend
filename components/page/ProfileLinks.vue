@@ -23,7 +23,7 @@
     <p class="text-base text-secondary-body-500">Provide your website and social media links to complete verification.</p>
     <div>
       <div class="flex-1 flex flex-col">
-        <form class="flex gap-4 flex-col w-2/6 ">
+        <form class="flex gap-4 flex-col px-2 lg:px-0 w-full lg:w-2/6 ">
           
           <FormField v-slot="{ componentField }" name="website_url">
             <FormItem class="space-y-1">
@@ -136,7 +136,7 @@
                 <LoaderCircle v-show="loading" class="animate-spin h-4 w-4 ml-2" />
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent class="max-w-[426px] pt-12">
+            <AlertDialogContent class="w-10/12 lg:max-w-[426px] pt-12">
               <AlertDialogHeader>
                 <AlertDialogTitle
                   class=" pt-4 pb-2 text-3xl text-center text-gray-950"
