@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NuxtLayout name="general" :title="`${ESO?.user?.organization_name}`">
+    <NuxtLayout name="general" :title="`${ESO?.user?.organization_name || 'Loading....'}`">
       <div v-if="loading" class="flex h-screen justify-center items-center">
         <LayoutsLoader />
       </div>
