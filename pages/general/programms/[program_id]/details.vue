@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NuxtLayout name="general" :title="program?.title">
+    <NuxtLayout name="general" :title="program?.title || 'Loading....'">
       <div v-if="loading" class="flex h-screen justify-center items-center">
         <LayoutsLoader />
       </div>

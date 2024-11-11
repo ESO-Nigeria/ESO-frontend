@@ -163,7 +163,7 @@
                         <img
                            :src="item?.logo_url || placeholderImg"
                           alt="ESOs Logo"
-                          class="w-full h-[115px] object-cover rounded-lg"
+                          class="w-full h-[115px] object-contain rounded-lg"
                         />  
                         <!-- <NuxtImg
                             :src="item?.logo || '~/assets/images/placeholderImg.png'" 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NuxtLayout name="general" :title="`${ESO?.user?.organization_name}`">
+    <NuxtLayout name="general" :title="`${ESO?.user?.organization_name || 'Loading....'}`">
       <div v-if="loading" class="flex h-screen justify-center items-center">
         <LayoutsLoader />
       </div>
@@ -17,16 +17,16 @@
               <div>
                 <div>
                   <div class="h-[290px] bg-[#EAECF0] mt-4"> 
-                    <img :src="ESO?.logo_url || '~/assets/images/placeholderImg.png'" class="h-full w-full rounded-md object-cover"/>
+                    <img :src="ESO?.logo_url || '~/assets/images/placeholderImg.png'" class="h-full w-full rounded-md object-contain"/>
                   </div>
                   <div class="mt-3">
                     <div class="space-y-3">
-                      <div class="space-y-1 text-center">
+                      <!-- <div class="space-y-1 text-center">
                     <p class="text-[32px] text-primary font-bold">50</p>
                     <p class="text-sm text-[#3F434A] font-normal">
                       Programmes
                     </p>
-                  </div>
+                  </div> -->
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Organization Type</p>
                     <p class="text-sm text-[#3F434A] font-normal">
@@ -61,13 +61,13 @@
                       {{ ESO?.company_phone }}
                     </p>
                   </div>
-                  <div>
+                  <!-- <div>
                     <a :href="'#'" target="_blank" class="w-full mt-3">
                     <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
                    Visit Website
                   </Button>
                 </a>
-                  </div>
+                  </div> -->
                   
                   </div>
                     <!-- <div class=" flex divide-x-2">
@@ -94,9 +94,16 @@
                 <div class="space-y-6">
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Sector</p>
-                    <p class="text-sm text-[#3F434A] font-normal">
-                      {{ ESO.sectors || 'N/A' }}
-                    </p>
+                    <div class="flex space-x-2 mt-2 font-normal">
+                     
+                      <span
+            v-for="tag in  ESO?.sectors"
+            :key="tag"
+            class="bg-[#ECFDF3] text-secondary-body-500 text-xs px-2 py-1 rounded-md"
+          >
+          {{sectors?.find(type => type.id == tag).label }}
+          </span>
+                    </div>
                   </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Brief Description</p>
@@ -137,7 +144,8 @@
 import { CalendarDays } from 'lucide-vue-next';
 import { useProfileStore } from '~/store/profile';
 import { useDayjs } from '#dayjs' // not need if you are using auto import
-import { organization_types } from '~/lib/data';
+import { organization_types, sectors } from '~/lib/data';
+
 const dayjs = useDayjs()
 
 const { eso_id } = useRoute().params

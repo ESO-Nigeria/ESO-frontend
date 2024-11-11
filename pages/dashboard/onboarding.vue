@@ -44,8 +44,8 @@
                     <PageProfile :user="user" />
                   </AccordionContent>
                 </AccordionItem>
-                <AccordionItem value="item-2">
-                  <AccordionTrigger class="p-6 whitespace-nowrap bg-[#F2F4F7] text-[#667085] rounded-t-xl data-state=open  data-[state=open]:bg-primary-200  data-[state=open]:text-primary-700">
+                <AccordionItem  value="item-2">
+                  <AccordionTrigger :disabled="!profile"  class="p-6 whitespace-nowrap bg-[#F2F4F7] text-[#667085] rounded-t-xl data-state=open  data-[state=open]:bg-primary-200  data-[state=open]:text-primary-700">
                     
                     <div class="">
 
@@ -61,8 +61,8 @@
                     <PageProfileUploads :user="user" />
                   </AccordionContent>
                 </AccordionItem>
-                <AccordionItem value="item-3">
-                  <AccordionTrigger class="p-6 whitespace-nowrap bg-[#F2F4F7] text-[#667085] rounded-t-xl data-state=open  data-[state=open]:bg-primary-200  data-[state=open]:text-primary-700">
+                <AccordionItem  value="item-3">
+                  <AccordionTrigger :disabled="!profile" class="p-6 whitespace-nowrap bg-[#F2F4F7] text-[#667085] rounded-t-xl data-state=open  data-[state=open]:bg-primary-200  data-[state=open]:text-primary-700">
                     
                     <div class="">
 
