@@ -9,7 +9,62 @@
             :breadcrumbs="[{ text: 'ESOs' }]"></LayoutsBreadcrumb>
             <div class="py-6 h-full">
               <div class="grid h-full items-stretch gap-6 md:grid-cols-[350px_minmax(0,1fr)]">
-                <div class="py-4">
+                <Dialog >
+                  <DialogTrigger class="lg:hidden">
+                    <h2 class="text-xl text-primary flex gap-1 lg:hidden"> 
+                      <img src="~/assets/images/icons/filter.svg" class=" items-center"/> 
+                      <span>Filter</span>
+                    </h2>
+                  </DialogTrigger>
+                  <DialogScrollContent class="w-10/12 rounded">
+                    <DialogHeader showClose>
+                      <DialogTitle>
+                        <h2 class="text-xl text-primary flex gap-1 lg:hidden"> 
+                          <img src="~/assets/images/icons/filter.svg" class=" items-center"/> 
+                          <span>Filter</span>
+                        </h2>
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div class="space-y-4">
+                      <div>
+                        <p class="text-primary text-base font-medium">Sector</p>
+                        <div>
+                          <FormField v-for="item in sectors" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" :name="item.name">
+                            <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
+                              <FormControl>
+                                <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
+                              </FormControl>
+                              <div class=" leading-none text-secondary-body-500 text-sm">
+                                <FormLabel class="text-secondary-body-500">{{item.name}}</FormLabel>
+                              </div>
+                            </FormItem>
+                          </FormField>
+                          
+                        </div>
+                      </div>
+                      <div>
+                        <p class="text-primary text-base font-medium">Organization Type</p>
+                        <div>
+                          <FormField v-for="item in organization_types" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" 
+                          :name="item.label">
+                            <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
+                              <FormControl>
+                                <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
+                              </FormControl>
+                              <div class=" leading-none text-secondary-body-500 text-sm">
+                                <FormLabel class="text-secondary-body-500">{{item.label}}</FormLabel>
+                              </div>
+                            </FormItem>
+                          </FormField>
+                          
+                        </div>
+                      </div>
+                   
+                  
+                    </div>
+                  </DialogScrollContent>
+                </Dialog>
+                <div class="py-4 hidden lg:block">
                   <h2 class="text-xl  mb-4 text-primary flex gap-1"> 
                     <img src="~/assets/images/icons/filter.svg" class=" items-center"/> 
                   <span>Filter</span>
@@ -53,7 +108,7 @@
                   </div>
                 </div>
                 <div class="space-y-5">
-                  <div class="flex justify-between gap-x-6">
+                  <div class="flex flex-col lg:flex-row justify-between gap-x-6 gap-y-4 lg:gap-y-0">
                     <div class="flex-1">
                       <FormField v-slot="{ componentField }" name="search">
                         <FormItem class="space-y-1">
@@ -100,7 +155,7 @@
                     </DropdownMenu>
                   </div>
 
-                  <div class="grid grid-cols-3 gap-6">
+                  <div class="grid lg:grid-cols-3 gap-7">
                     <Card v-for="(item, index) in ESOs?.results" :key="index"  class="shadow-lg rounded-lg sm:px-3 py-0 overflow-hidden">
                       <NuxtLink :to="`/general/eso/${item?.id}/details`">
                       <CardHeader class="p-0 relative">

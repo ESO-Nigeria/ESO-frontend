@@ -12,7 +12,7 @@
               <div class="grid h-full items-stretch gap-6 ">
                
                 <div class="space-y-5">
-                  <div class="flex justify-between gap-x-6 w-1/2">
+                  <div class="flex flex-col lg:flex-row justify-between gap-x-6 gap-y-4 lg:gap-y-0 w-full lg:w-1/2">
                     <div class="flex-1">
                       <FormField v-slot="{ componentField }" name="search">
                         <FormItem class="space-y-1">
