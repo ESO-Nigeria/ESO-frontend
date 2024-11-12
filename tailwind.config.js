@@ -1,4 +1,5 @@
 const animate = require("tailwindcss-animate")
+const lineClamp = require('@tailwindcss/line-clamp')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -109,5 +110,5 @@ module.exports = {
       },
     },
   },
-  plugins: [animate],
+  plugins: [animate, lineClamp],
 }

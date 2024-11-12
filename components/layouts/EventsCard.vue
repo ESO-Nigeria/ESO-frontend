@@ -21,7 +21,7 @@
           <Building2 class="size-4"/>
           <span> {{ event?.organization_name|| 'N/A' }}</span>
         </div>
-        <p class="text-secondary-body-contrast text-sm px-1 py-1 truncate" v-html="event?.description" />
+        <p class="text-secondary-body-contrast text-sm px-1 py-1 line-clamp-3" v-html="event?.description" />
         <div class=" text-xs text-[#FE7102] capitalize font-normal px-1 py-1">
           {{ event?.payment_mode || 'N/A' }}
         </div>
