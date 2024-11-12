@@ -8,7 +8,7 @@ export default defineNuxtConfig({
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1, maximum-scale-1, user-scalable=0',
       title:
-        '',
+        'Enterprise Support Organisations (ESO) Collaborative',
       htmlAttrs: {
         lang: 'en',
       },
@@ -21,14 +21,14 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            '',
+            'We are a group of Professionals providing support to MSMEs in Nigeria and building a stronger ecosystem',
         },
         { hid: 'og-type', property: 'og:type', content: 'website' },
         {
           hid: 'og-title',
           property: 'og:title',
           content:
-            '',
+            'We are a group of Professionals providing support to MSMEs in Nigeria and building a stronger ecosystem',
         },
         {
           hid: 't-type',

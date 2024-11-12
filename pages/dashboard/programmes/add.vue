@@ -382,13 +382,28 @@ async function handleFormSubmit() {
                         <FormItem class="space-y-1">
                           <FormLabel class="text-[#3F434A] text-base font-medium">Participation Fee</FormLabel>
                           <FormControl>
-                            <div class="relative w-full  items-center">
+                            <!-- <div class="relative w-full  items-center">
                               <Input type="number"
                                 class=" h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                                 placeholder="Enter Amount or Free" v-model="formFieldsDetails.amount" />
 
-                            </div>
-
+                            </div> -->
+                        <div class="relative w-full  items-center">
+                            <Select v-model="formFieldsDetails.amount">
+                              <SelectTrigger
+                                class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
+                                <SelectValue placeholder="Select Program Mode" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem  value="free">
+                                 Free
+                                </SelectItem>
+                                <SelectItem  value="paid">
+                                  Paid
+                                 </SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
                           </FormControl>
                         </FormItem>
                       </FormField>

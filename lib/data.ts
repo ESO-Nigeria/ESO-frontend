@@ -82,7 +82,7 @@ export const locations = [
   ]
 
   export const organization_types = [
-    { id: 'FCM', label: 'Financial Management Services'},
+    { id: 'FMS', label: 'Financial Management Services'},
     {id: 'LS', label: 'Legal Services '},
     {id: 'IRS', label: 'Investment-Readiness Services'},
     // {id: 'MD', label: 'Management Consulting'},
@@ -99,8 +99,8 @@ export const locations = [
     },
     {
       image: articleImage2,
-      title: "Exploring the Future of Technology in Nigeria",
-      description: "The technology landscape in Nigeria is evolving rapidly. This article discusses the latest trends and innovations in the tech industry.",
+      title: " WHY MSMES MATTER! ",
+      description: "Recently, the Central Bank of Nigeria (CBN) raised the Interest rates again as the Monetary Policy Rate (MPR) went up to 50 basis points at 27.25 per cent from the previous 26.75 per cent announced at the 297th meeting of th",
       link: "/path-to-article-2"
     },
     {
