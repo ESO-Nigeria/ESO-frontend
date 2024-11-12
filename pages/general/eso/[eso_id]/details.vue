@@ -30,8 +30,7 @@
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Organization Type</p>
                     <p class="text-sm text-[#3F434A] font-normal">
-
-                      {{organization_types?.find(type => type.id == ESO?.user?.organization_type)?.label }}
+                      {{organization_types?.find(type => type.id == ESO?.user?.organization_type)?.label}}
                     </p>
                   </div>
                   <div class="space-y-2">
@@ -61,26 +60,42 @@
                       {{ ESO?.company_phone }}
                     </p>
                   </div>
-                  <!-- <div>
-                    <a :href="'#'" target="_blank" class="w-full mt-3">
+                  <div class="flex gap-x-2">
+                    <a class="" v-for="link in ESO?.social_links" :href="link.url" :key="link?.id" target="_blank" rel="noopener noreferrer">
+                      <span v-if="link?.platform == 'TWITTER'">
+                        <img src="~/assets/images/icons/twitter.svg" alt="social_icon" />
+                      </span>
+                      <span v-if="link?.platform == 'FACEBOOK'">
+                        <img src="~/assets/images/icons/facebook.svg" alt="social_icon" />
+                      </span>
+                      <span v-if="link?.platform == 'LINKEDIN'">
+                        <img src="~/assets/images/icons/linkedIn.svg" alt="social_icon" />
+                      </span>
+                      <span v-if="link?.platform == 'INSTAGRAM'">
+                        <img src="~/assets/images/icons/instagram.svg" alt="social_icon" />
+                      </span>
+                    </a>
+                  </div>
+                  <div>
+                    <a :href="ESO.social_links?.find(type => type.platform == 'WEBSITE')?.url" target="_blank" class="w-full mt-3">
                     <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
                    Visit Website
                   </Button>
                 </a>
-                  </div> -->
+                  </div>
                   
                   </div>
-                    <!-- <div class=" flex divide-x-2">
-          <p class=" text-sm text-[#FE7102] font-normal px-1 ">
+                    <div class=" flex divide-x-2">
+          <!-- <p class=" text-sm text-[#FE7102] font-normal px-1 ">
             Free
-          </p>
-          <p class="text-secondary-body-contrast text-nowrap text-sm px-1 ">
+          </p> -->
+          <!-- <p class="text-secondary-body-contrast text-nowrap text-sm px-1 ">
             Startup (Post-revenue)
-          </p>
+          </p> -->
         </div>
-        <div>
+        <!-- <div>
           <span class="text-secondary-body-contrast  text-sm px-1 ">
-            Status: <span class="text-[#257F4A] capitalize">{{  event?.application_status }}</span>
+            Status: <span class="text-[#257F4A] capitalize">{{  ESO?.approval_status }}</span>
           </span>
         </div> -->
                  
@@ -94,7 +109,7 @@
                 <div class="space-y-6">
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Sector</p>
-                    <div class="flex space-x-2 mt-2 font-normal">
+                    <div class="flex flex-row gap-2 flex-wrap mt-2 font-normal">
                      
                       <span
             v-for="tag in  ESO?.sectors"
