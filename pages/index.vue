@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="relative">
-                  <img class=" w-full  rounded-tl-[142px] " src="~/assets/images/eso-hero-image-banner.png" alt="" />
+                  <img class=" w-full  rounded-tl-[142px] " src="~/assets/images/eso-hero-image-banner-new.png" alt="" />
               </div>
               
             </div>
