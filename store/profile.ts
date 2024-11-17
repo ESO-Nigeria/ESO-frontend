@@ -176,7 +176,7 @@ export const useProfileStore = defineStore("profile", {
     async getArticles(){
       this.loadingArticles = true
       try{
-        const response = await apiGetRequest(`/api/articles/`);
+        const response = await apiGetUnRestrictedRequest(`/api/articles/`);
         this.articles = response.data
         this.loadingProfile = false
         return { data: response, error: response.error };
@@ -187,7 +187,7 @@ export const useProfileStore = defineStore("profile", {
     async getSingleArticles(id: any){
       this.loading = true
       try{
-        const response = await apiGetRequest(`/api/articles/${id}`);
+        const response = await apiGetUnRestrictedRequest(`/api/articles/${id}`);
         this.singleArticles = response.data
         this.loading = false
         return { data: response, error: response.error };
