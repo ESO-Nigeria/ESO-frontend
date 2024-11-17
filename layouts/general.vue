@@ -21,8 +21,6 @@
 <script setup>
 const layoutCustomProps = useAttrs()
 
-console.log(layoutCustomProps.title, layoutCustomProps.loading)
-
 </script>
 
 <style lang="scss" scoped>

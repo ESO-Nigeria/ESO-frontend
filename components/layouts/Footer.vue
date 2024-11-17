@@ -12,16 +12,16 @@
           <h2 class="title-font font-semibold  tracking-widest  ">Get Involved</h2>
           <nav class="list-none space-y-3">
             <li>
-              <a class="">Enterprise Support Organizations</a>
+              <NuxtLink to="/general/esos" class="">Enterprise Support Organizations</NuxtLink>
             </li>
             <li>
-              <a class="">Businesses</a>
+              <a class="">Articles</a>
             </li>
             <li>
-              <a class="">Programmes</a>
+              <NuxtLink to="/general/programmes" class="">Programmes</NuxtLink>
             </li>
             <li>
-              <a class="">Events</a>
+              <NuxtLink to="/general/events" class="">Events</NuxtLink>
             </li>
           </nav>
         </div>

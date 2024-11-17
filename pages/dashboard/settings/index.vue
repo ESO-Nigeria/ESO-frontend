@@ -22,9 +22,62 @@
               </div>
              
               <div>
+                <Accordion type="single" class="lg:hidden space-y-4" collapsible default-value="item-1">
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger class="p-6 whitespace-nowrap bg-[#F2F4F7] text-[#667085] rounded-t-xl data-state=open  data-[state=open]:bg-primary-200  data-[state=open]:text-primary-700">
+                      
+                      <div class="">
+  
+                        <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
+                          <span class="text-white">1</span>
+                         </span>
+                         
+                         Organization Profile
+                      </div>
+                      
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <PageUpdateProfile :user="user" />
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem  value="item-2">
+                    <AccordionTrigger class="p-6 whitespace-nowrap bg-[#F2F4F7] text-[#667085] rounded-t-xl data-state=open  data-[state=open]:bg-primary-200  data-[state=open]:text-primary-700">
+                      
+                      <div class="">
+  
+                        <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
+                          <span class="text-white">2</span>
+                         </span>
+                         
+                         Certificates & Licences
+                      </div>
+                      
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <PageProfileUpdateUploads :user="user" />
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem  value="item-3">
+                    <AccordionTrigger class="p-6 whitespace-nowrap bg-[#F2F4F7] text-[#667085] rounded-t-xl data-state=open  data-[state=open]:bg-primary-200  data-[state=open]:text-primary-700">
+                      
+                      <div class="">
+  
+                        <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
+                          <span class="text-white">3</span>
+                         </span>
+                         
+                         Web & Socials
+                      </div>
+                      
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <PageProfileUpdateLinks :user="user" />
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
                 <Tabs
                 default-value="orders"
-                class="">
+                class="hidden lg:block">
                 <TabsList class="grid lg:grid-cols-4 justify-start gap-1">
                   <TabsTrigger inner_class="flex items-center justify-center" value="orders" class="py-6 data-[state=active]:bg-primary-200  data-[state=active]:text-primary-700">
                    <span class="size-5 inline-flex items-center justify-center rounded-full bg-current  text-xs mr-1">
@@ -50,14 +103,14 @@
                 </TabsList>
                 <TabsContent value="orders">
                   
-                  <PageProfile :user="user" />
+                  <PageUpdateProfile :user="user" />
                  
                 </TabsContent>
                 <TabsContent value="dispensed">
-                 <PageProfileUploads :user="user" />
+                 <PageProfileUpdateUploads :user="user" />
                 </TabsContent>
                 <TabsContent value="dispensed2">
-                  <PageProfileLinks :user="user" />
+                  <PageProfileUpdateLinks :user="user" />
                 </TabsContent>
                 <TabsContent value="change_password">
                     <form @submit="onSubmit" class="w-full lg:w-1/2 mx-auto flex gap-4 flex-col mt-8">
@@ -121,12 +174,13 @@
   </template>
   
   <script setup>
-  import Tabs from '~/components/ui/tabs/Tabs.vue';
-  import TabsContent from '~/components/ui/tabs/TabsContent.vue';
-  import TabsList from '~/components/ui/tabs/TabsList.vue';
-  import TabsTrigger from '~/components/ui/tabs/TabsTrigger.vue';
-  import { useAuthStore } from '~/store/auth';
-  import { useProfileStore } from '~/store/profile';
+import AccordionItem from '~/components/ui/accordion/AccordionItem.vue';
+import Tabs from '~/components/ui/tabs/Tabs.vue';
+import TabsContent from '~/components/ui/tabs/TabsContent.vue';
+import TabsList from '~/components/ui/tabs/TabsList.vue';
+import TabsTrigger from '~/components/ui/tabs/TabsTrigger.vue';
+import { useAuthStore } from '~/store/auth';
+import { useProfileStore } from '~/store/profile';
   
   const authStore = useAuthStore();
   const profileStore = useProfileStore()

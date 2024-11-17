@@ -76,7 +76,7 @@
                       </span>
                     </a>
                   </div>
-                  <div>
+                  <div v-if="ESO?.social_links?.length > 0 && ESO.social_links?.find(type => type.platform == 'WEBSITE')?.url">
                     <a :href="ESO.social_links?.find(type => type.platform == 'WEBSITE')?.url" target="_blank" class="w-full mt-3">
                     <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
                    Visit Website

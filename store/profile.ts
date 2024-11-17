@@ -19,6 +19,9 @@ export const useProfileStore = defineStore("profile", {
     program: {},
     ESOs: [],
     singleESO: {},
+    articles:{},
+    loadingArticles: false,
+    singleArticles: {}
   }),
   getters: {
     getToken(state) {
@@ -40,7 +43,6 @@ export const useProfileStore = defineStore("profile", {
         this.profile = response.data?.results[0]
         this.org_profile = response.data?.results[0]
         this.loadingProfile = false
-        console.log('response.data', response.data?.results[0], )
         return { data: response, error: response.error };
       }catch (error){
         return { data: null, error: "Unknown error" }
@@ -50,7 +52,6 @@ export const useProfileStore = defineStore("profile", {
       try {
         const response = await apiPostRequestForFormData(`/api/profiles/`, body);
         // this.submitting = false
-        console.log("response", response.data);
         this.profile = response.data
         // setItem('profile',JSON.stringify(response.data))
         return { data: response, error: response.error };
@@ -62,7 +63,6 @@ export const useProfileStore = defineStore("profile", {
       try {
         const response = await apiPostRequestForFormData(`/api/certificates/`, body);
         // this.submitting = false
-        console.log("response", response.data);
         // this.profile = response.data.data
         // setItem('profile',JSON.stringify(response.data.data))
         return { data: response, error: response.error };
@@ -76,7 +76,6 @@ export const useProfileStore = defineStore("profile", {
         const response = await apiGetRequest(`/api/certificates`);
         this.certificates = response.data
         this.loadingProfile = false
-        console.log('response.data', response.data, this.profile)
         return { data: response, error: response.error };
       }catch (error){
         return { data: null, error: "Unknown error" }
@@ -97,7 +96,6 @@ export const useProfileStore = defineStore("profile", {
         const response = await apiGetRequest(`/api/social-links/`);
         this.links = response.data
         this.loadingProfile = false
-        console.log('response.data', response.data, this.profile)
         return { data: response, error: response.error };
       }catch (error){
         return { data: null, error: "Unknown error" }
@@ -110,7 +108,6 @@ export const useProfileStore = defineStore("profile", {
         // this.links = response.data
         this.events = response.data
         this.loading = false
-        console.log('response.data', response.data)
         return { data: response, error: response.error };
       }catch (error){
         return { data: null, error: "Unknown error" }
@@ -123,20 +120,18 @@ export const useProfileStore = defineStore("profile", {
         // this.links = response.data
         this.event = response.data
         this.loading = false
-        console.log('response.data', response.data)
         return { data: response, error: response.error };
       }catch (error){
         return { data: null, error: "Unknown error" }
       }
     },
-    async getProgrammes(){
+    async getProgrammes(sectors: string | undefined, target_audience: string | undefined, financial_supports: string | undefined, non_financial_supports: string | undefined, page: string | undefined){
       this.loading = true
       try{
-        const response = await apiGetUnRestrictedRequest(`/api/programs/?page=`);
+        const response = await apiGetUnRestrictedRequest(`/api/programs/?sectors=${sectors || ''}&target_audience=${target_audience || ''}&financial_supports=${financial_supports || ''}&non_financial_supports=${non_financial_supports || ''}&page=`);
         // this.links = response.data
         this.programs = response.data
         this.loading = false
-        console.log('response.data', response.data)
         return { data: response, error: response.error };
       }catch (error){
         return { data: null, error: "Unknown error" }
@@ -149,20 +144,18 @@ export const useProfileStore = defineStore("profile", {
         // this.links = response.data
         this.program = response.data
         this.loading = false
-        console.log('response.data', response.data)
         return { data: response, error: response.error };
       }catch (error){
         return { data: null, error: "Unknown error" }
       }
     },
-    async getESOs(){
+    async getESOs(organization_types: undefined, sectors: undefined){
       this.loading = true
       try{
-        const response = await apiGetUnRestrictedRequest(`/api/profiles/`);
+        const response = await apiGetUnRestrictedRequest(`/api/profiles/?user__organization_type=${organization_types || '' }&sectors=${sectors || ''}`);
         // this.links = response.data
         this.ESOs = response.data
         this.loading = false
-        console.log('response.data', response.data)
         return { data: response, error: response.error };
       }catch (error){
         return { data: null, error: "Unknown error" }
@@ -175,7 +168,28 @@ export const useProfileStore = defineStore("profile", {
         // this.links = response.data
         this.singleESO = response.data
         this.loading = false
-        console.log('response.data', response.data)
+        return { data: response, error: response.error };
+      }catch (error){
+        return { data: null, error: "Unknown error" }
+      }
+    },
+    async getArticles(){
+      this.loadingArticles = true
+      try{
+        const response = await apiGetRequest(`/api/articles/`);
+        this.articles = response.data
+        this.loadingProfile = false
+        return { data: response, error: response.error };
+      }catch (error){
+        return { data: null, error: "Unknown error" }
+      }
+    },
+    async getSingleArticles(id: any){
+      this.loading = true
+      try{
+        const response = await apiGetRequest(`/api/articles/${id}`);
+        this.singleArticles = response.data
+        this.loading = false
         return { data: response, error: response.error };
       }catch (error){
         return { data: null, error: "Unknown error" }

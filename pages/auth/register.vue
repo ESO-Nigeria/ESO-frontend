@@ -211,6 +211,7 @@ import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 import { useAuthStore } from '~/store/auth';
+import { toast } from 'vue-sonner';
 
 const formSchema = toTypedSchema(
   z.object({
@@ -220,9 +221,7 @@ const formSchema = toTypedSchema(
     last_name: z.string({ required_error: "Last Name is required."}),
     email: z.string({ required_error: "Email is required."})
       .email({ message: "Must be a valid email" }),
-    whatsapp_number: z.string({required_error: "WhatsApp Number is required"}).min(10, { message: "Whatsapp Number must be at least 10 characters" }) // Minimum length of 10
-      .max(15, { message: "Whatsapp Number cannot exceed 15 characters" }) // Optional: add a max length validation
-    , // Ensure only digits
+    whatsapp_number: z.string().optional(), // Ensure only digits
        
     password: z.string({ message: "Password is required" }),
       // This can stay to ensure there's some input
@@ -243,7 +242,6 @@ const criteria = ref({
 
 // Function to check password strength criteria
 function checkPasswordStrength() {
-  console.log('password', password, values)
   const value = password.value;
   criteria.value.length = value.length >= 8;
   criteria.value.uppercase = /[A-Z]/.test(value);
@@ -279,22 +277,25 @@ const onSubmit = handleSubmit(async(values) => {
   "organization_type": values.organization_type,
   "whatsapp_number": values?.whatsapp_number
 }
-
-console.log('values', values)
   try {
     loading.value = true;
   const response =  await authStore.register( body );
-  console.log('response', response.data?.data)
   if (response.data && response?.data?.data?.data?.id) {
     loading.value = false;
     // redirect to dashboard
-    console.log('here', response?.data?.data?.id)
     router.push('/auth/registration-successful');
 
     } else {
       loading.value = false;
-      // alert(response.data.message);
       }
+      if (response.error && response?.error?.email) {
+        const joined = response?.error?.email.join(' ');
+        toast.error(joined || 'Error registering, please check details and try again.');
+        }
+        else if(response?.error && response?.error?.whatsapp_number ){
+          const joined = response?.error?.whatsapp_number.join(' ');
+          toast.error(joined|| 'Error registering, please check details and try again.')
+        } 
     loading.value = false
   }catch(error) {
     loading.value = false
