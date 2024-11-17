@@ -96,11 +96,9 @@ const onSubmit = form.handleSubmit(async(values) => {
   try {
     loading.value = true;
   const response =  await authStore.change_password( body );
-  console.log('response', response?.data?.data?.status)
   if (response.data &&  response?.data?.data?.status == 204) {
     loading.value = false;
     // redirect to dashboard
-    console.log('here', response?.data?.data?.auth_token)
     router.push('/auth/reset-successful');
 
     } else {

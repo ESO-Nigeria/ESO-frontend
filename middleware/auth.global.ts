@@ -6,12 +6,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const { logUserOut, getToken } = useAuthStore();
     // const token = getToken;
     const token = getItem("token");
-
-    console.log('token, storedToken', token)
-    // if (token !== null) {
-    //     // check if value exists
-    //     authenticated.value = true; // update the state to authenticated
-    // }
     
     const guestPage: RoutesNamesList[] = [
         'index',
@@ -31,7 +25,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         'general-programms-program_id-details',
         'general-esos',
         'general-eso-eso_id-details',
-        'general-about-us'
+        'general-about-us',
+        'general-article-article_id'
        
     ];
     

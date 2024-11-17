@@ -10,6 +10,7 @@
       </div>
      
     </Alert>
+    {{ profile }}
     <Alert v-show="certificates?.results?.length > 0 && profile.approval_status != 'APPROVED'" class="bg-blue-100 border-0 flex items-center">
       <CheckIcon class="text-[#05944F] size-5" />
       <div class="">
@@ -143,7 +144,7 @@
           </div>
         </div>
 
-        <FormField v-slot="{ componentField }" name="number_of_years_in_operation" class="">
+        <FormField v-slot="{ componentField }" name="organization_name" class="">
           <FormItem class="space-y-1 w-full lg:w-1/2">
             <FormLabel class="text-[#3F434A] text-base font-medium">Number of Years in Operation</FormLabel>
             <FormControl>
@@ -274,7 +275,6 @@ const onSubmit = handleSubmit(async(values) => {
   formData.append('tin_certificate', tin_doc.value);
   formData.append('profile', LSprofile?.value?.id);
   formData.append('other_license', license_doc.value)
-  formData.append('', values?.number_of_years_in_operation)
     // const form = serialize(newBody);
       try {
         loading.value = true;
@@ -283,7 +283,7 @@ const onSubmit = handleSubmit(async(values) => {
         loading.value = false;
         success.value = true;
         profileStore.getCertificates()
-       
+        
         } else {
           loading.value = false;
           // alert(response.data.message);

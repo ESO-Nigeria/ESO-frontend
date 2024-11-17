@@ -121,9 +121,6 @@ const onSubmit = form.handleSubmit(async(values) => {
   }
 });
 
-onMounted(() => {
-  console.log('object :>> ', useRoute().query?.uid.split('/'));
-})
 </script>
 
 <style lang="scss" scoped></style>

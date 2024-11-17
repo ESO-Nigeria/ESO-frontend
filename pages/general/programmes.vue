@@ -1,10 +1,8 @@
 <template>
   <div>
     <NuxtLayout name="general" title="ESO Programmes" >
-      <div v-if="loading" class="flex h-screen justify-center items-center">
-        <LayoutsLoader />
-      </div>
-          <div v-else class="container py-4">
+     
+          <div class="container py-4">
             <LayoutsBreadcrumb
             :breadcrumbs="[{ text: 'Programmes' }]"></LayoutsBreadcrumb>
             <div class="py-6 h-full">
@@ -134,10 +132,18 @@
                     <div>
                       <p class="text-primary text-base font-medium">Sector</p>
                       <div>
-                        <FormField v-for="item in sectors" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" :name="item.name">
+                        <FormField 
+                          v-for="item in sectors" 
+                          :key="item.id"
+                          type="checkbox" 
+                          :name="'sectors'"
+                          :unchecked-value="false"
+                          :value="item.id">
                           <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
                             <FormControl>
-                              <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
+                              <Checkbox class="size-5"  
+                              :checked="isSelected(item.id, 'sectors')" 
+                              @update:checked="(value) => handleCheckboxChange(value, item.id, 'sectors')" />
                             </FormControl>
                             <div class=" leading-none text-secondary-body-500 text-sm">
                               <FormLabel class="text-secondary-body-500">{{item.name}}</FormLabel>
@@ -150,10 +156,18 @@
                     <div>
                       <p class="text-primary text-base font-medium">Stages</p>
                       <div>
-                        <FormField v-for="item in stages" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" :name="item.name">
+                        <FormField 
+                        v-for="item in stages" 
+                        :key="item.id" 
+                        v-slot="{ value, handleChange }" 
+                        type="checkbox" 
+                        :name="'stages'"  
+                        :value="item.id">
                           <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
                             <FormControl>
-                              <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
+                              <Checkbox class="size-5"  
+                              :checked="isSelected(item.id, 'stages')" 
+                              @update:checked="(value) => handleCheckboxChange(value, item.id, 'stages')" />
                             </FormControl>
                             <div class=" leading-none text-secondary-body-500 text-sm">
                               <FormLabel class="text-secondary-body-500">{{item.name}}</FormLabel>
@@ -166,10 +180,16 @@
                     <div>
                       <p class="text-primary text-base font-medium">Participation</p>
                       <div>
-                        <FormField v-for="item in participations" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" :name="item.name">
+                        <FormField v-for="item in participations" :key="item.id" 
+                        v-slot="{ value, handleChange }" type="checkbox" 
+                        :name="'participation'"
+                        
+                        >
                           <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
                             <FormControl>
-                              <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
+                              <Checkbox class="size-5"  
+                              :checked="isSelected(item.id, 'participations')" 
+                              @update:checked="(value) => handleCheckboxChange(value, item.id, 'participations')" />
                             </FormControl>
                             <div class=" leading-none text-secondary-body-500 text-sm">
                               <FormLabel class="text-secondary-body-500">{{item.name}}</FormLabel>
@@ -185,7 +205,8 @@
                         <FormField v-for="item in mode" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" :name="item.name">
                           <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
                             <FormControl>
-                              <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
+                              <Checkbox class="size-5"  :checked="isSelected(item.id, 'modes')" 
+                              @update:checked="(value) => handleCheckboxChange(value, item.id, 'modes')" />
                             </FormControl>
                             <div class=" leading-none text-secondary-body-500 text-sm">
                               <FormLabel class="text-secondary-body-500">{{item.name}}</FormLabel>
@@ -201,7 +222,8 @@
                         <FormField v-for="item in non_financial_support" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" :name="item.name">
                           <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
                             <FormControl>
-                              <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
+                              <Checkbox class="size-5"  :checked="isSelected(item.id, 'non_financial_support')" 
+                              @update:checked="(value) => handleCheckboxChange(value, item.id, 'non_financial_support')" />
                             </FormControl>
                             <div class=" leading-none text-secondary-body-500 text-sm">
                               <FormLabel class="text-secondary-body-500">{{item.name}}</FormLabel>
@@ -217,7 +239,8 @@
                         <FormField v-for="item in financial_support" :key="item.id" v-slot="{ value, handleChange }" type="checkbox" :name="item.name">
                           <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
                             <FormControl>
-                              <Checkbox class="size-5" :checked="value" @update:checked="handleChange" />
+                              <Checkbox class="size-5" :checked="isSelected(item.id, 'financial_support')" 
+                              @update:checked="(value) => handleCheckboxChange(value, item.id, 'financial_support')" />
                             </FormControl>
                             <div class=" leading-none text-secondary-body-500 text-sm">
                               <FormLabel class="text-secondary-body-500">{{item.name}}</FormLabel>
@@ -278,7 +301,27 @@
                   </div>
                     
                   <div class="grid lg:grid-cols-3 gap-7">
-                    <Card v-for="(item, index) in programs?.results"  :key="index"  class="shadow-lg rounded-lg !px-0 !py-0 overflow-hidden">
+                    <div v-if="loading" class="flex h-screen justify-center items-center">
+                      <LayoutsLoader />
+                    </div>
+                    <div  v-else-if="programs?.results && programs?.results?.length == 0" class="col-span-3 flex items-center justify-center flex-col gap-2.5">
+                      <svg width="37" height="36" viewBox="0 0 37 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2.5" y="2" width="32" height="32" rx="16" fill="white"/>
+                        <rect x="2.5" y="2" width="32" height="32" rx="16" stroke="#CEE8F7" stroke-width="4"/>
+                        <g clip-path="url(#clip0_11060_11818)">
+                        <path d="M23.1667 12.0003H18.8147C18.7116 12.001 18.6097 11.9782 18.5167 11.9337L16.4127 10.8777C16.1349 10.7394 15.8289 10.6672 15.5187 10.667H13.8333C12.9496 10.6681 12.1024 11.0196 11.4775 11.6445C10.8526 12.2694 10.5011 13.1166 10.5 14.0003V22.0003C10.5011 22.8841 10.8526 23.7313 11.4775 24.3562C12.1024 24.9811 12.9496 25.3326 13.8333 25.3337H23.1667C24.0504 25.3326 24.8976 24.9811 25.5225 24.3562C26.1474 23.7313 26.4989 22.8841 26.5 22.0003V15.3337C26.4989 14.4499 26.1474 13.6027 25.5225 12.9778C24.8976 12.3529 24.0504 12.0014 23.1667 12.0003ZM13.8333 12.0003H15.5187C15.6218 11.9996 15.7237 12.0224 15.8167 12.067L17.9207 13.1197C18.1981 13.2591 18.5041 13.3324 18.8147 13.3337H23.1667C23.5654 13.3343 23.9548 13.4541 24.2849 13.6777C24.615 13.9012 24.8708 14.2184 25.0193 14.5883L11.8333 14.663V14.0003C11.8333 13.4699 12.044 12.9612 12.4191 12.5861C12.7942 12.211 13.3029 12.0003 13.8333 12.0003ZM23.1667 24.0003H13.8333C13.3029 24.0003 12.7942 23.7896 12.4191 23.4145C12.044 23.0395 11.8333 22.5308 11.8333 22.0003V15.9963L25.1667 15.921V22.0003C25.1667 22.5308 24.956 23.0395 24.5809 23.4145C24.2058 23.7896 23.6971 24.0003 23.1667 24.0003Z" fill="#374957"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_11060_11818">
+                        <rect width="16" height="16" fill="white" transform="translate(10.5 10)"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+                        <span class="text-lg text-[#3F434A] font-medium">
+                          Programmes Not found
+                        </span>
+                    </div>
+                    <Card v-else v-for="(item, index) in programs?.results"  :key="index"  class="shadow-lg rounded-lg !px-0 !py-0 overflow-hidden">
                       <CardHeader class="p-0 relative">
                         <img
                           :src="  item?.program_image?.url || item?.program_image_url || placeholderImg"
@@ -363,7 +406,6 @@ const sectors = [
 ]
 
 const filterOption = ref('Date Created')
-const tags = ['Agriculture', 'Education'];
 
 const stages = [
   { id: 1, name: 'Start-up (Post-revenue)' },
@@ -393,6 +435,53 @@ const financial_support = [
   { id: 2, name: 'Equity' },
   { id: 3, name: 'Debt' },
 ]
+const selectedValues = ref({
+  sectors: new Set(),
+  organization_types: new Set(),
+  stages: new Set(),
+  participations: new Set(),
+  modes: new Set(),
+  non_financial_support: new Set(),
+  financial_support: new Set(),
+});
+
+let timeout;
+
+const isSelected = (id, type) => {
+  return selectedValues.value[type]?.has(id) || false;
+};
+
+const handleCheckboxChange = (checked, id, type) => {
+  if (checked) {
+    selectedValues.value[type]?.add(id);
+  } else {
+    selectedValues.value[type]?.delete(id);
+  }
+
+  clearTimeout(timeout); // Clear the previous timeout
+  timeout = setTimeout(() => {
+    sendApiRequest();
+  }, 1500);
+};
+
+const sendApiRequest = async () => {
+  const sectorsString = Array.from(selectedValues.value.sectors).join(',');
+  const organizationTypesString = Array.from(selectedValues.value.organization_types).join(',');
+  const stagesString = Array.from(selectedValues.value.stages).join(',');
+  const participationsString = Array.from(selectedValues.value.participations).join(',');
+  const modesString = Array.from(selectedValues.value.modes).join(',');
+  const nonFinancialSupportString = Array.from(selectedValues.value.non_financial_support).join(',');
+  const financialSupportString = Array.from(selectedValues.value.financial_support).join(',');
+  
+  const response = await profileStore.getProgrammes(
+                                                    sectorsString, 
+                                                    participationsString, 
+                                                    financialSupportString, 
+                                                    nonFinancialSupportString, 
+                                                    modesString
+                                                   );
+  // You would typically use fetch or axios here
+};
 
 const profileStore = useProfileStore()
 const programs = computed(() => {

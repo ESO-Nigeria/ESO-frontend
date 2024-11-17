@@ -176,6 +176,7 @@
               <FormControl>
                 <div class="relative w-full  items-center">
                   <Input type="tel"
+                  disabled
                     class="pl-10 h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                     placeholder="Enter Whatsapp Number" v-bind="componentField" />
                   <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -221,64 +222,6 @@
         </FormField>
       
         <div class="grid grid-cols-3 gap-4">
-          <FormField  v-slot="{ componentField }" name="country">
-            <FormItem class="space-y-1">
-              <FormLabel class="text-[#3F434A] text-base font-medium">Country</FormLabel>
-              <FormControl>
-                <Select :disabled="profile?.country" v-model="selectedCountry"  @update:modelValue="onCountryChange" v-bind="componentField">
-                  <SelectTrigger
-                    class="h-11 border-0 ring-[#D0D5DD]  disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
-                    <SelectValue placeholder="Select a country" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem v-for="country in all_countries" :key="country.id" :value="country.name">
-                      {{ country.name }}
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-            </FormItem>
-          </FormField>
-          <FormField v-slot="{ componentField }" name="state">
-            <FormItem class="space-y-1">
-              <FormLabel class="text-[#3F434A] text-base font-medium">State</FormLabel>
-              <FormControl>
-                <Select  v-bind="componentField" :disabled="!selectedCountry || profile?.state" @update:modelValue="onStateChange" v-model="selectedState" >
-                  <SelectTrigger
-                    class="h-11 border-0 ring-[#D0D5DD]  disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
-                    <SelectValue placeholder="Select a state" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem v-for="state in states" :key="state.id" :value="state.name">
-                      {{state?.name}}
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-  
-              </FormControl>
-            </FormItem>
-          </FormField>
-
-          <FormField v-slot="{ componentField }" name="city">
-            <FormItem class="space-y-1">
-              <FormLabel class="text-[#3F434A] text-base font-medium">City</FormLabel>
-              <FormControl>
-                <Select v-bind="componentField" :disabled="!selectedState || profile?.city" v-model="selectedCity">
-                  <SelectTrigger
-                    class="h-11 border-0 ring-[#D0D5DD]  disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
-                    <SelectValue placeholder="Select a city" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem v-for="city in cities" :key="city.id" :value="city.name">
-                      {{city?.name}}
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-  
-              </FormControl>
-            </FormItem>
-          </FormField>
-        </div>   <div class="grid grid-cols-3 gap-4">
           <FormField :modelValue="profile?.country"  v-slot="{ componentField }" name="country">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">Country</FormLabel>
@@ -537,6 +480,13 @@ formData.append("services", values.services);
 });
 
 onMounted(() => {
+  // if (process.client) {
+  //       const storedProfile = getItem("profile");
+  //       if (storedProfile && storedProfile !== undefined) {
+  //       const user  = JSON.parse(storedProfile);
+  //       console.log(user)
+  //       }
+  //     }
       fetchProfile()
 })
 </script>

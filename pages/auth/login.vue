@@ -67,6 +67,7 @@ import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 import { useAuthStore } from '~/store/auth';
+import { toast } from 'vue-sonner';
 
 const authStore = useAuthStore()
 const form = useForm({
@@ -95,6 +96,10 @@ const onSubmit = form.handleSubmit(async(values) => {
       loading.value = false;
       // alert(response.data.message);
       }
+      if (response.error && response?.error?.error) {
+        const joined = response?.error?.error.join(' ');
+        toast.error(joined || 'Error registering, please check details and try again.');
+        }
     loading.value = false
   }catch(error) {
     loading.value = false

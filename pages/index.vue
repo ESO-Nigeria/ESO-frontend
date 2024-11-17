@@ -135,7 +135,10 @@
           <NuxtLink to="/general/programmes" class="text-primary text-xl font-medium">See all</NuxtLink>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4">
-          <LayoutsProgrammeCard :program="item" v-for="(item, index) in programs?.results?.slice(0,4)" :key="index"  />
+          <div v-if="loading" class="flex  justify-center items-center col-span-full md:col-span-3 lg:col-span-4">
+            <LayoutsLoader />
+          </div>
+          <LayoutsProgrammeCard v-else :program="item" v-for="(item, index) in programs?.results?.slice(0,4)" :key="index"  />
         </div>
       </div>
     </section>
@@ -149,8 +152,10 @@
             <NuxtLink to="/general/events" class="text-primary text-xl font-medium">See all</NuxtLink>
           </div>
         <div class="grid lg:grid-cols-2 sm:grid-cols-1  gap-4">
-
-          <LayoutsEventsCard :event="item" v-for="(item, index) in events?.results" :key="index"  />
+          <div v-if="loading" class="flex  justify-center items-center col-span-full md:col-span-3 lg:col-span-4">
+            <LayoutsLoader />
+          </div>
+          <LayoutsEventsCard v-else :event="item" v-for="(item, index) in events?.results" :key="index"  />
         </div>
       </div>
     </section>
@@ -205,7 +210,10 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-          <LayoutsArticleCard class="" :article="item" v-for="item, index in articlesDetails?.slice(0,2)" :key="index" />
+          <div v-if="loading" class="flex  justify-center items-center col-span-full ">
+            <LayoutsLoader />
+          </div>
+          <LayoutsArticleCard class="" :article="item" v-for="item, index in articles?.results?.slice(0,2)" :key="index" />
         </div>
       </div>
     </section>
@@ -244,12 +252,17 @@ const events = computed(() => {
 const programs = computed(() => {
   return profileStore.programs
 })
+const articles = computed(()=> {
+  return profileStore.articles
+})
+
 const loading = computed(() => {
   return profileStore.loading
 })
 onMounted(() => {
   profileStore.getEvents()
   profileStore.getProgrammes()
+  profileStore.getArticles()
 })
 </script>
 

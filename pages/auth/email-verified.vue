@@ -37,18 +37,13 @@ import { useAuthStore } from '~/store/auth';
 const authStore = useAuthStore()
 
 onMounted(async () => {
-  console.log ('token, uid', token, uid)
   loading.value = true
   try {
     loading.value = true;
   const response =  await authStore.email_verified( {token, uid} );
-  console.log('response', response.data?.data)
   if (response.data && response?.data?.data?.auth_token) {
     loading.value = false;
-    // redirect to dashboard
-    console.log('here', response?.data?.data?.auth_token)
-    // router.push('/dashboard');
-
+   
     } else {
       loading.value = false;
       // alert(response.data.message);

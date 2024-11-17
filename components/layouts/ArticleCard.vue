@@ -5,9 +5,9 @@
       <div class="mt-4">
       
         <h1 class="title-font text-2xl font-semibold text-[#101828] mb-3">{{ article?.title }}</h1>
-        <p class="leading-relaxed mb-3 text-secondary-body-regular-contrast">{{ article?.description }}</p>
+        <p class="leading-relaxed mb-3 text-secondary-body-regular-contrast line-clamp-3">{{ article?.content }}</p>
         <div class="flex items-center flex-wrap ">
-          <NuxtLink class="text-primary inline-flex items-center font-medium md:mb-2 lg:mb-0">
+          <NuxtLink :to="`/general/article/${article?.id}`" class="text-primary inline-flex items-center font-medium md:mb-2 lg:mb-0">
             Read More
           </NuxtLink>
           

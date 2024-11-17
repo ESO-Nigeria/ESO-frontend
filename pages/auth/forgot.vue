@@ -60,7 +60,6 @@ const onSubmit = form.handleSubmit(async(values) => {
   try {
     loading.value = true;
   const response =  await authStore.reset( {email } );
-  console.log('response', response?.data?.data?.status)
   if (response.data && response?.data?.data?.status == 204) {
     loading.value = false;
     // redirect to dashboard
@@ -68,7 +67,6 @@ const onSubmit = form.handleSubmit(async(values) => {
 
     } else {
       loading.value = false;
-      console.log('res[onse] :>> ', response);
       // alert(response.data.message);
       if (response.error) {
         toast.error(response?.error?.[0] || "Error sending email, please try again")

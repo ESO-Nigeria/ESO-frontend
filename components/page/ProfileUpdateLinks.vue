@@ -1,44 +1,24 @@
 <template>
   <div class="mt-4 flex flex-col gap-6">
-    <Alert v-show="success" class="bg-[#E2FEF0] border-0 flex items-center">
-      <CheckIcon class="text-[#05944F] size-5" />
-      <div class="">
-        <AlertTitle class="text-[#232E3F]">Details Submitted Successfully!</AlertTitle>
-        <AlertDescription class="text-[#5C6F7F]">
-          Your organization details have been submitted for verification. Please continue to complete the remaining sections to finalize your application.
-        </AlertDescription>
-      </div>
-    </Alert>
-    <Alert v-show="links?.results?.length > 0" class="bg-blue-100 border-0 flex items-center">
-      <CheckIcon class="text-[#05944F] size-5" />
-      <div class="">
-        <AlertTitle class="text-[#232E3F]">Details Awaiting Verification!</AlertTitle>
-        <AlertDescription class="text-[#5C6F7F]">
-          Your organization details have been submitted for verification.
-        </AlertDescription>
-      </div>
-     
-    </Alert>
     
     <p class="text-base text-secondary-body-500">Provide your website and social media links to complete verification.</p>
     <div>
       <div class="flex-1 flex flex-col">
         <form class="flex gap-4 flex-col px-2 lg:px-0 w-full lg:w-2/6 ">
           
-          <FormField v-slot="{ componentField }" name="website_url">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'WEBSITE')?.url" v-slot="{ componentField }" name="website_url">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">Website Url</FormLabel>
               <FormControl>
                 <Input type="url"
-                
+                  disabled
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="www.example.com" v-bind="componentField" />
               </FormControl>
             </FormItem>
           </FormField>
-         
-
-          <FormField v-slot="{ componentField }" name="linkedIn">
+        
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'LINKEDIN')?.url" v-slot="{ componentField }" name="linkedIn">
             <FormItem class="space-y-1">
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">LinkedIn</FormLabel>
               
@@ -47,6 +27,7 @@
                 Linkedin
               </span>
               <Input type="url"
+                  disabled
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0]  ring-0  rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="" v-bind="componentField" />
                   <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -61,7 +42,7 @@
             
           </FormField>
       
-          <FormField v-slot="{ componentField }" name="instagram">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'INSTAGRAM')?.url" v-slot="{ componentField }" name="instagram">
             <FormItem class="space-y-1">
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">Instagram</FormLabel>
               
@@ -70,6 +51,7 @@
                 instagram
               </span>
               <Input type="url"
+                  disabled
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0]  ring-0  rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="" v-bind="componentField" />
                   <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -81,7 +63,7 @@
             </FormItem>
             
           </FormField>
-          <FormField v-slot="{ componentField }" name="facebook">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'FACEBOOK')?.url" v-slot="{ componentField }" name="facebook">
             <FormItem class="space-y-1">
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">Facebook</FormLabel>
             <div class="flex items-center border border-secondary-body-500 rounded-md relative">
@@ -89,6 +71,7 @@
                 facebook.com
               </span>
               <Input type="url"
+                  disabled
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0]  ring-0  rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="" v-bind="componentField" />
                   <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -102,7 +85,7 @@
             </FormItem>
             
           </FormField>
-          <FormField v-slot="{ componentField }" name="twitter">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'TWITTER')?.url" v-slot="{ componentField }" name="twitter">
             <FormItem class="space-y-1">
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">Twitter</FormLabel>
               
@@ -111,6 +94,7 @@
                 twitter.com
               </span>
               <Input type="url"
+                  disabled
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0]  ring-0  rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="" v-bind="componentField" />
                   <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -180,13 +164,13 @@ const router = useRouter()
 const success = ref(false)
 const loading  = ref(false);
 
-const form = useForm({
-  // validationSchema: formSchema,
-});
+const form = useForm({});
 
 const links = computed(() => {
-  return  profileStore.links
+  return profileStore.links
 })
+
+
 const props = defineProps({
   user: {
     type: Object
@@ -202,7 +186,7 @@ function convertToSocialLinks(obj) {
 
 const onSubmit = form.handleSubmit(async(values) => {
   const socialLinksArray = convertToSocialLinks(values);
- const body = [  {
+  const body = [  {
         "platform": "WEBSITE",
         "url": values.website_url
     },
@@ -231,6 +215,7 @@ try {
     loading.value = false;
     success.value = true;
     profileStore.getLinks()
+   
     } else {
       loading.value = false;
       // alert(response.data.message);
