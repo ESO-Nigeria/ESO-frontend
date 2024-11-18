@@ -77,11 +77,12 @@
                     </a>
                   </div>
                   <div v-if="ESO?.social_links?.length > 0 && ESO.social_links?.find(type => type.platform == 'WEBSITE')?.url">
-                    <a :href="ESO.social_links?.find(type => type.platform == 'WEBSITE')?.url" target="_blank" class="w-full mt-3">
-                    <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
+                    <NuxtLink :to="`https://${ESO.social_links?.find(type => type.platform == 'WEBSITE')?.url}`" target="_blank" class="w-full mt-3">
+                    <p size="lg" class="py-3 text-center  text-sm px-5 h-11 w-full bg-primary text-white rounded-md"  type="button" >
                    Visit Website
-                  </Button>
-                </a>
+                  </p>
+                  
+                </NuxtLink>
                   </div>
                   
                   </div>
