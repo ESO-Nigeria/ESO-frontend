@@ -10,7 +10,7 @@
       </div>
      
     </Alert>
-    <Alert v-show="certificates?.results?.length > 0 && profile.approval_status != 'APPROVED'" class="bg-blue-100 border-0 flex items-center">
+    <Alert v-show="certificates?.results?.length > 0 && profile?.approval_status != 'APPROVED'" class="bg-blue-100 border-0 flex items-center">
       <CheckIcon class="text-[#05944F] size-5" />
       <div class="">
         <AlertTitle class="text-[#232E3F]">Details Awaiting Verification!</AlertTitle>
@@ -56,7 +56,7 @@
       <input  v-bind="getInputProps1()" />
       <img src="~/assets/images/icons/upload.svg" />
       <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
-      <p class="text-xs">.pdf, .jpeg, .png (max.560kb)</p>
+      <p class="text-xs">.pdf, .jpeg, .png (max.900kb)</p>
       <p class="text-xs text-destructive capitalize mt-1">{{ cac_doc_errors ? cac_doc_errors.code : null }}</p>
 
     </div>
@@ -96,7 +96,7 @@
       <input v-bind="getInputProps2()" />
       <img src="~/assets/images/icons/upload.svg" />
       <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
-      <p class="text-xs">.pdf, .jpeg, .png (max.560kb)</p>
+      <p class="text-xs">.pdf, .jpeg, .png (max.900kb)</p>
       <p class="text-xs text-destructive capitalize mt-1">{{ tin_doc_errors ? tin_doc_errors.code : null }}</p>
 
     </div>
@@ -135,7 +135,7 @@
                 <input v-bind="getInputProps3()" />
                 <img src="~/assets/images/icons/upload.svg" />
                 <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
-                <p class="text-xs">.pdf, .jpeg, .png (max.560kb)</p>
+                <p class="text-xs">.pdf, .jpeg, .png (max.900kb)</p>
                 <p class="text-xs text-destructive capitalize mt-1">{{ license_doc_errors ? license_doc_errors.code : null }}</p>
 
               </div>
@@ -143,11 +143,12 @@
           </div>
         </div>
 
-        <FormField v-slot="{ componentField }" name="number_of_years_in_operation" class="">
+        <FormField :modelValue="certificates?.results?.[0]?.number_of_year_in_operation" v-slot="{ componentField }" name="number_of_years_in_operation" class="">
           <FormItem class="space-y-1 w-full lg:w-1/2">
             <FormLabel class="text-[#3F434A] text-base font-medium">Number of Years in Operation</FormLabel>
             <FormControl>
               <Input type="number"
+                :disabled="certificates?.results?.[0]?.number_of_year_in_operation"
                 class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                 placeholder="Years in Operation" v-bind="componentField" />
             </FormControl>
@@ -238,7 +239,7 @@ const deleteCac = () => {
   cac_doc_errors.value = {}
 }
 
-const { getRootProps: getRootProps1, getInputProps: getInputProps1 } = useDropzone({ onDrop: onDrop1, maxSize: 560000, accept: ".pdf, .jpeg, .png", maxFiles: 1});
+const { getRootProps: getRootProps1, getInputProps: getInputProps1 } = useDropzone({ onDrop: onDrop1, maxSize: 900000, accept: ".pdf, .jpeg, .png", maxFiles: 1});
 
 function onDrop2(acceptedFiles, rejectReasons) {
   tin_doc.value = acceptedFiles[0]
@@ -250,7 +251,7 @@ const deleteTin = () => {
   tin_doc.value = {}
   tin_doc_errors.value = {}
 }
-const { getRootProps: getRootProps2, getInputProps: getInputProps2 } = useDropzone({ onDrop: onDrop2, maxSize: 560000, accept: ".pdf, .jpeg, .png", maxFiles: 1 });
+const { getRootProps: getRootProps2, getInputProps: getInputProps2 } = useDropzone({ onDrop: onDrop2, maxSize: 900000, accept: ".pdf, .jpeg, .png", maxFiles: 1 });
 
 function onDrop3(acceptedFiles, rejectReasons) {
   license_doc.value = acceptedFiles[0]
@@ -263,7 +264,7 @@ const deleteLicense = () => {
   license_doc.value = {}
   license_doc_errors.value = {}
 }
-const { getRootProps: getRootProps3, getInputProps: getInputProps3 } = useDropzone({ onDrop: onDrop3, maxSize: 560000, accept: ".pdf, .jpeg, .png", maxFiles: 1 });
+const { getRootProps: getRootProps3, getInputProps: getInputProps3 } = useDropzone({ onDrop: onDrop3, maxSize: 900000, accept: ".pdf, .jpeg, .png", maxFiles: 1 });
 
 
 const onSubmit = handleSubmit(async(values) => {

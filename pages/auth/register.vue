@@ -294,8 +294,11 @@ const onSubmit = handleSubmit(async(values) => {
         }
         else if(response?.error && response?.error?.whatsapp_number ){
           const joined = response?.error?.whatsapp_number.join(' ');
+          toast.error(`Whatsapp Number: ${joined}`|| 'Error registering, please check details and try again.')
+        }else if (response.error && response?.error?.error) {
+          const joined = response?.error?.error?.join(' ');
           toast.error(joined|| 'Error registering, please check details and try again.')
-        } 
+        }
     loading.value = false
   }catch(error) {
     loading.value = false

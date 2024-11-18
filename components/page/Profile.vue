@@ -28,8 +28,8 @@
       <div class="flex flex-col lg:flex-row gap-5 lg:gap-14 items-start ">
         <div v-bind="getRootProps1()" class="cursor-pointer">
           <Avatar size="xl">
-            <AvatarImage :src="image_preview_link || profile?.logo" alt="@radix-vue" />
-            <input v-bind="getInputProps1()" :disabled="profile?.logo" />
+            <AvatarImage :src="image_preview_link || profile?.logo_url" alt="@radix-vue" />
+            <input v-bind="getInputProps1()" :disabled="profile?.logo_url" />
             <AvatarFallback class="flex items-center justify-center flex-col">
               <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_17_26405)">
@@ -90,6 +90,12 @@
                 </FormControl>
               </FormItem>
             </FormField>
+            <MultiSelect
+                      v-model="formSectors"
+                      :options="sectors"
+                      title="Sector"
+                      placeholder="Select sectors..."
+                    />
             <FormField
             :modelValue="profile?.description"
             v-slot="{ componentField }"
@@ -220,7 +226,7 @@
           </FormItem>
         </FormField>
       
-        <div class="grid grid-cols-3 gap-4">
+        <!-- <div class="grid grid-cols-3 gap-4">
           <FormField  v-slot="{ componentField }" name="country">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">Country</FormLabel>
@@ -278,7 +284,8 @@
               </FormControl>
             </FormItem>
           </FormField>
-        </div>   <div class="grid grid-cols-3 gap-4">
+        </div>    -->
+        <div class="grid grid-cols-3 gap-4">
           <FormField :modelValue="profile?.country"  v-slot="{ componentField }" name="country">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">Country</FormLabel>
@@ -414,11 +421,13 @@ import { useProfileStore } from '~/store/profile';
 import nigeria from '~/composables/nigeria.json';
 import { isProxy, toRaw } from 'vue';
 import { useDropzone } from "vue3-dropzone"; // Ensure to use the dropzone library compatible with Vue
+import { sectors, targetAudience, nonFinancialSupport, financialSupport, programMode, countries, locations } from '~/lib/data';
 
 const all_countries = computed(()=>{
   return nigeria
 });
 const loading  = ref(false);
+const formSectors = ref([])
 const selectedCountry = ref(null);
 const selectedState = ref(null);
 const selectedCity = ref(null);
@@ -516,7 +525,7 @@ formData.append("company_website", ""); // Empty string as specified
 formData.append("description", values?.description);
 formData.append("logo", logo.value);
 formData.append("services", values.services);
-
+formData.append("sectors", formSectors)
       try {
         loading.value = true;
       const response =  await profileStore.createProfile(formData);

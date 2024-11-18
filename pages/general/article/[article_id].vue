@@ -14,11 +14,11 @@
         <div class="py-3 h-full">
           <div class=" space-y-4 h-full items-stretch ">
             <div class="w-full ">
-              <img :src="article?.image_url" alt="Group Image" class="w-full h-[240px] rounded-lg object-cover">
+              <img :src="article?.image_url" alt="Group Image" class="w-full h-[240px] rounded-lg object-cover object-center">
             </div>
             <div >
-              <p>
-                {{ article?.content }}
+              <p v-html="article?.content">
+               
               </p>
             </div>
           </div>

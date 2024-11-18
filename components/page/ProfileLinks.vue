@@ -25,12 +25,12 @@
       <div class="flex-1 flex flex-col">
         <form class="flex gap-4 flex-col px-2 lg:px-0 w-full lg:w-2/6 ">
           
-          <FormField v-slot="{ componentField }" name="website_url">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'WEBSITE')?.url" v-slot="{ componentField }" name="website_url">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">Website Url</FormLabel>
               <FormControl>
                 <Input type="url"
-                
+                :disabled="links?.results?.find(type => type.platform == 'WEBSITE')?.url && profile.approval_status != 'APPROVED'"
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="www.example.com" v-bind="componentField" />
               </FormControl>
@@ -38,7 +38,7 @@
           </FormField>
          
 
-          <FormField v-slot="{ componentField }" name="linkedIn">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'LINKEDIN')?.url" v-slot="{ componentField }" name="linkedIn">
             <FormItem class="space-y-1">
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">LinkedIn</FormLabel>
               
@@ -47,6 +47,7 @@
                 Linkedin
               </span>
               <Input type="url"
+              :disabled="links?.results?.find(type => type.platform == 'LINKEDIN')?.url && profile.approval_status != 'APPROVED'"
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0]  ring-0  rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="" v-bind="componentField" />
                   <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -61,7 +62,7 @@
             
           </FormField>
       
-          <FormField v-slot="{ componentField }" name="instagram">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'INSTAGRAM')?.url" v-slot="{ componentField }" name="instagram">
             <FormItem class="space-y-1">
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">Instagram</FormLabel>
               
@@ -70,6 +71,7 @@
                 instagram
               </span>
               <Input type="url"
+              :disabled="links?.results?.find(type => type.platform == 'INSTAGRAM')?.url && profile.approval_status != 'APPROVED'"
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0]  ring-0  rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="" v-bind="componentField" />
                   <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -81,7 +83,7 @@
             </FormItem>
             
           </FormField>
-          <FormField v-slot="{ componentField }" name="facebook">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'FACEBOOK')?.url" v-slot="{ componentField }" name="facebook">
             <FormItem class="space-y-1">
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">Facebook</FormLabel>
             <div class="flex items-center border border-secondary-body-500 rounded-md relative">
@@ -89,6 +91,7 @@
                 facebook.com
               </span>
               <Input type="url"
+                  :disabled="links?.results?.find(type => type.platform == 'FACEBOOK')?.url && profile.approval_status != 'APPROVED'"
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0]  ring-0  rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="" v-bind="componentField" />
                   <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -102,7 +105,7 @@
             </FormItem>
             
           </FormField>
-          <FormField v-slot="{ componentField }" name="twitter">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'TWITTER')?.url" v-slot="{ componentField }" name="twitter">
             <FormItem class="space-y-1">
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">Twitter</FormLabel>
               
@@ -111,6 +114,7 @@
                 twitter.com
               </span>
               <Input type="url"
+              :disabled="links?.results?.find(type => type.platform == 'TWITTER')?.url && profile.approval_status != 'APPROVED'"
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0]  ring-0  rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="" v-bind="componentField" />
                   <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -192,7 +196,9 @@ const props = defineProps({
     type: Object
   }
 })
-
+const profile = computed(() => {
+  return profileStore.profile
+})
 function convertToSocialLinks(obj) {
   return Object.entries(obj).map(([platform, url]) => ({
     platform,
@@ -244,6 +250,7 @@ try {
 
 onMounted(() => {
   profileStore.getLinks()
+  profileStore.getProfile()
 })
 </script>
 

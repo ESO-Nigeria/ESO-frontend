@@ -259,13 +259,13 @@
                         <FormItem class="space-y-1">
                           <FormControl >
                             <div class="relative flex border items-center border-primary rounded-md ">
-                              <Input v-bind="componentField" id="search" type="text" placeholder="Looking for Programme..." 
+                              <Input v-model="searchValue" v-bind="componentField" id="search" type="text" placeholder="Looking for Programme..." 
                               class="pl-10 h-11 border-0  ring-0 disabled:bg-[#EAECF0] focus:bg-[#F5F5F5]   rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-[#333] text-sm"
                               />
                               <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
                                 <Search class="size-5 text-muted-foreground" />
                               </span>
-                              <Button size="lg" class="h-11 rounded-none">Search</Button>
+                              <Button @click="searchProgrammes" type="button" size="lg" class="h-11 rounded-none">Search</Button>
                             </div>
                            
                           </FormControl>
@@ -414,9 +414,9 @@ const stages = [
 ]
 
 const participations = [
-  { id: 1, name: 'Start-up (Post-revenue)' },
-  { id: 2, name: 'Early Stage' },
-  { id: 3, name: 'Growth Stage' },
+  { id: 1, name: 'Free' },
+  { id: 2, name: 'Paid' },
+  // { id: 3, name: 'Growth Stage' },
 ]
 
 const mode = [
@@ -444,6 +444,8 @@ const selectedValues = ref({
   non_financial_support: new Set(),
   financial_support: new Set(),
 });
+
+const searchValue = ref("")
 
 let timeout;
 
@@ -475,14 +477,36 @@ const sendApiRequest = async () => {
   
   const response = await profileStore.getProgrammes(
                                                     sectorsString, 
-                                                    participationsString, 
+                                                    stagesString, 
                                                     financialSupportString, 
-                                                    nonFinancialSupportString, 
-                                                    modesString
+                                                    nonFinancialSupportString,
+                                                    searchValue.value, 
+                                                    modesString,
+                                                    
+
                                                    );
   // You would typically use fetch or axios here
 };
 
+const searchProgrammes = async () => {
+  const sectorsString = Array.from(selectedValues.value.sectors).join(',');
+  const organizationTypesString = Array.from(selectedValues.value.organization_types).join(',');
+  const stagesString = Array.from(selectedValues.value.stages).join(',');
+  const participationsString = Array.from(selectedValues.value.participations).join(',');
+  const modesString = Array.from(selectedValues.value.modes).join(',');
+  const nonFinancialSupportString = Array.from(selectedValues.value.non_financial_support).join(',');
+  const financialSupportString = Array.from(selectedValues.value.financial_support).join(',');
+  
+  const response = await profileStore.getProgrammes(
+                                                    sectorsString, 
+                                                    stagesString, 
+                                                    financialSupportString, 
+                                                    nonFinancialSupportString, 
+                                                    searchValue.value,
+                                                    modesString,
+                                                   
+                                                   );
+}
 const profileStore = useProfileStore()
 const programs = computed(() => {
   return profileStore.programs
@@ -490,6 +514,15 @@ const programs = computed(() => {
 const loading = computed(() => {
   return profileStore.loading
 })
+
+watch(
+  () => searchValue.value,
+  (newValue) => {
+    if(newValue == ''){
+      searchProgrammes()
+    }
+  }
+);
 onMounted(() => {
   profileStore.getProgrammes()
 })

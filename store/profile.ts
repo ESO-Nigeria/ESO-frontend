@@ -101,11 +101,10 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: "Unknown error" }
       }
     },
-    async getEvents(){
+    async getEvents(title: string | undefined){
       this.loading = true
       try{
-        const response = await apiGetUnRestrictedRequest(`/api/events/` );
-        // this.links = response.data
+        const response = await apiGetUnRestrictedRequest(`/api/events/?title=${title || ''}` );
         this.events = response.data
         this.loading = false
         return { data: response, error: response.error };
@@ -125,10 +124,10 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: "Unknown error" }
       }
     },
-    async getProgrammes(sectors: string | undefined, target_audience: string | undefined, financial_supports: string | undefined, non_financial_supports: string | undefined, page: string | undefined){
+    async getProgrammes(sectors: string | undefined, target_audience: string | undefined, financial_supports: string | undefined, non_financial_supports: string | undefined, title: string | undefined , page: string | undefined){
       this.loading = true
       try{
-        const response = await apiGetUnRestrictedRequest(`/api/programs/?sectors=${sectors || ''}&target_audience=${target_audience || ''}&financial_supports=${financial_supports || ''}&non_financial_supports=${non_financial_supports || ''}&page=`);
+        const response = await apiGetUnRestrictedRequest(`/api/programs/?sectors=${sectors || ''}&target_audience=${target_audience || ''}&financial_supports=${financial_supports || ''}&non_financial_supports=${non_financial_supports || ''}&title=${title || ''}&page=`);
         // this.links = response.data
         this.programs = response.data
         this.loading = false
@@ -149,10 +148,10 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: "Unknown error" }
       }
     },
-    async getESOs(organization_types: undefined, sectors: undefined){
+    async getESOs(organization_types: undefined, sectors: undefined, user__organization_name: undefined){
       this.loading = true
       try{
-        const response = await apiGetUnRestrictedRequest(`/api/profiles/?user__organization_type=${organization_types || '' }&sectors=${sectors || ''}`);
+        const response = await apiGetUnRestrictedRequest(`/api/profiles/?user__organization_type=${organization_types || '' }&sectors=${sectors || ''}&user__organization_name=${user__organization_name || ''}`);
         // this.links = response.data
         this.ESOs = response.data
         this.loading = false

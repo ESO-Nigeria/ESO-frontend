@@ -1,10 +1,7 @@
 <template>
   <div>
     <NuxtLayout name="general" title="Events" subtitle="programes title">
-      <div v-if="loading" class="flex h-screen justify-center items-center">
-        <LayoutsLoader />
-      </div>
-      <div v-else class="container py-4">
+      <div class="container py-4">
             <LayoutsBreadcrumb
             :breadcrumbs="[{ text: 'Events' }]"></LayoutsBreadcrumb>
             <div class="py-6 h-full">
@@ -18,13 +15,13 @@
                         <FormItem class="space-y-1">
                           <FormControl >
                             <div class="relative flex border items-center border-primary rounded-md ">
-                              <Input v-bind="componentField" id="search" type="text" placeholder="Search for Events" 
+                              <Input v-model="searchValue" v-bind="componentField" id="search" type="text" placeholder="Search for Events" 
                               class="pl-10 h-11 border-0  ring-0 disabled:bg-[#EAECF0] focus:bg-[#F5F5F5]   rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-[#333] text-sm"
                               />
                               <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
                                 <Search class="size-5 text-muted-foreground" />
                               </span>
-                              <Button size="lg" class="h-11 rounded-none">Search</Button>
+                              <Button @click="searchEvents" type="button" size="lg" class="h-11 rounded-none">Search</Button>
                             </div>
                            
                           </FormControl>
@@ -60,8 +57,10 @@
                   </div>
 
                   <div class="grid lg:grid-cols-2 sm:grid-cols-1  gap-7">
-                    
-                    <LayoutsEventsCard :event="item" v-for="(item, index) in events?.results" :key="index" />
+                    <div v-if="loading" class="flex h-screen justify-center items-center col-span-full">
+                      <LayoutsLoader />
+                    </div>
+                    <LayoutsEventsCard v-else :event="item" v-for="(item, index) in events?.results" :key="index" />
                   </div>
                 </div>
               </div>
@@ -78,7 +77,7 @@ import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the p
 const filterOption = ref('Date Created')
 
 const profileStore = useProfileStore()
-
+const searchValue = ref("")
 const singleUser = computed(() => {
   return profileStore.singleESO
 })
@@ -88,7 +87,17 @@ const events = computed(() => {
 const loading = computed(() => {
   return profileStore.loading
 })
-
+const searchEvents = () => {
+  profileStore.getEvents(searchValue.value)
+}
+watch(
+  () => searchValue.value,
+  (newValue) => {
+    if(newValue == ''){
+      profileStore.getEvents()
+    }
+  }
+);
 onMounted(() => {
   profileStore.getEvents()
   // profileStore.

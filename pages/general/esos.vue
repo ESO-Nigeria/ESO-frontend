@@ -154,13 +154,13 @@
                         <FormItem class="space-y-1">
                           <FormControl >
                             <div class="relative flex border items-center border-primary rounded-md ">
-                              <Input v-bind="componentField" id="search" type="text" placeholder="Search For ESOs." 
+                              <Input v-model="searchValue" v-bind="componentField" id="search" type="text" placeholder="Search For ESOs." 
                               class="pl-10 h-11 border-0  ring-0 disabled:bg-[#EAECF0] focus:bg-[#F5F5F5]   rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-[#333] text-sm"
                               />
                               <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
                                 <Search class="size-5 text-muted-foreground" />
                               </span>
-                              <Button size="lg" class="h-11 rounded-none">Search</Button>
+                              <Button @click="searchESOs" type="button" size="lg" class="h-11 rounded-none">Search</Button>
                             </div>
                            
                           </FormControl>
@@ -278,7 +278,7 @@ let timeout;
 
 
 const form = useForm({});
-
+const searchValue = ref("")
 const isSelected = (id, type) => {
   return type === 'sectors' ? selectedSectors.value.has(id) : selectedOrganizationTypes.value.has(id);
 };
@@ -301,10 +301,16 @@ const handleCheckboxChange = (checked, id, type) => {
 const sendApiRequest = async () => {
   const sectorsString = Array.from(selectedSectors.value).join(',');
   const organizationTypesString = Array.from(selectedOrganizationTypes.value).join(',');
-  const response = await profileStore.getESOs(organizationTypesString, sectorsString)
+  const response = await profileStore.getESOs(organizationTypesString, sectorsString, searchValue.value)
   // You would typically use fetch or axios here
 };
 
+const searchESOs = async () => {
+  const sectorsString = Array.from(selectedSectors.value).join(',');
+  const organizationTypesString = Array.from(selectedOrganizationTypes.value).join(',');
+  const response = await profileStore.getESOs(organizationTypesString, sectorsString, searchValue.value)
+  // You would typically use fetch or axios here
+}
 const profileStore = useProfileStore()
 
 const ESOs = computed(() => {
@@ -313,6 +319,15 @@ const ESOs = computed(() => {
 const loading = computed(() => {
   return profileStore.loading
 })
+watch(
+  () => searchValue.value,
+  (newValue) => {
+    if(newValue == ''){
+      searchProgrammes()
+    }
+  }
+);
+
 onMounted(() => {
   profileStore.getESOs()
 })
