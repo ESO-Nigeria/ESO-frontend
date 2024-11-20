@@ -283,18 +283,13 @@
                         <DropdownMenuLabel>Select Filter</DropdownMenuLabel>
                        
                         <DropdownMenuRadioGroup v-model="filterOption">
-                          <DropdownMenuRadioItem class="text-sm font-normal" value="Date Created">
+                          <DropdownMenuRadioItem class="text-sm font-normal" value="created_at">
                             Date Created
                           </DropdownMenuRadioItem>
-                          <DropdownMenuRadioItem class="text-sm font-normal"  value="Application Deadline">
+                          <DropdownMenuRadioItem class="text-sm font-normal"  value="application_deadline">
                             Application Deadline
                           </DropdownMenuRadioItem>
-                          <DropdownMenuRadioItem class="text-sm font-normal"  value="Free">
-                            Free
-                          </DropdownMenuRadioItem>
-                          <DropdownMenuRadioItem class="text-sm font-normal"  value="Paid">
-                            Paid
-                          </DropdownMenuRadioItem>
+                          
                         </DropdownMenuRadioGroup>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -407,6 +402,8 @@ const sectors = [
 
 const filterOption = ref('Date Created')
 
+const route = useRoute()
+
 const stages = [
   { id: 1, name: 'Start-up (Post-revenue)' },
   { id: 2, name: 'Early Stage' },
@@ -414,8 +411,8 @@ const stages = [
 ]
 
 const participations = [
-  { id: 1, name: 'Free' },
-  { id: 2, name: 'Paid' },
+  { id: 'free', name: 'Free' },
+  { id: 'paid', name: 'Paid' },
   // { id: 3, name: 'Growth Stage' },
 ]
 
@@ -481,6 +478,8 @@ const sendApiRequest = async () => {
                                                     financialSupportString, 
                                                     nonFinancialSupportString,
                                                     searchValue.value, 
+                                                    filterOption.value,
+                                                    participationsString,
                                                     modesString,
                                                     
 
@@ -503,6 +502,8 @@ const searchProgrammes = async () => {
                                                     financialSupportString, 
                                                     nonFinancialSupportString, 
                                                     searchValue.value,
+                                                    filterOption.value,
+                                                    participationsString,
                                                     modesString,
                                                    
                                                    );
@@ -523,8 +524,17 @@ watch(
     }
   }
 );
+watch(
+  () => filterOption.value,
+  (newValue) => {
+    if(newValue ){
+      sendApiRequest()
+    }
+  }
+);
 onMounted(() => {
   profileStore.getProgrammes()
+  console.log('route', route)
 })
 </script>
 

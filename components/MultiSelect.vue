@@ -28,7 +28,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const isAllSelected = computed(() => {
-    return props.modelValue.length === props.options.length
+    return props.modelValue?.length === props.options?.length
 })
 
 const toggleSelectAll = () => {
@@ -60,9 +60,9 @@ const toggleOption = (id) => {
                 <Button variant="outline" role="combobox" :aria-expanded="open"
                     class="flex w-full bg-background px-3 py-2 ring-offset-background justify-between file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 h-11 border-0 ring-[#D0D5DD] focus:bg-[#F5F5F5] ring-[1.5px] rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                     <div class="flex items-center gap-2 truncate">
-                        <div v-if="modelValue.length > 0"
+                        <div v-if="modelValue?.length > 0"
                             class="bg-green-100 text-green-800 px-3 py-1 rounded-full flex items-center gap-2 text-sm">
-                            Selected ({{ modelValue.length }})
+                            Selected ({{ modelValue?.length }})
                             <EyeIcon class="h-4 w-4" />
                         </div>
                         <span v-else class="text-gray-500">{{ placeholder }}</span>

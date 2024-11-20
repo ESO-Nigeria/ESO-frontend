@@ -23,7 +23,7 @@ export const formatToNaira = (amount: any) => {
   return nairaFormattedAmount;
 }
 
-export function convertToAMPM(timeString) {
+export function convertToAMPM(timeString: { split: (arg0: string) => { (): any; new(): any; map: { (arg0: NumberConstructor): [any, any]; new(): any } } }) {
   // Split the time string into hours and minutes
   const [hours, minutes] = timeString.split(':').map(Number);
 
@@ -42,13 +42,27 @@ export function convertToAMPM(timeString) {
   return `${convertedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
 }
 
-export function transformHref(href) {
+export function transformHref(href: string) {
   // Replace spaces and periods with hyphens
   return href.replace(/[\s.]+/g, '-');
 }
-
-export function reverseTransform(href) {
+export function transformHrefTitle(href: string) {
+  // Replace spaces and periods with hyphens
+  return href.replace(/[\s.]+/g, ' ');
+}
+export function reverseTransform(href: string) {
   // Replace hyphens back to spaces and periods
   // Assuming periods are not part of the original string, we can replace hyphens to spaces
   return href.replace(/-/g, ' '); // Replace hyphens with spaces
+}
+
+export function checkLink(link: string) {
+  // Check if the link starts with https
+  if (link.startsWith("https")) {
+    // If it does, return the link as it is
+    return link;
+  } else {
+    // If it doesn't, append https to the beginning of the link
+    return "https://" + link;
+  }
 }

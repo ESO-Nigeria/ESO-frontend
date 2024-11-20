@@ -39,18 +39,13 @@
                         <DropdownMenuLabel>Select Filter</DropdownMenuLabel>
                        
                         <DropdownMenuRadioGroup v-model="filterOption">
-                          <DropdownMenuRadioItem class="text-sm font-normal" value="Date Created">
+                          <DropdownMenuRadioItem class="text-sm font-normal" value="created_at">
                             Date Created
                           </DropdownMenuRadioItem>
                           <DropdownMenuRadioItem class="text-sm font-normal"  value="Application Deadline">
                             Application Deadline
                           </DropdownMenuRadioItem>
-                          <DropdownMenuRadioItem class="text-sm font-normal"  value="Free">
-                            Free
-                          </DropdownMenuRadioItem>
-                          <DropdownMenuRadioItem class="text-sm font-normal"  value="Paid">
-                            Paid
-                          </DropdownMenuRadioItem>
+                         
                         </DropdownMenuRadioGroup>
                       </DropdownMenuContent>
                     </DropdownMenu>

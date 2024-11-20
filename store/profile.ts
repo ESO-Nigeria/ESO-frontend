@@ -59,6 +59,17 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
+    async updateProfile(id: any,body: any) {
+      try {
+        const response = await apiPutRequest(`/api/profiles/${id}/`, body);
+        // this.submitting = false
+        this.profile = response.data
+        // setItem('profile',JSON.stringify(response.data))
+        return { data: response, error: response.error };
+      } catch (error) {
+        return { data: null, error: error ?? "Unknown error" };
+      }
+    },
     async uploadCertificates(id: any,body: any) {
       try {
         const response = await apiPostRequestForFormData(`/api/certificates/`, body);
@@ -124,10 +135,10 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: "Unknown error" }
       }
     },
-    async getProgrammes(sectors: string | undefined, target_audience: string | undefined, financial_supports: string | undefined, non_financial_supports: string | undefined, title: string | undefined , page: string | undefined){
+    async getProgrammes(sectors: string | undefined, target_audience: string | undefined, financial_supports: string | undefined, non_financial_supports: string | undefined, title: string | undefined , sort_by: string | undefined , details__amount: string|undefined ,page: string | undefined){
       this.loading = true
       try{
-        const response = await apiGetUnRestrictedRequest(`/api/programs/?sectors=${sectors || ''}&target_audience=${target_audience || ''}&financial_supports=${financial_supports || ''}&non_financial_supports=${non_financial_supports || ''}&title=${title || ''}&page=`);
+        const response = await apiGetUnRestrictedRequest(`/api/programs/?sectors=${sectors || ''}&target_audience=${target_audience || ''}&financial_supports=${financial_supports || ''}&non_financial_supports=${non_financial_supports || ''}&title=${title || ''}&sort_by=${sort_by || ''}&details__amount=${details__amount || ''}&page=`);
         // this.links = response.data
         this.programs = response.data
         this.loading = false

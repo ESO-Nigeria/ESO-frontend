@@ -33,10 +33,10 @@
                       {{organization_types?.find(type => type.id == ESO?.user?.organization_type)?.label}}
                     </p>
                   </div>
-                  <div class="space-y-2">
+                  <div v-if="ESO?.number_of_years_in_operation !== 0" class="space-y-2">
                     <p class="text-sm text-primary font-bold">Number of years in Operation</p>
                     <p class="text-sm text-[#3F434A] font-normal">
-
+                      {{ ESO?.number_of_years_in_operation }}
                       <!-- {{organization_types?.find(type => type.id == ESO?.user?.organization_type)?.label }} -->
                     </p>
                   </div>
@@ -61,7 +61,7 @@
                     </p>
                   </div>
                   <div class="flex gap-x-2">
-                    <a class="" v-for="link in ESO?.social_links" :href="link.url" :key="link?.id" target="_blank" rel="noopener noreferrer">
+                    <a class="" v-for="link in ESO?.social_links" :href="checkLink(link.url)" :key="link?.id" target="_blank" rel="noopener noreferrer">
                       <span v-if="link?.platform == 'TWITTER'">
                         <img src="~/assets/images/icons/twitter.svg" alt="social_icon" />
                       </span>
@@ -77,7 +77,7 @@
                     </a>
                   </div>
                   <div v-if="ESO?.social_links?.length > 0 && ESO.social_links?.find(type => type.platform == 'WEBSITE')?.url">
-                    <NuxtLink :to="`https://${ESO.social_links?.find(type => type.platform == 'WEBSITE')?.url}`" target="_blank" class="w-full mt-3">
+                    <NuxtLink :to="checkLink(ESO.social_links?.find(type => type.platform == 'WEBSITE')?.url)" target="_blank" class="w-full mt-3">
                     <p size="lg" class="py-3 text-center  text-sm px-5 h-11 w-full bg-primary text-white rounded-md"  type="button" >
                    Visit Website
                   </p>
@@ -161,6 +161,7 @@ import { CalendarDays } from 'lucide-vue-next';
 import { useProfileStore } from '~/store/profile';
 import { useDayjs } from '#dayjs' // not need if you are using auto import
 import { organization_types, sectors } from '~/lib/data';
+import { checkLink } from '~/lib/utils';
 
 const dayjs = useDayjs()
 

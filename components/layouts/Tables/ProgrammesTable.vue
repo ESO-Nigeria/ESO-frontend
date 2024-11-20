@@ -210,7 +210,12 @@ onMounted(() => {
               class="h-5 w-5 border border-gray-300 rounded-md data-[state=checked]:border-[#088AD8] data-[state=checked]:bg-primaryBlue-25 data-[state=checked]:text-primaryBlue-500" />
           </div>
         </TableCell>
-        <TableCell class="py-4 px-6">{{item.title}}</TableCell>
+        <TableCell class="py-4 px-6">
+          <NuxtLink class="underline" :to="`/dashboard/programmes/${item?.title}`">
+            {{item.title}}
+          </NuxtLink>
+          
+        </TableCell>
         <TableCell class="py-4 px-6">
           <div>
            <span v-for="(sector, index) in item.sectors" :key="sector.id">

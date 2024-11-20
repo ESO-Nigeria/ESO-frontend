@@ -1,18 +1,6 @@
 <template>
   <div class="mt-4 flex flex-col gap-6">
-
-    <!-- <Alert v-show="success" class="bg-[#E2FEF0] border-0 flex items-center">
-      <CheckIcon class="text-[#05944F] size-5" />
-      <div class="">
-        <AlertTitle class="text-[#232E3F]">Details Submitted Successfully!</AlertTitle>
-        <AlertDescription class="text-[#5C6F7F]">
-          Your organization details have been submitted for verification. Please continue to complete the remaining sections to finalize your application.
-        </AlertDescription>
-      </div>
-     
-    </Alert> -->
-
-    <Alert v-show="profile && profile.approval_status != 'APPROVED'" class="bg-blue-100 border-0 flex items-center">
+    <Alert v-show="profile && profile?.approval_status != 'APPROVED'" class="bg-blue-100 border-0 flex items-center">
       <CheckIcon class="text-[#05944F] size-5" />
       <div class="">
         <AlertTitle class="text-[#232E3F]">Details Awaiting Verification!</AlertTitle>
@@ -22,14 +10,17 @@
       </div>
      
     </Alert>
-
-    <p class="text-base text-secondary-body-500">Enter details about your organization for verification.</p>
+    <div class="flex justify-between">
+      <p class="text-base text-secondary-body-500">Edit details about your organization.</p>
+      <Button @click="edit = !edit" variant="ghost"><SquarePen /></Button>
+    </div>
+  
     <div>
       <div class="flex flex-col lg:flex-row gap-5 lg:gap-14 items-start ">
-        <div v-bind="getRootProps1()" class="cursor-pointer">
+        <div class="cursor-pointer">
           <Avatar size="xl">
-            <AvatarImage :src="image_preview_link || profile?.logo" alt="@radix-vue" />
-            <input v-bind="getInputProps1()" :disabled="profile?.logo" />
+            <AvatarImage :src="image_preview_link || profile?.logo_url" alt="@radix-vue" />
+            <!-- <input v-bind="getInputProps1()" :disabled="profile?.logo" /> -->
             <AvatarFallback class="flex items-center justify-center flex-col">
               <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_17_26405)">
@@ -41,7 +32,7 @@
                 </clipPath>
                 </defs>
                 </svg>
-                <span class="text-sm text-secondary-body-regular ">Click to Upload Logo</span>
+                <!-- <span class="text-sm text-secondary-body-regular ">Click to Upload Logo</span> -->
               </AvatarFallback>
           </Avatar>
         </div>
@@ -52,7 +43,7 @@
                 <FormLabel class="text-[#3F434A] text-base font-medium">Organization Name</FormLabel>
                 <FormControl>
                   <Input type="text"
-                  disabled
+                    :disabled="!edit"
                     class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                     placeholder="Organization Name" v-bind="componentField" />
                 </FormControl>
@@ -62,7 +53,7 @@
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">Organization Type</FormLabel>
                 <FormControl>
-                  <Select disabled v-bind="componentField">
+                  <Select  :disabled="!edit" v-bind="componentField">
                     <SelectTrigger
                       class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                       <SelectValue placeholder="Select an organization type" />
@@ -99,13 +90,16 @@
                 >Brief Description (not more than 300 words)</FormLabel
               >
               <FormControl>
-                <Textarea
-                :disabled="profile && profile?.description"
-                placeholder="Enter brief description about your organization"
-                class="border-0 ring-[#D0D5DD]  disabled:bg-[#EAECF0]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                v-bind="componentField"
-              />
-              </FormControl>
+                <div :class="{ 'editor-disabled': !edit }">
+                  <ckeditor
+                  :editor="editor"
+                  :config="editorConfig"
+                  v-model="editorData"
+                  @change="onEditorChange"
+                  :disabled="!edit"
+                />
+            </div>
+               </FormControl>
             </FormItem>
           </FormField>
           <FormField
@@ -118,7 +112,7 @@
             >
             <FormControl>
               <Textarea
-              :disabled="profile && profile?.services"
+               :disabled="!edit"
               placeholder="Enter Services"
               class="border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5]  disabled:bg-[#EAECF0] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
               v-bind="componentField"
@@ -132,7 +126,7 @@
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">First Name</FormLabel>
                 <FormControl>
-                  <Input disabled type="text"
+                  <Input  :disabled="!edit" type="text"
                     class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                     placeholder="Enter First Name" v-bind="componentField" />
                 </FormControl>
@@ -142,7 +136,7 @@
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">Last Name</FormLabel>
                 <FormControl>
-                  <Input disabled type="text"
+                  <Input  :disabled="!edit" type="text"
                     class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                     placeholder="Enter Last Name" v-bind="componentField" />
                 </FormControl>
@@ -176,7 +170,7 @@
               <FormControl>
                 <div class="relative w-full  items-center">
                   <Input type="tel"
-                  disabled
+                   :disabled="!edit"
                     class="pl-10 h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                     placeholder="Enter Whatsapp Number" v-bind="componentField" />
                   <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -194,7 +188,7 @@
               <FormControl>
                 <div class="relative w-full  items-center">
                   <Input type="tel"
-                  :disabled="profile && profile?.company_phone"
+                   :disabled="!edit"
                     class="pl-10 h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                     placeholder="Enter Whatsapp Number" v-bind="componentField" />
                   <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -212,7 +206,7 @@
             <FormControl class=" relative w-full  items-center">
               <div class="relative w-full  items-center">
                 <Input type="text"
-                  :disabled="profile && profile?.address"
+                  :disabled="!edit"
                   class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="Organization Address" v-bind="componentField" />
               </div>
@@ -228,13 +222,13 @@
               <FormControl>
                
                 <Input 
-                    v-if="profile?.country"
+                    v-if="profile?.country && edit == false"
                     type="text"
                     :disabled="profile?.country"
                     class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                     placeholder="Country" v-bind="componentField" />
 
-                <Select v-else :disabled="profile?.country" v-model="selectedCountry"  @update:modelValue="onCountryChange" v-bind="componentField">
+                <Select v-else  v-model="selectedCountry"  @update:modelValue="onCountryChange" v-bind="componentField">
                   <SelectTrigger
                     class="h-11 border-0 ring-[#D0D5DD]  disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                     <SelectValue placeholder="Select a country" />
@@ -253,13 +247,13 @@
               <FormLabel class="text-[#3F434A] text-base font-medium">State</FormLabel>
               <FormControl>
                 <Input 
-                v-if="profile?.state"
+                v-if="profile?.state && edit == false"
                 type="text"
                 :disabled="profile?.state"
                 class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                 placeholder="State" v-bind="componentField" />
 
-                <Select v-else  v-bind="componentField" :disabled="!selectedCountry || profile?.state" @update:modelValue="onStateChange" v-model="selectedState" >
+                <Select v-else  v-bind="componentField" :disabled="!selectedCountry " @update:modelValue="onStateChange" v-model="selectedState" >
                   <SelectTrigger
                     class="h-11 border-0 ring-[#D0D5DD]  disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                     <SelectValue placeholder="Select a state" />
@@ -280,13 +274,13 @@
               <FormLabel class="text-[#3F434A] text-base font-medium">City</FormLabel>
               <FormControl>
                 <Input 
-                v-if="profile?.city"
+                v-if="profile?.city && edit == false"
                 type="text"
                 :disabled="profile?.city"
                 class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                 placeholder="Country" v-bind="componentField" />
 
-                <Select v-else v-bind="componentField" :disabled="!selectedState || profile?.city" v-model="selectedCity">
+                <Select v-else v-bind="componentField" :disabled="!selectedState" v-model="selectedCity">
                   <SelectTrigger
                     class="h-11 border-0 ring-[#D0D5DD]  disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm">
                     <SelectValue placeholder="Select a city" />
@@ -306,8 +300,8 @@
           <div class="mt-8 flex justify-end gap-6" >
             <Button size="lg" variant="outline" class="py-3 px-5 h-11 w-[145px]">Cancel</Button>
             <AlertDialog>
-              <AlertDialogTrigger :disabled="loading || profile" class="">
-                <Button :disabled="loading || profile" size="lg" class="py-3 px-5 h-11 w-[145px]">
+              <AlertDialogTrigger :disabled="loading || !edit" class="">
+                <Button :disabled="loading || !edit" size="lg" class="py-3 px-5 h-11 w-[145px]">
                   Save
                   <LoaderCircle v-show="loading" class="animate-spin h-4 w-4 ml-2" />
                 </Button>
@@ -345,7 +339,11 @@
 </template>
 
 <script setup>
-import { CheckIcon, LoaderCircle, Mail, PhoneCall } from 'lucide-vue-next';
+import { ClassicEditor, Bold, Essentials, Italic, Paragraph, Undo, Font, Alignment, List, Heading } from 'ckeditor5';
+import { Ckeditor } from '@ckeditor/ckeditor5-vue';
+
+import 'ckeditor5/ckeditor5.css';
+import { CheckIcon, LoaderCircle, Mail, PhoneCall, SquarePen } from 'lucide-vue-next';
 import Avatar from '../ui/avatar/Avatar.vue';
 import AvatarFallback from '../ui/avatar/AvatarFallback.vue';
 import AvatarImage from '../ui/avatar/AvatarImage.vue';
@@ -362,6 +360,7 @@ const all_countries = computed(()=>{
   return nigeria
 });
 const loading  = ref(false);
+const edit = ref(false)
 const selectedCountry = ref(null);
 const selectedState = ref(null);
 const selectedCity = ref(null);
@@ -380,30 +379,6 @@ const profile = computed(() => {
   return profileStore.profile
 })
 // Dropzone 1
-function onDrop1(acceptedFiles, rejectReasons) {
-  logo.value = acceptedFiles[0]
-  if (rejectReasons[0]) {
-    logo_errors.value = rejectReasons[0].errors[0];
-  } else {
-    // Create a FileReader to read the image file
-    const file = acceptedFiles[0];
-    const reader = new FileReader();
-
-    reader.onload = function(event) {
-      image_preview_link.value = event.target.result; // Save the data URL to the ref
-    };
-
-    // Read the file as a data URL
-    reader.readAsDataURL(file);
-  }
-}
-const deleteLogo = () => {
-  logo.value = {}
-  logo_errors.value = {}
-}
-
-const { getRootProps: getRootProps1, getInputProps: getInputProps1 } = useDropzone({ onDrop: onDrop1, maxSize: 560000, accept: ".pdf, .jpeg, .png", maxFiles: 1});
-
 // Methods to handle changes
 const onCountryChange = (newValue) => {
   states.value = all_countries?.value?.find((c) => c.name == newValue)?.states;
@@ -433,39 +408,56 @@ watch(
   }
 );
 
+const editorDataDescription = ref(profile.value?.description || '');
+const editorDataServices = ref(profile.value?.services || '');
+const editor = ClassicEditor;
+const editorData = ref(profile?.value?.description);
+
+const editorConfig = {
+  plugins: [ Bold, Essentials, Italic,  Paragraph, Heading, Undo, Font, List ],
+  toolbar: {
+		items: [
+        'undo', 'redo',
+        '|',
+        'paragraph','heading',
+        '|',
+        'fontsize',
+        '|',
+        'bold', 'italic', 
+        '|',
+        'alignment',
+        '|',
+        'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
+    ],
+
+		shouldNotGroupWhenFull: true
+	},
+};
+
+function onEditorChange(event, editor) {
+  editorData.value = editor.getData();
+}
+
 const onSubmit = handleSubmit(async(values) => {
-//       const body =    {
-//     "country": values.country,
-//     "state": values.state,
-//     "city": values.city,
-//     "address": values?.organization_address,
-//     "company_email": values?.email,
-//     "company_phone": values?.phone_number,
-//     "company_website": "",
-//     "description": values?.description,
-//     "services": values?.services,
-//     "logo": logo.value
-// }
-const formData = new FormData();
-
-// Append each key-value pair to FormData
-formData.append("country", values.country);
-formData.append("state", values.state);
-formData.append("city", values.city);
-formData.append("address", values?.organization_address);
-formData.append("company_email", values?.email);
-formData.append("company_phone", values?.phone_number);
-formData.append("company_website", ""); // Empty string as specified
-formData.append("description", values?.description);
-formData.append("logo", logo.value);
-formData.append("services", values.services);
-
+      const body =    {
+    "country": values.country,
+    "state": values.state,
+    "city": values.city,
+    "address": values?.organization_address,
+    "company_email": values?.email,
+    "company_phone": values?.phone_number,
+    "company_website": "",
+    "description": editorData.value,
+    "services": values?.services,
+    // "logo": logo.value
+}
       try {
         loading.value = true;
-      const response =  await profileStore.createProfile(formData);
+      const response =  await profileStore.updateProfile(profile.value.id, body);
       if (response.data && response?.data?.data) {
         loading.value = false;
         success.value = true;
+        edit.value = false
         fetchProfile()
        
         } else {
@@ -479,18 +471,28 @@ formData.append("services", values.services);
       }
 });
 
+watch(
+  () => profile.value,
+  (newPatient) => {
+    editorData.value = newPatient.description;
+  }
+);
+
 onMounted(() => {
-  // if (process.client) {
-  //       const storedProfile = getItem("profile");
-  //       if (storedProfile && storedProfile !== undefined) {
-  //       const user  = JSON.parse(storedProfile);
-  //       console.log(user)
-  //       }
-  //     }
       fetchProfile()
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.editor-disabled {
+  pointer-events: none; 
+  background-color: #f5f5f5; 
+  border: 1px solid #ccc; 
+  opacity: 0.5; 
+}
 
+.editor-disabled .ck-editor .ck-editor__main .ck-editor__editable {
+  background: #EAECF0 !important; 
+  cursor: not-allowed  !important;
+}
 </style>

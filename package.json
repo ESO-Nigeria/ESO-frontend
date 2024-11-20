@@ -36,6 +36,7 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-vue": "^7.2.0",
     "@nuxt/app": "^0.5.0",
     "@nuxt/http": "^0.6.4",
     "@nuxt/types": "^2.17.2",
@@ -55,6 +56,7 @@
     "@yzfe/vue3-svgicon": "^1.0.2",
     "axios": "^1.6.2",
     "boolean": "^3.2.0",
+    "ckeditor5": "^43.3.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
