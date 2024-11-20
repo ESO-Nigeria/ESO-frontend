@@ -29,7 +29,8 @@ export const useProgrammeStore = defineStore("programme", {
         } as ProgrammeDetails,
         image: null,
         loading: false,
-        error: null
+        error: null,
+        program:{}
     }),
     getters: {
         getCreateProgramme(state) {
@@ -113,6 +114,23 @@ export const useProgrammeStore = defineStore("programme", {
         async GET_PROGRAMMES() {
             try {
                 const response = await apiGetRequest(`/api/programs/`);
+                return { data: response, error: response.error };
+            } catch (error) {
+                return { data: null, error: "Unknown error" }
+            }
+        },
+        async getProgramme(id: any){
+            try {
+                const response = await apiGetRequest(`/api/programs/${id}`);
+                this.program = response.data
+                return { data: response, error: response.error };
+            } catch (error) {
+                return { data: null, error: "Unknown error" }
+            }
+        },
+        async updateProgramme(id: any, body: object){
+            try {
+                const response = await apiPutRequest(`/api/programs/${id}/`, body);
                 return { data: response, error: response.error };
             } catch (error) {
                 return { data: null, error: "Unknown error" }

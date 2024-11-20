@@ -1,4 +1,7 @@
 <script setup>
+import { ClassicEditor, Bold, Essentials, Italic, Paragraph, Undo, Font, Alignment, List, Heading } from 'ckeditor5';
+import { Ckeditor } from '@ckeditor/ckeditor5-vue';
+import 'ckeditor5/ckeditor5.css';
 import { Check, Edit, LoaderCircle } from 'lucide-vue-next';
 import { ref } from 'vue';
 import FormDescription from '~/components/ui/form/FormDescription.vue';
@@ -125,10 +128,38 @@ function updateProgrammeState() {
   })
 }
 
+const editor = ClassicEditor;
+const editorData = ref('');
+
+const editorConfig = {
+  plugins: [ Bold, Essentials, Italic,  Paragraph, Heading, Undo, Font, List ],
+  toolbar: {
+		items: [
+        'undo', 'redo',
+        '|',
+        'paragraph','heading',
+        '|',
+        'fontsize',
+        '|',
+        'bold', 'italic', 
+        '|',
+        'alignment',
+        '|',
+        'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
+    ],
+
+		shouldNotGroupWhenFull: true
+	},
+};
+
+function onEditorChange(event, editor) {
+  formFields.description = editor.getData();
+}
+
 
 async function handleFormSubmit() {
   programmeStore.SET_LOADING(true);
-
+  
   const formData = new FormData();
   formData.append('title', programme.value?.title);
   formData.append('description', programme.value?.description);
@@ -271,9 +302,18 @@ async function handleFormSubmit() {
                       <FormItem class="space-y-1">
                         <FormLabel class="text-[#3F434A] text-sm font-medium">Program Description</FormLabel>
                         <FormControl>
-                          <Textarea placeholder="Program Description"
+                          <!-- <Textarea placeholder="Program Description"
                             class="border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                            v-model="formFields.description" />
+                            v-model="formFields.description" /> -->
+                            <div>
+                              <ckeditor
+                              :editor="editor"
+                              :config="editorConfig"
+                              v-model="formFields.description"
+                              @change="onEditorChange"
+                             
+                            />
+                        </div>
                         </FormControl>
                       </FormItem>
                     </FormField>
@@ -288,17 +328,7 @@ async function handleFormSubmit() {
                       </FormItem>
                     </FormField>
 
-                    <!-- <FormField v-slot="{ componentField }" name="instructor">
-                      <FormItem class="space-y-1">
-                        <FormLabel class="text-[#3F434A] text-sm font-medium">Brief detail of instructors used
-                          (Optional)</FormLabel>
-                        <FormControl>
-                          <Textarea placeholder="Brief detail of instructors used "
-                            class="border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                            v-model="formFields.instructors" />
-                        </FormControl>
-                      </FormItem>
-                    </FormField> -->
+                    
 
                     <MultiSelect
                       v-model="formFields.sectors"
@@ -314,17 +344,7 @@ async function handleFormSubmit() {
                       placeholder="Select target audience..."
                     />
 
-                    <!-- <FormField v-slot="{ componentField }" name="organization_name">
-                      <FormItem class="space-y-1">
-                        <FormLabel class="text-[#3F434A] text-base font-medium">Other partners and funders</FormLabel>
-                        <FormControl>
-                          <Input type="text"
-                            class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                            placeholder="Enter Organization Name" v-bind="componentField" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    </FormField> -->
+                    
 
                     <MultiSelect
                       v-model="formFields.non_financial_supports"

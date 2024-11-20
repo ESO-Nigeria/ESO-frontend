@@ -34,7 +34,7 @@
             </span>
           </div>
                    
-          <a :href="event?.registration_link" target="_blank" class="w-full mt-3">
+          <a :href="checkLink(event?.registration_link) " target="_blank" class="w-full mt-3">
                       <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
                       Apply Now
                     </Button>
@@ -57,13 +57,13 @@
                     </div>
                    </div>
                   <div class="flex justify-end mt-6 gap-4">
-                    <a :href="event?.registration_link" target="_blank" class="w-full">
+                    <a :href="checkLink(event?.registration_link) " target="_blank" class="w-full">
                       <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
                       Apply Now
                     </Button>
                   </a>
                    
-                    <a :href="event?.website_link" target="_blank" class="w-full">
+                    <a :href="checkLink(event?.website_link) " target="_blank" class="w-full">
                       <Button class="py-3 px-5 h-11 w-full bg-[#257F4A]" size="lg" type="button">
                         Visit Website
                       </Button>
@@ -88,7 +88,7 @@
   import { CalendarDays } from 'lucide-vue-next';
   import { useProfileStore } from '~/store/profile';
   import { useDayjs } from '#dayjs' // not need if you are using auto import
-  import { reverseTransform } from '~/lib/utils';
+  import { checkLink, reverseTransform } from '~/lib/utils';
   
   const dayjs = useDayjs()
   

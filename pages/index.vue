@@ -8,7 +8,7 @@
                     <h1 class="text-4xl font-bold  sm:text-5xl ">Enterprise Support Organisations (ESO) Collaborative</h1>
                     <p class="mt-4 text-xl font-normal text-[#475467]  sm:mt-8">We are a group of Professionals providing support to MSMEs in Nigeria and building a stronger ecosystem 
                     </p>
-                    <form action="#" method="POST" class="relative mt-8 rounded-md">
+                    <div class="relative mt-8 rounded-md">
                         <div class="relative">
                             <div class="relative border flex rounded-md">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-6">
@@ -16,14 +16,14 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                     </svg>
                                 </div>
-                                <input type="text" name="" id="" placeholder="Looking for a programme?" class="rounded-r-none block w-full py-4 pr-6  placeholder-gray-500 border border-transparent  rounded-md pl-14 focus:border-transparent focus:ring-0" />
+                                <input v-model="search" type="text" name="" id="" placeholder="Looking for a programme?" class="rounded-r-none block w-full py-4 pr-6  placeholder-gray-500 border border-transparent  rounded-md pl-14 focus:border-transparent focus:ring-0" />
                                 <div class="inline-flex">
-                                  <NuxtLink to="/general/programmes" type="submit" class="border rounded-r-md border-r inline-flex items-center justify-center w-full px-5 py-5 text-sm font-semibold tracking-widest uppercase transition-all duration-200 bg-primary text-white  sm:w-auto sm:py-3 hover:opacity-90">Search</NuxtLink>
+                                  <NuxtLink to="/general/programmes"  :data-search-value="search"  type="button" class="border rounded-r-md border-r inline-flex items-center justify-center w-full px-5 py-5 text-sm font-semibold tracking-widest uppercase transition-all duration-200 bg-primary text-white  sm:w-auto sm:py-3 hover:opacity-90">Search</NuxtLink>
                               </div>
                               </div>
                         </div>
                        
-                    </form>
+                    </div>
                     <div class="mt-4 ">
                         <NuxtLink to="/general/programmes" class="text-base text-[#257F4A] font-normal ">View all programmes</NuxtLink>
                     </div>
@@ -245,7 +245,7 @@ import { useProfileStore } from '~/store/profile';
 import { articlesDetails } from '~/lib/data';
 
 const profileStore = useProfileStore()
-
+const search = ref("")
 const events = computed(() => {
   return profileStore.events
 })

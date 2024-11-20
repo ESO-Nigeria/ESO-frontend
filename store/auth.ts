@@ -80,7 +80,17 @@ export const useAuthStore = defineStore("auth", {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
-
+    async change_current_password(body: any) {
+      try {
+        const response = await apiPostFormRequest(
+          "/auth/users/set_password/",
+          body
+        );
+        return { data: response, error: response.error };
+      } catch (error) {
+        return { data: null, error: error ?? "Unknown error" };
+      }
+    },
     async new_password(body: any) {
       try {
         // /auth/users/reset_password/

@@ -8,19 +8,8 @@
           Your organization details have been submitted for verification. Please continue to complete the remaining sections to finalize your application.
         </AlertDescription>
       </div>
-     
     </Alert>
-    {{ profile }}
-    <Alert v-show="certificates?.results?.length > 0 && profile.approval_status != 'APPROVED'" class="bg-blue-100 border-0 flex items-center">
-      <CheckIcon class="text-[#05944F] size-5" />
-      <div class="">
-        <AlertTitle class="text-[#232E3F]">Details Awaiting Verification!</AlertTitle>
-        <AlertDescription class="text-[#5C6F7F]">
-          Your organization details have been submitted for verification.
-        </AlertDescription>
-      </div>
-    </Alert>
-
+    
     <p class="text-base text-secondary-body-500">Upload relevant certificates and licenses for verification.</p>
   
     <form>
@@ -30,12 +19,13 @@
             <p class="text-[#3F434A] text-base font-medium">CAC Document</p>
             <p class="text-base text-[#98A2B3] font-normal">Upload Registration Certificate</p>
           </div>
-          <div v-if="cac_doc?.name " class="border border-primary w-[367px] text-sm h-[72px] p-4 rounded-md flex items-start ">
+          <div v-if="certificates?.results?.[0]?.cac_certificate" class="border border-primary w-[367px] text-sm h-[72px] p-4 rounded-md flex items-start ">
             <div class="flex gap-4">
               <img src="~/assets/images/icons/file.svg" />
               <div>
-                <p class="text-[#344054] font-medium">{{ cac_doc?.name }}</p>
-                <p class="text-secondary-body-regular-contrast">{{bytesToKilobytes(cac_doc?.size) }}KB – 100% uploaded -  <span @click="deleteTin" class="cursor-pointer text-destructive">Delete</span></p>
+                <p class="text-[#344054] font-medium">{{ extractFileName(certificates?.results?.[0]?.cac_certificate) }}</p>
+                <p class="text-secondary-body-regular-contrast"> 100% uploaded -  
+                  <NuxtLink :to="certificates?.results?.[0]?.cac_certificate" target="_blank" class="cursor-pointer text-destructive">view</NuxtLink></p>
               </div>
                </div>
             <div class="ml-auto">
@@ -46,22 +36,9 @@
                 </svg>
             </div>
           </div>
-          <div v-else class="mb-4">
-            <p class="text-sm text-[#3F434A] font-medium">Upload CAC Certificate</p>
-            <div class="mt-4">
-             
-              <!-- Dropzone 1 -->
-    <div v-bind="getRootProps1()" 
-    :class="['dropzone', { 'bg-[#EAECF0]': certificates?.results?.[0]?.cac_certificate, 'cursor-not-allowed': certificates?.results?.[0]?.cac_certificate}]" 
-    class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
-      <input  v-bind="getInputProps1()" />
-      <img src="~/assets/images/icons/upload.svg" />
-      <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
-      <p class="text-xs">.pdf, .jpeg, .png (max.560kb)</p>
-      <p class="text-xs text-destructive capitalize mt-1">{{ cac_doc_errors ? cac_doc_errors.code : null }}</p>
-
-    </div>
-            </div>
+         
+          <div v-else>
+            <p class="text-[#3F434A] text-base font-medium">Document Not Uploaded!!!</p>
           </div>
         </div>
         <div>
@@ -69,12 +46,13 @@
             <p class="text-[#3F434A] text-base font-medium">TIN</p>
             <p class="text-base text-[#98A2B3] font-normal">Upload Registration Certificate</p>
           </div>
-          <div v-if="tin_doc?.name" class="border border-primary w-[367px] text-sm h-[72px] p-4 rounded-md flex items-start ">
+          <div v-if="certificates?.results?.[0]?.tin_certificate" class="border border-primary w-[367px] text-sm h-[72px] p-4 rounded-md flex items-start ">
             <div class="flex gap-4">
               <img src="~/assets/images/icons/file.svg" />
               <div>
-                <p class="text-[#344054] font-medium">{{ tin_doc?.name }}</p>
-                <p class="text-secondary-body-regular-contrast">{{bytesToKilobytes(tin_doc?.size) }}KB – 100% uploaded -  <span @click="deleteTin" class="cursor-pointer text-destructive">Delete</span></p>
+                <p class="text-[#344054] font-medium">{{ extractFileName(certificates?.results?.[0]?.tin_certificate) }}</p>
+                <p class="text-secondary-body-regular-contrast"> 100% uploaded -  
+                  <NuxtLink :to="certificates?.results?.[0]?.tin_certificate" target="_blank" class="cursor-pointer text-destructive">view</NuxtLink></p>
               </div>
                </div>
             <div class="ml-auto">
@@ -83,25 +61,11 @@
                 <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" stroke="#31A962"/>
                 <path d="M11.3337 5.5L6.75033 10.0833L4.66699 8" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                
             </div>
           </div>
-          <div v-else class="mb-4">
-            <p class="text-sm text-[#3F434A] font-medium">Upload TIN Certificate</p>
-            <div class="mt-4">
-              <!-- Dropzone 1 -->
-    <div v-bind="getRootProps2()" 
-    :class="['dropzone', { 'bg-[#EAECF0]': certificates?.results?.[0]?.tin_certificate, 'cursor-not-allowed': certificates?.results?.[0]?.tin_certificate}]" 
-
-    class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
-      <input v-bind="getInputProps2()" />
-      <img src="~/assets/images/icons/upload.svg" />
-      <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
-      <p class="text-xs">.pdf, .jpeg, .png (max.560kb)</p>
-      <p class="text-xs text-destructive capitalize mt-1">{{ tin_doc_errors ? tin_doc_errors.code : null }}</p>
-
-    </div>
-            </div>
+         
+          <div v-else>
+            <p class="text-[#3F434A] text-base font-medium">Document Not Uploaded!!!</p>
           </div>
         </div>
         <div>
@@ -109,12 +73,13 @@
             <p class="text-[#3F434A] text-base font-medium">Licences (Optional)</p>
             <p class="text-base text-[#98A2B3] font-normal">Upload any supporting documents</p>
           </div>
-          <div v-if="license_doc?.name" class="border border-primary w-[367px] text-sm h-[72px] p-4 rounded-md flex items-start ">
+          <div v-if="certificates?.results?.[0]?.other_license" class="border border-primary w-[367px] text-sm h-[72px] p-4 rounded-md flex items-start ">
             <div class="flex gap-4">
               <img src="~/assets/images/icons/file.svg" />
               <div>
-                <p class="text-[#344054] font-medium">{{ license_doc?.name }}</p>
-                <p class="text-secondary-body-regular-contrast">{{bytesToKilobytes(license_doc?.size) }}KB – 100% uploaded -  <span @click="deleteLicense" class="cursor-pointer text-destructive">Delete</span></p>
+                <p class="text-[#344054] font-medium">{{ extractFileName(certificates?.results?.[0]?.other_license) }}</p>
+                <p class="text-secondary-body-regular-contrast"> 100% uploaded -  
+                  <NuxtLink :to="certificates?.results?.[0]?.other_license" target="_blank" class="cursor-pointer text-destructive">view</NuxtLink></p>
               </div>
                </div>
             <div class="ml-auto">
@@ -123,32 +88,19 @@
                 <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" stroke="#31A962"/>
                 <path d="M11.3337 5.5L6.75033 10.0833L4.66699 8" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                
             </div>
           </div>
-          <div v-else class="mb-4">
-            <div class="mt-4">
-              <!-- Dropzone 1 -->
-              <div v-bind="getRootProps3()" 
-              :class="['dropzone', { 'bg-[#EAECF0]': certificates?.results?.[0]?.other_license, 'cursor-not-allowed': certificates?.results?.[0]?.other_license}]" 
-
-              class="dropzone cursor-pointer text-secondary-body-regular-contrast border border-[#EAECF0] h-[126px] rounded-md w-full flex flex-col items-center justify-center">
-                <input v-bind="getInputProps3()" />
-                <img src="~/assets/images/icons/upload.svg" />
-                <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
-                <p class="text-xs">.pdf, .jpeg, .png (max.560kb)</p>
-                <p class="text-xs text-destructive capitalize mt-1">{{ license_doc_errors ? license_doc_errors.code : null }}</p>
-
-              </div>
-            </div>
+         
+          <div v-else>
+            <p class="text-[#3F434A] text-base font-medium">Document Not Uploaded!!!</p>
           </div>
         </div>
 
-        <FormField v-slot="{ componentField }" name="organization_name" class="">
+        <FormField :modelValue="certificates?.results?.[0]?.number_of_year_in_operation" v-slot="{ componentField }" name="organization_name" class="">
           <FormItem class="space-y-1 w-full lg:w-1/2">
             <FormLabel class="text-[#3F434A] text-base font-medium">Number of Years in Operation</FormLabel>
             <FormControl>
-              <Input type="number"
+              <Input disabled type="number"
                 class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                 placeholder="Years in Operation" v-bind="componentField" />
             </FormControl>
@@ -226,6 +178,15 @@ const certificates = computed(() => {
 })
 function bytesToKilobytes(bytes) {
   return Math.floor(bytes / 1024);
+}
+
+function extractFileName(url) {
+  // Split the URL by '/'
+  const parts = url.split('/');
+  // Get the last part of the split URL
+  const fileName = parts[parts.length - 1];
+  // Return the file name
+  return fileName;
 }
 // Dropzone 1
 function onDrop1(acceptedFiles, rejectReasons) {

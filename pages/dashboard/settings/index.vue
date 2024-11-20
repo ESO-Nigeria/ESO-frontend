@@ -117,9 +117,9 @@
         <div class="flex flex-col gap-2">
           <h6 class="text-secondary-header3 text-xl font-bold">Set a new password</h6>
         </div>
-        <FormField v-slot="{ componentField }" name="password">
+        <FormField v-slot="{ componentField }" name="current_password">
           <FormItem class="space-y-1">
-            <FormLabel class="text-[#3F434A] text-base font-medium">New Password</FormLabel>
+            <FormLabel class="text-[#3F434A] text-base font-medium">Current Password</FormLabel>
             <FormControl class=" relative w-full  items-center">
 
               <div class="relative w-full  items-center">
@@ -133,11 +133,12 @@
                 </button>
               </div>
             </FormControl>
+            <FormMessage />
           </FormItem>
         </FormField>
-        <FormField v-slot="{ componentField }" name="confirm_password">
+        <FormField v-slot="{ componentField }" name="new_password">
           <FormItem class="space-y-1">
-            <FormLabel class="text-[#3F434A] text-base font-medium">Confirm Password</FormLabel>
+            <FormLabel class="text-[#3F434A] text-base font-medium">New Password</FormLabel>
             <FormControl class=" relative w-full  items-center">
 
               <div class="relative w-full  items-center">
@@ -151,13 +152,14 @@
                 </button>
               </div>
             </FormControl>
+            <FormMessage />
           </FormItem>
         </FormField>
         <!-- </div> -->
 
-        <Button  class="text-base py-3 h-11 mt-2">Change Password
+        <Button @click="onSubmit" type="button" :disabled="loadingSubmit"  class="text-base py-3 h-11 mt-2">Change Password
 
-          <!-- <LoaderCircle v-show="loading" class="animate-spin h-4 w-4 ml-2" /> -->
+          <LoaderCircle v-show="loadingSubmit" class="animate-spin h-4 w-4 ml-2" />
         </Button>
 
       </form>
@@ -181,16 +183,33 @@ import TabsList from '~/components/ui/tabs/TabsList.vue';
 import TabsTrigger from '~/components/ui/tabs/TabsTrigger.vue';
 import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
-  
-  const authStore = useAuthStore();
-  const profileStore = useProfileStore()
-  const user = computed(() => {
-    return authStore.user;
+import { useForm } from 'vee-validate';
+import { toTypedSchema } from "@vee-validate/zod";
+import * as z from "zod";
+import { toast } from 'vue-sonner';
+import { Eye, EyeOff, LoaderCircle } from 'lucide-vue-next';
+
+
+const formSchema = toTypedSchema(
+  z.object({
+    current_password: z.string({ message: "Current password is required" }),
+      // This can stay to ensure there's some input
+    new_password: z.string({message: 'New password is required'})
   })
-  const profile = computed(()=> {
-    return profileStore.profile
-  })
-  
+);
+const form = useForm({
+  validationSchema: formSchema,
+})
+const authStore = useAuthStore();
+const profileStore = useProfileStore()
+const user = computed(() => {
+  return authStore.user;
+})
+const profile = computed(()=> {
+  return profileStore.profile
+})
+const loadingSubmit  = ref(false);
+
   const loading = computed(() => {
     return authStore.loadingUser
   })
@@ -200,6 +219,35 @@ const isPasswordVisible = ref(false);
 function togglePasswordVisibility() {
   isPasswordVisible.value = !isPasswordVisible.value;
 }
+
+const onSubmit  = form.handleSubmit(async( values) => {
+  try {
+    loadingSubmit.value = true;
+  const response =  await authStore.change_current_password( values );
+  if (response.data && response?.data?.data?.status == 204) {
+    loadingSubmit.value = false;
+    form.handleReset()
+    toast.success( 'Password changed successfully')
+    } else {
+      loadingSubmit.value = false;
+      }
+      if (response.error && response?.error?.current_password) {
+        const joined = response?.error?.current_password.join(' ');
+        toast.error(joined || 'Error , please check details and try again.');
+        }
+        else if(response?.error && response?.error?.new_password ){
+          const joined = response?.error?.new_password.join(' ');
+          toast.error(`${joined}`|| 'Error , please check details and try again.')
+        }else if (response.error && response?.error?.error) {
+          const joined = response?.error?.error?.join(' ');
+          toast.error(joined|| 'Error registering, please check details and try again.')
+        }
+        loadingSubmit.value = false
+  }catch(error) {
+    loadingSubmit.value = false
+    console.log('error', error)
+  }
+})
   onMounted(() => {
     authStore.getUser()
   
