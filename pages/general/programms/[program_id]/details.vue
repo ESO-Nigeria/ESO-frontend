@@ -84,8 +84,8 @@
                     <div class="space-y-2">
                       <p class="text-sm text-primary font-bold">Timeline/Duration</p>
                       <p class="text-sm text-[#3F434A] font-normal">
-
-                      </p>
+                          {{program?.program_details?.start_date && getDuration(program?.program_details?.start_date, program?.program_details?.end_date) }}
+                        </p>
                     </div>
                     <div class="space-y-2">
                       <p class="text-sm text-primary font-bold">Program Mode</p>
@@ -103,8 +103,8 @@
                     </div>
                     <div class="space-y-2">
                       <p class="text-sm text-primary font-bold">Participation Fee</p>
-                      <p class="text-sm text-[#3F434A] font-normal">
-                        {{program?.program_details?.amount &&  formatToNaira(program?.program_details?.amount) }}
+                      <p class="text-sm text-[#3F434A] font-normal capitalize">
+                        {{program?.program_details?.amount || '' }}
                       </p>
                     </div>
                   </div>
@@ -184,7 +184,7 @@ import { useProfileStore } from '~/store/profile';
 import { useDayjs } from '#dayjs' // not need if you are using auto import
 import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
 import { targetAudience, sectors, nonFinancialSupport, financialSupport, programMode, organization_types } from '~/lib/data';
-import { formatToNaira, reverseTransform } from '~/lib/utils';
+import { formatToNaira, reverseTransform, getDuration } from '~/lib/utils';
 const dayjs = useDayjs()
 
 const { program_id } = useRoute().params
