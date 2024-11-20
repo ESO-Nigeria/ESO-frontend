@@ -66,3 +66,34 @@ export function checkLink(link: string) {
     return "https://" + link;
   }
 }
+
+export function getDuration(startDate: string | number , endDate: string | number ) {
+  // Ensure the input dates are valid
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  
+  console.log('start, end, startDate, endDate', start, end, startDate, endDate)
+  // if (isNaN(start) || isNaN(end)) {
+  //     throw new Error('Invalid date input');
+  // }
+
+  // Calculate the difference in milliseconds
+  const diffInMs = end - start;
+
+  // Calculate the total days
+  const totalDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+  // Determine the appropriate duration format
+  if (totalDays > 30) {
+      // More than 30 days, return in months
+      const months = Math.floor(totalDays / 30);
+      return `${months} month${months > 1 ? 's' : ''}`;
+  } else if (totalDays > 7) {
+      // More than 7 days, return in weeks
+      const weeks = Math.floor(totalDays / 7);
+      return `${weeks} week${weeks > 1 ? 's' : ''}`;
+  } else {
+      // Return in days if it's 7 days or less
+      return `${totalDays} day${totalDays > 1 ? 's' : ''}`;
+  }
+}
