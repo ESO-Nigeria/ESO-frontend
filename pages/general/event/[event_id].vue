@@ -77,6 +77,7 @@
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
       </NuxtLayout>
@@ -89,6 +90,7 @@
   import { useProfileStore } from '~/store/profile';
   import { useDayjs } from '#dayjs' // not need if you are using auto import
   import { checkLink, reverseTransform } from '~/lib/utils';
+import Ratings from '~/components/layouts/Ratings.vue';
   
   const dayjs = useDayjs()
   

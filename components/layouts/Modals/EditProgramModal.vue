@@ -119,7 +119,6 @@ const form = useForm({});
 
 const onSubmit = form.handleSubmit( async (values) => {
   loadingState.value = true
-  console.log('values', values, formFields.value, formFieldsDetails.value)
   const body = {
     ...formFields.value,
     program_details: {

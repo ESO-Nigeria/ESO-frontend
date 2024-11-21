@@ -83,6 +83,7 @@
     "vue-multiselect": "^2.1.9",
     "vue-router": "latest",
     "vue-sonner": "^1.2.5",
+    "vue-star-rating": "^2.1.0",
     "vue-sweetalert2": "^5.0.5",
     "vue3-dropzone": "^2.2.1",
     "vuex-persistedstate": "^4.1.0",

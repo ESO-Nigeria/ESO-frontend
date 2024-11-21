@@ -123,6 +123,7 @@
                     </div>
                   </DialogScrollContent>
                 </Dialog>
+               
                 <div class="py-4 hidden lg:block">
                   <h2 class="text-xl  mb-4 text-primary flex gap-1"> 
                     <img src="~/assets/images/icons/filter.svg" class=" items-center"/> 
@@ -255,7 +256,7 @@
                 <div class="space-y-5">
                   <div class="flex flex-col lg:flex-row justify-between gap-x-6 gap-y-4 lg:gap-y-0">
                     <div class="flex-1">
-                      <FormField v-slot="{ componentField }" name="search">
+                      <FormField :modelValue="q" v-slot="{ componentField }" name="search">
                         <FormItem class="space-y-1">
                           <FormControl >
                             <div class="relative flex border items-center border-primary rounded-md ">
@@ -387,6 +388,7 @@ import { useProfileStore } from '~/store/profile';
 import { transformHref } from '~/lib/utils';
 import Dialog from '~/components/ui/dialog/Dialog.vue';
 
+const { q } = useRoute().query
 const sectors = [
   { id: 1, name: 'Agriculture' },
   { id: 2, name: 'Healthcare ' },
@@ -403,7 +405,7 @@ const sectors = [
 const filterOption = ref('Date Created')
 
 const route = useRoute()
-
+const router = useRouter();
 const stages = [
   { id: 1, name: 'Start-up (Post-revenue)' },
   { id: 2, name: 'Early Stage' },
@@ -524,6 +526,7 @@ watch(
     }
   }
 );
+
 watch(
   () => filterOption.value,
   (newValue) => {
@@ -532,9 +535,23 @@ watch(
     }
   }
 );
-onMounted(() => {
-  profileStore.getProgrammes()
-})
+watch(
+  () => route.query.q,
+  (newValue) => {
+    searchValue.value = newValue || '';
+  }
+);
+watch(() => searchValue.value ,
+(newValue) => {
+  router.push({ query: { ...route.query, q: newValue } });
+  searchProgrammes()
+}
+)
+onMounted(async() => {
+  if (route.query.q) {
+    searchValue.value = route.query.q; // Initialize query from route query
+  }
+});
 </script>
 
 <style lang="scss" scoped>

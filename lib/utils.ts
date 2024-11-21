@@ -71,9 +71,7 @@ export function getDuration(startDate: string | number , endDate: string | numbe
   // Ensure the input dates are valid
   const start = new Date(startDate);
   const end = new Date(endDate);
-  
-  console.log('start, end, startDate, endDate', start, end, startDate, endDate)
-  // if (isNaN(start) || isNaN(end)) {
+    // if (isNaN(start) || isNaN(end)) {
   //     throw new Error('Invalid date input');
   // }
 
