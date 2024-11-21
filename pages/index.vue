@@ -17,8 +17,9 @@
                                     </svg>
                                 </div>
                                 <input v-model="search" type="text" name="" id="" placeholder="Looking for a programme?" class="rounded-r-none block w-full py-4 pr-6  placeholder-gray-500 border border-transparent  rounded-md pl-14 focus:border-transparent focus:ring-0" />
+                                
                                 <div class="inline-flex">
-                                  <NuxtLink to="/general/programmes"  :data-search-value="search"  type="button" class="border rounded-r-md border-r inline-flex items-center justify-center w-full px-5 py-5 text-sm font-semibold tracking-widest uppercase transition-all duration-200 bg-primary text-white  sm:w-auto sm:py-3 hover:opacity-90">Search</NuxtLink>
+                                  <NuxtLink :to="search ? `/general/searchResult?q=${search}` : ''"  type="button" class="border rounded-r-md border-r inline-flex items-center justify-center w-full px-5 py-5 text-sm font-semibold tracking-widest uppercase transition-all duration-200 bg-primary text-white  sm:w-auto sm:py-3 hover:opacity-90">Search</NuxtLink>
                               </div>
                               </div>
                         </div>

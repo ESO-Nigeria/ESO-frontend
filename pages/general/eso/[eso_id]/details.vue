@@ -123,7 +123,7 @@
                   </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Brief Description</p>
-                    <p class="text-sm text-[#3F434A] font-normal">{{  ESO.description }}</p>
+                    <p class="text-sm text-[#3F434A] font-normal" v-html="ESO.description"></p>
                   </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Services</p>
@@ -149,6 +149,11 @@
               </div>
             </div>
           </div>
+          <div class="py-3">
+            <p class="text-primary text-lg font-medium">Ratings</p>
+            <LayoutsRatings :profile="ESO"/>
+          </div>
+          
         </div>
       </div>
     </NuxtLayout>
