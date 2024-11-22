@@ -333,7 +333,6 @@ async function handleFormSubmit() {
                           />
                       </div>
 
-                      {{ formFields }}
                           <!-- <Textarea placeholder="Program Details"
                             class="border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                             v-model="formFields.brief_details" /> -->
