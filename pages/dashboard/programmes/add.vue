@@ -19,7 +19,7 @@ import AlertDialogFooter from '~/components/ui/alert-dialog/AlertDialogFooter.vu
 import { useProgrammeStore } from '~/store/programmme';
 import { sectors, targetAudience, nonFinancialSupport, financialSupport, programMode, countries, locations } from '~/lib/data';
 import { formatDate } from '~/lib/utils';
-
+import { toast } from 'vue-sonner';
 
 const { isFieldDirty, handleSubmit, values } = useForm({
 });
@@ -196,6 +196,7 @@ async function handleFormSubmit() {
 
     if(programmeData){
       programmeStore.RESET_PROGRAMME()
+      toast.success('Programme created successfully')
       navigateTo(`/dashboard/programmes`);
     }
   } catch (error) {

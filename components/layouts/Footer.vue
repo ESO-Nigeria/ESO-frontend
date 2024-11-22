@@ -6,7 +6,7 @@
           <NuxtLink to="/" class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
             <img src="~/assets/images/Footer-logo.png" />
           </NuxtLink>
-          <p class="mt-2 text-base ">The Nigerian ESO Collaborative, a Programme of Impact Investors Foundation is a platform of Enterprise Support Organizations building a stronger MSME network in Nigeria</p>
+          <p class="mt-2 text-base ">The Nigerian ESO Collaborative, a Programme of <a href="https://www.impactinvestorsfoundation.org" target="_blank">Impact Investors Foundation</a> is a platform of Enterprise Support Organizations building a stronger MSME network in Nigeria</p>
         </div>
         <div class="lg:w-1/3 md:w-1/2 w-full mb-4 md:mb-0 px-4  text-base space-y-3">
           <h2 class="title-font font-semibold  tracking-widest  ">Get Involved</h2>
@@ -15,7 +15,7 @@
               <NuxtLink to="/general/esos" class="">Enterprise Support Organizations</NuxtLink>
             </li>
             <li>
-              <a class="">Articles</a>
+              <a class="https://docs.google.com/forms/d/1_lE4s9DZz2yhYYBUsCHc3YHrbtIRYbJ8OnzLt_wqpb0/viewform?edit_requested=true" target="_blank">Join the community</a>
             </li>
             <li>
               <NuxtLink to="/general/programmes" class="">Programmes</NuxtLink>

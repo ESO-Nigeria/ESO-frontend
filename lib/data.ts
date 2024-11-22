@@ -5,13 +5,14 @@ import articleImage2 from '@/assets/images/article2.png'; // Correctly import th
 export const sectors = [
     { "id": 1, "label": "Agriculture" },
     { "id": 2, "label": "Healthcare" },
-    { "id": 3, "label": "Renewable Energy" },
-    { "id": 4, "label": "Climate" },
-    { "id": 5, "label": "Mobility/ Transportation" },
-    { "id": 6, "label": "Technology" },
-    { "id": 7, "label": "Consulting" },
-    { "id": 8, "label": "Services" },
-    { "id": 9, "label": "Others" },
+    { "id": 3, "label": "Education" },
+    { "id": 4, "label": "Renewable Energy" },
+    { "id": 5, "label": "Climate" },
+    { "id": 6, "label": "Mobility/ Transportation" },
+    { "id": 7, "label": "Technology" },
+    { "id": 8, "label": "Consulting" },
+    { "id": 9, "label": "Services" },
+    { "id": 10, "label": "Others" },
 ]
 
 export const targetAudience = [
