@@ -525,7 +525,11 @@ formData.append("company_website", ""); // Empty string as specified
 formData.append("description", values?.description);
 formData.append("logo", logo.value);
 formData.append("services", values.services);
-formData.append("sectors", formSectors)
+for(let sector of formSectors.value){
+    formData.append('sectors', sector)
+  }
+  // formSectors.value
+// formData.append("sectors", )
       try {
         loading.value = true;
       const response =  await profileStore.createProfile(formData);

@@ -168,6 +168,7 @@ async function handleFormSubmit() {
   for(let sector of programme.value?.sectors){
     formData.append('sectors', sector)
   }
+  
   for(let financial_support of programme.value?.financial_supports){
     formData.append('financial_supports', financial_support)
   }
