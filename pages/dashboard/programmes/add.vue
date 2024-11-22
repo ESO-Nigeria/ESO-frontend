@@ -168,7 +168,7 @@ async function handleFormSubmit() {
   for(let sector of programme.value?.sectors){
     formData.append('sectors', sector)
   }
-  
+
   for(let financial_support of programme.value?.financial_supports){
     formData.append('financial_supports', financial_support)
   }
@@ -322,9 +322,20 @@ async function handleFormSubmit() {
                       <FormItem class="space-y-1">
                         <FormLabel class="text-[#3F434A] text-sm font-medium">Program Details</FormLabel>
                         <FormControl>
-                          <Textarea placeholder="Program Details"
+                          <div>
+                            <ckeditor
+                            :editor="editor"
+                            :config="editorConfig"
+                            v-model="formFields.brief_details"
+                            @change="onEditorChange"
+                           
+                          />
+                      </div>
+
+                      {{ formFields }}
+                          <!-- <Textarea placeholder="Program Details"
                             class="border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                            v-model="formFields.brief_details" />
+                            v-model="formFields.brief_details" /> -->
                         </FormControl>
                       </FormItem>
                     </FormField>
