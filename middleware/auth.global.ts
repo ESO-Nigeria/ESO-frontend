@@ -26,6 +26,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         'general-esos',
         'general-eso-eso_id-details',
         'general-about-us',
+        'general-mapping-report',
         'general-article-article_id',
         'general-searchResult'
        

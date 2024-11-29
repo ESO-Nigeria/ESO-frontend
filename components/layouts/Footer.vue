@@ -15,7 +15,7 @@
               <NuxtLink to="/general/esos" class="">Enterprise Support Organizations</NuxtLink>
             </li>
             <li>
-              <a class="https://docs.google.com/forms/d/1_lE4s9DZz2yhYYBUsCHc3YHrbtIRYbJ8OnzLt_wqpb0/viewform?edit_requested=true" target="_blank">Join the community</a>
+              <a href="https://docs.google.com/forms/d/1_lE4s9DZz2yhYYBUsCHc3YHrbtIRYbJ8OnzLt_wqpb0/viewform?edit_requested=true" target="_blank">Join the community</a>
             </li>
             <li>
               <NuxtLink to="/general/programmes" class="">Programmes</NuxtLink>
