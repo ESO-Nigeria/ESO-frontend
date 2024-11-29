@@ -15,7 +15,7 @@
           <div class="md:w-1/2 flex flex-col justify-between">
             <!-- Header Section -->
             <div class="mb-4 text-justify">
-              <h2 class="text-4xl font-bold text-left text-primary uppercase leading-snug">About the Nigerian ESO Collaborative</h2>
+              <h2 class="text-4xl font-bold text-left text-primary uppercase leading-snug">MAPPING AND ANALYSIS OF ENTERPRISE SUPPORT ORGANISATIONS (ESOS) IN NIGERIA</h2>
               <p class="text-base text-[#4F5865] mt-2">
                Uncover key insights from the "Mapping and Analysis of Enterprise Support Organisations (ESOs) in Nigeria",
                 a comprehensive report by the Impact Investors Foundation (IIF). This study provides deep insights into the actors, 
@@ -136,7 +136,6 @@
         </div>
        
 
-        <section class="my-8">
       <div class="container  mx-auto  relative max-w-7xl">
         <div class="bg-customGreen  rounded-[25px]  px-4  sm:px-6 lg:px-8 ">
           <div class="container pt-10 pb-10 mx-auto px-4">
@@ -154,7 +153,7 @@
               </div>
               <!-- Second Section: Buttons -->
               <div class="lg:flex  lg:items-start lg:justify-start lg:space-x-5">
-                <a href="https://forms.gle/jJUYF5AHCT7r23xS7">
+                <a href="https://forms.gle/jJUYF5AHCT7r23xS7" target="_blank">
                   <Button variant="variant" size="lg" class="bg-customLightGreen mb-2 text-[#fff] text-base font-normal">
                     Download Now
                   </Button>
@@ -173,8 +172,7 @@
         </div>
        
       </div>
-      
-    </section>
+  
       </div>
   </NuxtLayout>
   </div>
