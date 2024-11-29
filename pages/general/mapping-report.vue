@@ -154,11 +154,11 @@
               </div>
               <!-- Second Section: Buttons -->
               <div class="lg:flex  lg:items-start lg:justify-start lg:space-x-5">
-                <NuxtLink to="/auth/login">
+                <a href="https://forms.gle/jJUYF5AHCT7r23xS7">
                   <Button variant="variant" size="lg" class="bg-customLightGreen mb-2 text-[#fff] text-base font-normal">
                     Download Now
                   </Button>
-                </NuxtLink>
+                </a>
 
                 <!-- <NuxtLink to="/auth/register">
                   <Button class="border border-blue-50 " size="lg">
