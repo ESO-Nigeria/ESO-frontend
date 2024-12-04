@@ -179,7 +179,7 @@
               <div class="lg:flex  lg:items-start lg:justify-start lg:space-x-5">
                 <NuxtLink to="/auth/login">
                   <Button variant="variant" size="lg" class="bg-customLightGreen mb-2 text-[#fff] text-base font-normal">
-                    Great Started Now
+                    Get Started Now
                   </Button>
                 </NuxtLink>
 
