@@ -100,6 +100,26 @@ onMounted(() => {
 });
 </script>
 
+<script>
+export default {
+  mounted() {
+    const script1 = document.createElement("script");
+    script1.async = true;
+    script1.src = "https://www.googletagmanager.com/gtag/js?id=G-BXN8PVE3HB";
+    document.head.appendChild(script1);
+
+    const script2 = document.createElement("script");
+    script2.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BXN8PVE3HB');
+    `;
+    document.head.appendChild(script2);
+  },
+};
+</script>
+
 <style lang="scss" scoped>
 /* You can add specific styles for the mobile navigation here if needed */
 </style>
