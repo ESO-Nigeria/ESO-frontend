@@ -83,7 +83,7 @@
       </div>
       <div class="">
         <div class="container  relative max-w-7xl border-t mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
-          <p class=" text-base text-center sm:text-left">© 2024 All Rights Reserved. Powered by ESO Nigeria
+          <p class=" text-base text-center sm:text-left">© {{ new Date().getFullYear()}} All Rights Reserved. Powered by ESO Nigeria
           </p>
          
         </div>
