@@ -4,7 +4,6 @@
 
       <div class="container py-4">
         <LayoutsBreadcrumb
-        
             :breadcrumbs="[{ text: 'DISCOVER  DETAILED  INSIGHTS ON ENTERPRISE SUPPORT ORGANISATIONS (ESOS) IN NIGERIA' }]"></LayoutsBreadcrumb>
         <div class="w-full max-w-screen-lg mx-auto p-4 sm:p-8 md:flex md:gap-6">
           <!-- Left Section with Image -->
