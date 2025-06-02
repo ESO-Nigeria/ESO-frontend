@@ -3,11 +3,11 @@
     <NuxtLayout name="general" title="THE ENTERPRISE SUPPORT ORGANISATION FIRST ANNUAL FORUM" >
 
       <div class="container py-4">
-        <LayoutsBreadcrumb :breadcrumbs="[{ text: 'THE ENTERPRISE SUPPORT ORGANISATION FIRST ANNUAL FORUM' }]"></LayoutsBreadcrumb>
+        <LayoutsBreadcrumb :breadcrumbs="[{ text:'THE ENTERPRISE SUPPORT ORGANISATION FIRST ANNUAL FORUM' }]"></LayoutsBreadcrumb>
         <div class="w-full max-w-screen-lg mx-auto p-4 sm:p-8 md:flex md:gap-6">
           <!-- Left Section with Image -->
           <div class="md:w-1/2 mb-4 md:mb-0">
-            <img src="~/assets/images/eso-annual-report.png" alt="Group Image" class="w-full h-auto rounded-lg object-contain">
+            <img src="~/assets/images/eso-annual-report.png" alt="ESO Annual Forum" class="w-full h-auto rounded-lg object-contain">
           </div>
           
           <!-- Right Section with Content -->
