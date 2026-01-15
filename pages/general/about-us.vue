@@ -286,18 +286,6 @@
 
             <div class="grid lg:grid-cols-2 gap-6 auto-rows-[360px]">
               <div class="rounded-md overflow-hidden">
-<<<<<<< HEAD
-                <img src="~/assets/images/about-gallery.png" alt="Gallery Image" class="w-full h-full object-cover rounded-md">
-              </div>
-              <div class="rounded-md overflow-hidden">
-                <img src="~/assets/images/about-gallery.png" alt="Gallery Image" class="w-full h-full object-cover rounded-md">
-              </div>
-              <div class="rounded-md  overflow-hidden">
-                <img src="~/assets/images/about-gallery.png" alt="Gallery Image" class="w-full h-full object-cover rounded-md">
-              </div>
-              <div class="rounded-md overflow-hidden">
-                <img src="~/assets/images/about-gallery.png" alt="Gallery Image" class="w-full h-full object-cover rounded-md">
-=======
                 <img src="~/assets/images/about-g1.png" alt="Gallery Image" class="w-full h-full object-cover rounded-md">
               </div>
               <div class="rounded-md overflow-hidden">
@@ -308,7 +296,6 @@
               </div>
               <div class="rounded-md overflow-hidden">
                 <img src="~/assets/images/about-g4.png" alt="Gallery Image" class="w-full h-full object-cover rounded-md">
->>>>>>> 02f1ac6 (about us image new)
               </div>
             </div>
           </div>
