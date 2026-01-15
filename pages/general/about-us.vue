@@ -130,104 +130,48 @@
             </div>
           </div>
         </div>
-        <div class="w-full  max-w-screen-lg mx-auto p-4 my-3 text-justify space-y-5">
-          <p class="text-primary text-2xl font-bold">Objectives</p>
-          <div class="rounded-md overflow-hidden h-[432px]">
-            <img src="~/assets/images/container-image.png" alt="Gallery Image" class="w-full h-full object-cover rounded-md">
-          </div>
-          <div class="grid md:grid-cols-2 lg:grid-cols-2 text-white gap-6">
-            <div class="border-primary bg-primary text-white border rounded-md p-4 space-y-2.5 flex flex-col  justify-center">
-              <p class="text-base font-medium ">
-                Collaboration
-              </p>
-              <p class="text-sm text-justify">
-                The collaborative provides a platform for cooperation, partnership and synergy between Enterprise support organizations (ESOs). The collaborative believes in the power of collaboration to drive collective impact and create synergy among ESOs, government agencies, financial institutions, academia, and other stakeholders.
-              </p>
-            </div>
-            <div class="bg-[#D1AE6F] text-white rounded-md p-4 space-y-2.5 flex flex-col  justify-center">
-              <p class="text-base font-medium ">
-                Knowledge Sharing
-              </p>
-              <p class="text-sm  text-justify">
-                The collaborative fosters a culture of continuous learning with a focus on peer-peer learning, knowledge exchange and collaboration among ESOs .
-              </p>
-            </div>
-            <div class="bg-[#D1AE6F] text-white rounded-md p-4 space-y-2.5 flex flex-col  justify-center">
-              <p class="text-base font-medium ">
-                Enterprise-Centric Approach
-              </p>
-              <p class="text-sm  text-justify">
-                Prioritize customer needs by implementing tailored support solutions, personalized interactions, and proactive service delivery.
-              </p>
-            </div>
-            <div class="bg-primary text-white justify-center rounded-md p-4 space-y-2.5 flex flex-col  ">
-              <p class="text-base font-medium ">
-                Innovation Integration
-              </p>
-              <p class="text-sm text-justify">
-                Embrace emerging technologies and best practices to innovate support services, anticipate future requirements, and maintain a competitive edge.
-              </p>
-            </div>
-            <div class="justify-center bg-primary text-white rounded-md p-4 space-y-2.5 flex flex-col  ">
-              <p class="text-base font-medium ">
-                Stakeholder Alignment
-              </p>
-              <p class="text-sm text-justify">
-                Establish strong partnerships and alignment with stakeholders to ensure seamless integration of support services with overall ecosystem development objectives.
-              </p>
-            </div>
-            <div class="bg-[#D1AE6F] text-white rounded-md p-4 space-y-2.5 flex flex-col  justify-center">
-              <p class="text-base font-medium ">
-                Efficiency Optimization
-              </p>
-              <p class="text-sm  text-justify">
-                Streamline support processes and workflows to maximize productivity, and reduce operational costs.
-              </p>
-            </div>
-           
-          </div>
-        </div>
-        <div class="w-full  max-w-screen-lg mx-auto p-4 my-3 text-justify space-y-5">
-          <p class="text-primary text-2xl font-bold">Programme Focus</p>
+       
+        <div class="w-full bg-primary  rounded-md max-w-screen-lg mx-auto p-4 my-3 text-justify space-y-5">
+          <p class="text-white text-2xl font-bold">Programme Focus</p>
           <div class="grid md:grid-cols-2 lg:grid-cols-4 text-white gap-6">
-            <div class="border-primary border rounded-md p-4 space-y-2.5 flex flex-col  ">
-              <p class="text-base font-medium text-primary">
+            <div class="border-white border rounded-md p-4 space-y-2.5 flex flex-col  ">
+              <p class="text-white  font-medium text-primary">
                 Ecosystem Development
               </p>
-              <p class="text-base text-[#4F5865] text-justify">
+              <p class="text-white text-[#4F5865] text-justify">
                 Establish a robust and inclusive ecosystem of collaborative support services that empowers Nigerian enterprises to thrive, innovate, and contribute to sustainable economic growth.
               </p>
             </div>
-            <div class="border-primary border rounded-md p-4 space-y-2.5 flex flex-col  ">
-              <p class="text-base font-medium text-primary">
+            <div class="border-white border rounded-md p-4 space-y-2.5 flex flex-col  ">
+              <p class="text-white font-medium text-primary">
                 Impactful Partnerships
               </p>
-              <p class="text-base text-[#4F5865] text-justify">
+              <p class="text-white text-[#4F5865] text-justify">
                 Forge strategic partnerships with government agencies, financial institutions, academia, industry associations, and international organizations to amplify the reach and impact of support initiatives across Nigeria.
               </p>
             </div>
-            <div class="border-primary border rounded-md p-4 space-y-2.5 flex flex-col  ">
-              <p class="text-base font-medium text-primary">
+            <div class="border-white border rounded-md p-4 space-y-2.5 flex flex-col  ">
+              <p class="text-white font-medium text-primary">
                 Capacity Building
               </p>
-              <p class="text-base text-[#4F5865] text-justify">
+              <p class="text-white text-[#4F5865] text-justify">
                 Strengthen the capacity and capabilities of ESOs and support personnel to deliver high-quality, tailored support services that address the evolving needs of Nigerian enterprises effectively.
               </p>
             </div>
-            <div class="border-primary border rounded-md p-4 space-y-2.5 flex flex-col  ">
-              <p class="text-base font-medium text-primary">
+            <div class="border-white border rounded-md p-4 space-y-2.5 flex flex-col  ">
+              <p class="text-white font-medium text-primary">
                 Sustainable Growth
               </p>
-              <p class="text-base text-[#4F5865] text-justify">
+              <p class="text-white text-[#4F5865] text-justify">
                 Foster an environment conducive to sustainable enterprise growth by promoting ethical business practices, responsible resource management, and social and environmental stewardship.
 
               </p>
             </div>
-            <div class="border-primary border rounded-md p-4 space-y-2.5 flex flex-col  ">
-              <p class="text-base font-medium text-primary">
+            <div class="border-white border rounded-md p-4 space-y-2.5 flex flex-col  ">
+              <p class="text-white font-medium text-primary">
                 Entrepreneurship Promotion
               </p>
-              <p class="text-base text-[#4F5865] text-justify">
+              <p class="text-white text-[#4F5865] text-justify">
                 Cultivate a culture of entrepreneurship, innovation, and risk-taking among Nigerian youth and aspiring entrepreneurs, equipping them with the skills, knowledge, and networks needed to succeed in the dynamic business landscape.
               </p>
             </div>
