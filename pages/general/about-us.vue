@@ -17,7 +17,20 @@
             <div class="mb-4 text-justify">
               <h2 class="text-4xl font-bold text-left text-primary uppercase leading-snug">About the Nigerian ESO Collaborative</h2>
               <p class="text-base text-[#4F5865] mt-2">
-                The Nigeria Enterprise Support Organizations (ESOs) Collaborative is a programme of the Impact Investors Foundation with support from the RISA Fund and UKAID. This programme is building a strong network of diverse ESOs that share a common goal to drive sustainable economic growth through entrepreneurship. This is by pooling collective expertise and resources to enhance the capacity of Nigerian ESOs to foster collaboration, innovation, and capacity building. Through a comprehensive range of services, strategic initiatives, and collaborative frameworks; the Collaborative is empowering enterprise support organizations to drive economic growth through a supportive ecosystem where Nigerian enterprises can thrive, grow, and contribute meaningfully to the nation's economic prosperity and societal well-being.
+                The Nigeria ESOs Collaborative is a network of dedicated 
+                enterprise support organizations committed to fostering the growth and 
+                development of Nigeria’s entrepreneurial ecosystem with a drive to empower 
+                entrepreneurs across Nigeria and beyond by providing comprehensive support, 
+                resources, and a unified platform for collaboration, capacity building and 
+                innovation. The Collaborative brings together a diverse range of Enterprise 
+                Support Organizations (ESOs) that share a common goal to drive sustainable 
+                economic growth through entrepreneurship. By pooling collective expertise 
+                and resources, the collaborative aims to enhance the capacity of Nigerian ESOs, 
+                helping them overcome challenges and seize opportunities in a dynamic business 
+                environment to fill the following gaps as identified  in the recent ESO Mapping 
+                report;
+
+
               </p>
             </div>
           
@@ -25,16 +38,15 @@
         </div>
         <div class="w-full max-w-screen-lg mx-auto p-4  text-justify space-y-3">
           <p class="text-base text-[#4F5865] ">
-            The Collaborative recognizes the critical importance of collaboration in achieving organizational objectives, delivering exceptional support services and developing SME sector. By leveraging the strengths and resources of each enterprise support organization within our network, the Nigerian ESO Collaborative is creating a more effective and holistic support ecosystem for businesses through knowledge sharing, networking and collaboration, innovation, research and development (R&D), advocacy, access to funding, mentorship, and continuous evaluation. The ESOs Collaborative has built a platform for a supportive ecosystem where Nigerian enterprises can thrive, grow, and contribute meaningfully to the nation's economic prosperity and societal well-being. We are leveraging our collective strengths, resources, and networks to overcome challenges, seize opportunities, and create lasting positive change for the benefit of the SME sector in Nigeria. Do join us in shaping the future of entrepreneurship and enterprise development in the Nation!          </p>
+            
+Gap 1 : Low Levels of Enterprise Readiness<br>
+Gap 2: Low Capacity of ESO’s to Delivery Effective Programs <br>
+Gap 3: Limited Sectors of Focus<br>
+Gap 4: Disconnect between MSME investment and financing available and access to finance by MSMEs<br>
+</p>
         
-          <p class="text-base text-[#4F5865] ">
-            SMEs play a pivotal role in driving economic development, fostering innovation, and generating employment opportunities within the country. Integral to the growth and development of SMEs are Enterprise Support Organizations (ESOs) that are crucial in providing essential resources like access to capital and other forms of enterprise technical assistance/support that contribute to SMEs’ profitability and sustainability. Hence, improving the coordination, quality and quantity of enterprise support is crucial to building an enabling environment for sustainable businesses to thrive in Nigeria. With the rapidly evolving business landscape and the increasing complexity of technological advancements, the Nigerian business environment is characterised by a mix of challenges and opportunities, including regulatory complexities, infrastructural limitations, market volatility, and emerging trends such as digital and technological transformation. In this context, ESOs serve as catalysts for entrepreneurship and business sustainability, providing critical resources, mentorship, networking opportunities, investment-readiness and invariably, access to funding to empower enterprises at all stages of their growth journey. ESOs services range from making a business commercially viable, having financial and operations numbers that are realistic and achievable, having a plan on how to scale the business, knowing the right target market, having a proof of concept, building a great team and having a good advisory board.
-    </p>
       
-          <p class="text-base text-[#4F5865] ">
-            In the investment landscape, the crucial disconnect between investors and entrepreneurs include insufficient investment readiness, differing valuation expectations, and limited access to information. Entrepreneurial Support Organizations (ESOs) are bridging these gaps by offering guidelines on investor expectations and providing capacity-building support In the investment landscape, to correct the disconnect between investors and entrepreneurs due to insufficient investment readiness, differing valuation expectations, and limited access to information.
-            Indeed ESOs play in achieving organizational objectives, delivering exceptional support services and strengthening the enterprise development ecosystem, collaboration between ESOs becomes important to enhance their impact, and foster innovative solutions. By working together within a collaborative network, ESOs can share knowledge and best practices, improve their organizational performance and support services, build stronger networks, mitigate mutual risks, present a unified voice for advocacy, and reach a larger audience. Ultimately, these partnerships lead to more efficient use of resources and more significant, sustainable valued outcomes for their stakeholders. The Nigeria Enterprise Support Organizations (ESOs) Collaborative Strategy aims to provide a clear roadmap for achieving shared goals of ESOs in Nigeria working independently yet within a collaborative network. It outlines the vision, mission, and objectives, ensuring all members are aligned and working towards the same outcomes. The document defines roles, responsibilities, and processes, which helps in coordinating efforts and avoiding overlaps or conflicts. It also includes metrics for evaluating progress and continuous improvement. Additionally, a strategy document serves as a reference point for decision-making, resource allocation, and conflict resolution, ensuring the collaborative operates efficiently and effectively.
-            </p>
+        
       
 
         </div>
