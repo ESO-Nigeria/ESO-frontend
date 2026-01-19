@@ -21,7 +21,14 @@ export const useProfileStore = defineStore("profile", {
     singleESO: {},
     articles:{},
     loadingArticles: false,
-    singleArticles: {}
+    singleArticles: {},
+    // Add faqs and galleries state
+    faqs: [],
+    faq: {},
+    loadingFaqs: false,
+    galleries: [],
+    gallery: {},
+    loadingGalleries: false
   }),
   getters: {
     getToken(state) {
@@ -205,5 +212,48 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: "Unknown error" }
       }
     },
+    
+    // FAQ Actions
+    async getFaqs(search: string | undefined, page: string | undefined) {
+      this.loadingFaqs = true
+      try {
+        const response = await apiGetUnRestrictedRequest(`/api/faqs/?search=${search || ''}&page=${page || ''}`);
+        this.faqs = response.data
+        this.loadingFaqs = false
+        return { data: response, error: response.error };
+      } catch (error) {
+        this.loadingFaqs = false
+        return { data: null, error: "Unknown error" }
+      }
+    },
+    
+    
+    // Gallery Actions
+    async getGalleries(search: string | undefined, page: string | undefined, category: string | undefined) {
+      this.loadingGalleries = true
+      try {
+        const response = await apiGetUnRestrictedRequest(`/api/galleries/?search=${search || ''}&page=${page || ''}&category=${category || ''}`);
+        this.galleries = response.data
+        this.loadingGalleries = false
+        return { data: response, error: response.error };
+      } catch (error) {
+        this.loadingGalleries = false
+        return { data: null, error: "Unknown error" }
+      }
+    },
+    
+    async getSingleGallery(id: any) {
+      this.loading = true
+      try {
+        const response = await apiGetUnRestrictedRequest(`/api/galleries/${id}`);
+        this.gallery = response.data
+        this.loading = false
+        return { data: response, error: response.error };
+      } catch (error) {
+        this.loading = false
+        return { data: null, error: "Unknown error" }
+      }
+    },
+    
   },
 });
