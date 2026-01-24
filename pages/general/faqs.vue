@@ -64,9 +64,11 @@
                           <div class="mt-1">
                             <MessageSquareText class="size-5 text-gray-400" />
                           </div>
-                          <div class="text-gray-600 text-[16px] font-normal leading-relaxed">
-                            {{ faq.answer }}
-                          </div>
+                         <div
+                          class="text-gray-600 text-[16px] font-normal leading-relaxed"
+                          v-html="faq.answer"
+                        ></div>
+
                         </div>
                       </AccordionContent>
                     </AccordionItem>
@@ -89,7 +91,7 @@
             </div>
 
             <!-- Contact Support Section -->
-            <div class="mt-12 pt-8 border-t border-gray-200">
+            <div class="mt-12 pt-8 border-t border-gray-200 flex justify-center">
               <div class="text-center">
                 <h3 class="text-2xl font-bold text-gray-800 mb-3">
                   Still have questions?
@@ -97,10 +99,13 @@
                 <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
                   Can't find the answer you're looking for? Please contact our support team.
                 </p>
-                <Button size="lg" class="px-8">
-                  <Mail class="size-5 mr-2" />
-                  Contact Support
-                </Button>
+                <div class="flex items-center justify-center">
+
+                  <Mail class="size-5 mr-2 text-center" />
+                  <p class="text-gray-800">
+                    info@impactinvestorsfoundation.org
+                  </p>
+                </div>
               </div>
             </div>
           </div>
