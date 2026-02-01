@@ -23,6 +23,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         'general-faqs',
         'general-gallery',
         'general-reports',
+        'general-report-report_id',
         'general-programmes',
         'general-event-event_id',
         'general-programms-program_id-details',
