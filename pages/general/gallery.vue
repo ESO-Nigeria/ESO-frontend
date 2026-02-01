@@ -19,7 +19,7 @@
       
       <div class="px-4 mx-auto relative sm:px-6 lg:px-8 max-w-7xl py-4">
         <!-- Search Section -->
-        <div class="mb-8">
+        <!-- <div class="mb-8">
           <div class="flex flex-col lg:flex-row justify-between gap-x-6 gap-y-4 lg:gap-y-0 w-full">
             <div class="flex-1">
               <FormField v-slot="{ componentField }" name="search">
@@ -47,7 +47,7 @@
               </FormField>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Gallery Content -->
         <div class="py-6">
