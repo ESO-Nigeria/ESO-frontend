@@ -58,7 +58,7 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: "Unknown error" }
       }
     },
-    async createProfile(body: any) {
+    async createProfile(body: FormData | Record<string, unknown>) {
       try {
         const response = await apiPostRequestForFormData(`/api/profiles/`, body);
         // this.submitting = false
@@ -69,7 +69,7 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
-    async updateProfile(id: string | number, body: any) {
+    async updateProfile(id: string | number, body: Record<string, unknown>) {
       try {
         const response = await apiPutRequest(`/api/profiles/${id}/`, body);
         // this.submitting = false
@@ -80,7 +80,7 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
-    async uploadCertificates(id: string | number, body: any) {
+    async uploadCertificates(id: string | number, body: FormData) {
       try {
         const response = await apiPostRequestForFormData(`/api/certificates/`, body);
         // this.submitting = false
@@ -102,7 +102,7 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: "Unknown error" }
       }
     },
-    async socialLinks(body: any) {
+    async socialLinks(body: Record<string, unknown>) {
       try {
         const response = await apiPostFormRequest(`/api/social-links/`, body);
         this.links = response.data.data

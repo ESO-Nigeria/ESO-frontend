@@ -119,12 +119,14 @@
                   </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Program Description</p>
-                    <div class="text-sm text-[#3F434A] font-normal" v-html="program.description">
+                    <!-- eslint-disable-next-line vue/no-v-html -->
+                    <div class="text-sm text-[#3F434A] font-normal" v-html="sanitizedDescription">
                     </div>
                   </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">  Program Details</p>
-                    <div class="text-sm text-[#3F434A] font-normal" v-html="program.brief_details">
+                    <!-- eslint-disable-next-line vue/no-v-html -->
+                    <div class="text-sm text-[#3F434A] font-normal" v-html="sanitizedBriefDetails">
                     </div>
                   </div>
                   <div class="space-y-2">
@@ -188,9 +190,20 @@ const dayjs = useDayjs()
 const { program_id } = useRoute().params
 const profileStore = useProfileStore()
 
+const { sanitize } = useSanitize()
+
 const program = computed(() => {
   return profileStore.program
 })
+
+const sanitizedDescription = computed(() => {
+  return program.value?.description ? sanitize(program.value.description) : ''
+})
+
+const sanitizedBriefDetails = computed(() => {
+  return program.value?.brief_details ? sanitize(program.value.brief_details) : ''
+})
+
 const loading = computed(() => {
   return profileStore.loading
 })
