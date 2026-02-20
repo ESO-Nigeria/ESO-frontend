@@ -46,7 +46,7 @@ export const useProfileStore = defineStore("profile", {
     },
   },
   actions: {
-    async getProfile(id: any) {
+    async getProfile() {
       this.loadingProfile = true
       try {
         const response = await apiGetRequest(`/api/profiles/`);
@@ -69,7 +69,7 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
-    async updateProfile(id: any, body: any) {
+    async updateProfile(id: string | number, body: any) {
       try {
         const response = await apiPutRequest(`/api/profiles/${id}/`, body);
         // this.submitting = false
@@ -80,7 +80,7 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
-    async uploadCertificates(id: any, body: any) {
+    async uploadCertificates(id: string | number, body: any) {
       try {
         const response = await apiPostRequestForFormData(`/api/certificates/`, body);
         // this.submitting = false
@@ -133,7 +133,7 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: "Unknown error" }
       }
     },
-    async getSingleEvents(id: any) {
+    async getSingleEvents(id: string | number) {
       this.loading = true
       try {
         const response = await apiGetUnRestrictedRequest(`/api/events/${id}`);
@@ -157,7 +157,7 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: "Unknown error" }
       }
     },
-    async getSingleProgramme(id: any) {
+    async getSingleProgramme(id: string | number) {
       this.loading = true
       try {
         const response = await apiGetUnRestrictedRequest(`/api/programs/${id}`);
@@ -181,7 +181,7 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: "Unknown error" }
       }
     },
-    async getSingleESO(id: any) {
+    async getSingleESO(id: string | number) {
       this.loading = true
       try {
         const response = await apiGetUnRestrictedRequest(`/api/profiles/${id}`);
@@ -204,7 +204,7 @@ export const useProfileStore = defineStore("profile", {
         return { data: null, error: "Unknown error" }
       }
     },
-    async getSingleArticles(id: any) {
+    async getSingleArticles(id: string | number) {
       this.loading = true
       try {
         const response = await apiGetUnRestrictedRequest(`/api/articles/${id}`);
@@ -245,7 +245,7 @@ export const useProfileStore = defineStore("profile", {
       }
     },
 
-    async getSingleGallery(id: any) {
+    async getSingleGallery(id: string | number) {
       this.loading = true
       try {
         const response = await apiGetUnRestrictedRequest(`/api/galleries/${id}`);
@@ -271,7 +271,7 @@ export const useProfileStore = defineStore("profile", {
       }
     },
 
-    async getSingleReport(id: any) {
+    async getSingleReport(id: string | number) {
       this.loadingReports = true
       try {
         const response = await apiGetUnRestrictedRequest(`/api/reports/${id}/`);

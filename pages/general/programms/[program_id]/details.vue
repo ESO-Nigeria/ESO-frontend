@@ -117,17 +117,15 @@
                       </p>
                     </div>
                   </div>
-                 <div class="space-y-2">
+                  <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Program Description</p>
-                    <p class="text-sm text-[#3F434A] font-normal">
-                      {{ program.description }}
-                    </p>
+                    <div class="text-sm text-[#3F434A] font-normal" v-html="program.description">
+                    </div>
                   </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">  Program Details</p>
-                    <p class="text-sm text-[#3F434A] font-normal">
-                      {{ program.brief_details}}
-                    </p>
+                    <div class="text-sm text-[#3F434A] font-normal" v-html="program.brief_details">
+                    </div>
                   </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">  Non Financial Support Provided</p>
