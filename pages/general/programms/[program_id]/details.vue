@@ -119,15 +119,18 @@
                   </div>
                  <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Program Description</p>
-                    <p class="text-sm text-[#3F434A] font-normal">
-                      {{ program.description }}
-                    </p>
+                   <div 
+                      className="text-sm text-[#3F434A] font-normal" 
+                      dangerouslySetInnerHTML={{ __html: program.description }} >
+
+                  </div>
                   </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">  Program Details</p>
-                    <p class="text-sm text-[#3F434A] font-normal">
-                      {{ program.brief_details}}
-                    </p>
+                    <div 
+                      className="text-sm text-[#3F434A] font-normal" 
+                      dangerouslySetInnerHTML={{ __html: program.brief_details }} >
+                  </div>
                   </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">  Non Financial Support Provided</p>
