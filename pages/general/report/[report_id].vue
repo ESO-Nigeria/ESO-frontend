@@ -57,13 +57,13 @@ import placeholderImg from '~/assets/images/placeholderImg.png';
 const { report_id } = useRoute().params
 const profileStore = useProfileStore()
 
-const { sanitize } = useSanitize()
+const { getSafeHtml } = useSanitize()
 
 const report = computed(() => profileStore.report)
 const loading = computed(() => profileStore.loadingReports)
 
 const sanitizedContent = computed(() => {
-  return report.value?.content ? sanitize(report.value.content) : ''
+  return report.value?.content ? getSafeHtml(report.value.content) : ''
 })
 
 onMounted(() => {

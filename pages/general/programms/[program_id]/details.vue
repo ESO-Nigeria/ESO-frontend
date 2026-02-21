@@ -190,18 +190,18 @@ const dayjs = useDayjs()
 const { program_id } = useRoute().params
 const profileStore = useProfileStore()
 
-const { sanitize } = useSanitize()
+const { getSafeHtml } = useSanitize()
 
 const program = computed(() => {
   return profileStore.program
 })
 
 const sanitizedDescription = computed(() => {
-  return program.value?.description ? sanitize(program.value.description) : ''
+  return program.value?.description ? getSafeHtml(program.value.description) : ''
 })
 
 const sanitizedBriefDetails = computed(() => {
-  return program.value?.brief_details ? sanitize(program.value.brief_details) : ''
+  return program.value?.brief_details ? getSafeHtml(program.value.brief_details) : ''
 })
 
 const loading = computed(() => {
