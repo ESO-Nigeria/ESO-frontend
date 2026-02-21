@@ -28,17 +28,37 @@
               <!-- Startup (Post-revenue) -->
             </p>
           </div>
-          <div>
-            <span class="text-secondary-body-contrast  text-sm px-1 ">
-              Status: <span class="text-[#257F4A] capitalize">{{  event?.application_status }}</span>
-            </span>
-          </div>
-                   
-          <a :href="checkLink(event?.registration_link) " target="_blank" class="w-full mt-3">
-                      <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
-                      Apply Now
-                    </Button>
-                  </a>
+         <div>
+  <span class="text-secondary-body-contrast text-sm px-1">
+    Status:
+    <span
+      :class="event?.application_status?.toLowerCase() === 'closed'
+        ? 'text-red-600'
+        : 'text-[#257F4A]'"
+      class="capitalize"
+    >
+      {{ event?.application_status }}
+    </span>
+  </span>
+</div>
+
+<a
+  :href="event?.application_status?.toLowerCase() === 'closed'
+    ? null
+    : checkLink(event?.registration_link)"
+  target="_blank"
+  class="w-full mt-3"
+>
+  <Button
+    size="lg"
+    class="py-3 px-5 h-11 w-full"
+    type="button"
+    :disabled="event?.application_status?.toLowerCase() === 'closed'"
+  >
+    Apply Now
+  </Button>
+</a>
+
         </div>
                   </div>
                 </div>
@@ -57,8 +77,19 @@
                     </div>
                    </div>
                   <div class="flex justify-end mt-6 gap-4">
-                    <a :href="checkLink(event?.registration_link) " target="_blank" class="w-full">
-                      <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
+                   <a
+                    :href="event?.application_status?.toLowerCase() === 'closed'
+                      ? null
+                      : checkLink(event?.registration_link)"
+                    target="_blank"
+                    class="w-full"
+                  >
+                    <Button
+                      size="lg"
+                      class="py-3 px-5 h-11 w-full"
+                      type="button"
+                      :disabled="event?.application_status?.toLowerCase() === 'closed'"
+                    >
                       Apply Now
                     </Button>
                   </a>

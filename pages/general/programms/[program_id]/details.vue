@@ -117,20 +117,17 @@
                       </p>
                     </div>
                   </div>
-                 <div class="space-y-2">
+                  <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Program Description</p>
-                   <div 
-                      className="text-sm text-[#3F434A] font-normal" 
-                      dangerouslySetInnerHTML={{ __html: program.description }} >
-
-                  </div>
+                    <!-- eslint-disable-next-line vue/no-v-html -->
+                    <div class="text-sm text-[#3F434A] font-normal" v-html="sanitizedDescription">
+                    </div>
                   </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">  Program Details</p>
-                    <div 
-                      className="text-sm text-[#3F434A] font-normal" 
-                      dangerouslySetInnerHTML={{ __html: program.brief_details }} >
-                  </div>
+                    <!-- eslint-disable-next-line vue/no-v-html -->
+                    <div class="text-sm text-[#3F434A] font-normal" v-html="sanitizedBriefDetails">
+                    </div>
                   </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">  Non Financial Support Provided</p>
@@ -193,9 +190,20 @@ const dayjs = useDayjs()
 const { program_id } = useRoute().params
 const profileStore = useProfileStore()
 
+const { getSafeHtml } = useSanitize()
+
 const program = computed(() => {
   return profileStore.program
 })
+
+const sanitizedDescription = computed(() => {
+  return program.value?.description ? getSafeHtml(program.value.description) : ''
+})
+
+const sanitizedBriefDetails = computed(() => {
+  return program.value?.brief_details ? getSafeHtml(program.value.brief_details) : ''
+})
+
 const loading = computed(() => {
   return profileStore.loading
 })
