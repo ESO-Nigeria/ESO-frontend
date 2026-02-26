@@ -60,30 +60,29 @@
                       {{ ESO?.company_phone }}
                     </p>
                   </div>
-                  <div class="flex gap-x-2">
-                    <a class="" v-for="link in ESO?.social_links" :href="checkLink(link.url)" :key="link?.id" target="_blank" rel="noopener noreferrer">
-                      <span v-if="link?.platform == 'TWITTER'">
-                        <img src="~/assets/images/icons/twitter.svg" alt="social_icon" />
-                      </span>
-                      <span v-if="link?.platform == 'FACEBOOK'">
-                        <img src="~/assets/images/icons/facebook.svg" alt="social_icon" />
-                      </span>
-                      <span v-if="link?.platform == 'LINKEDIN'">
-                        <img src="~/assets/images/icons/linkedIn.svg" alt="social_icon" />
-                      </span>
-                      <span v-if="link?.platform == 'INSTAGRAM'">
-                        <img src="~/assets/images/icons/instagram.svg" alt="social_icon" />
-                      </span>
-                    </a>
-                  </div>
-                  <div v-if="ESO?.social_links?.length > 0 && ESO.social_links?.find(type => type.platform == 'WEBSITE')?.url">
-                    <NuxtLink :to="checkLink(ESO.social_links?.find(type => type.platform == 'WEBSITE')?.url)" target="_blank" class="w-full mt-3">
-                    <p size="lg" class="py-3 text-center  text-sm px-5 h-11 w-full bg-primary text-white rounded-md"  type="button" >
-                   Visit Website
+             <div class="flex gap-x-2">
+                <a class="" v-for="link in ESO?.social_links" v-if="link?.url" :href="checkLink(link.url)" :key="link?.id" target="_blank" rel="noopener noreferrer">
+                  <span v-if="link?.platform === 'TWITTER'">
+                    <img src="~/assets/images/icons/twitter.svg" alt="social_icon" />
+                  </span>
+                  <span v-if="link?.platform === 'FACEBOOK'">
+                    <img src="~/assets/images/icons/facebook.svg" alt="social_icon" />
+                  </span>
+                  <span v-if="link?.platform === 'LINKEDIN'">
+                    <img src="~/assets/images/icons/linkedIn.svg" alt="social_icon" />
+                  </span>
+                  <span v-if="link?.platform === 'INSTAGRAM'">
+                    <img src="~/assets/images/icons/instagram.svg" alt="social_icon" />
+                  </span>
+                </a>
+              </div>
+              <div v-if="websiteUrl">
+                <NuxtLink :to="checkLink(websiteUrl)" target="_blank" class="w-full mt-3">
+                  <p size="lg" class="py-3 text-center text-sm px-5 h-11 w-full bg-primary text-white rounded-md" type="button">
+                    Visit Website
                   </p>
-                  
                 </NuxtLink>
-                  </div>
+              </div>
                   
                   </div>
                     <div class=" flex divide-x-2">
@@ -149,6 +148,7 @@
               </div>
             </div>
           </div>
+          
           <div class="py-3">
             <p class="text-primary text-lg font-medium">Ratings</p>
             <LayoutsRatings :profile="ESO"/>
@@ -182,6 +182,11 @@ const loading = computed(() => {
 onMounted(() => {
   profileStore.getSingleESO(eso_id)
 })
+
+const websiteUrl = computed(() => {
+  const websiteLink = ESO.value?.social_links?.find(link => link?.platform === 'WEBSITE');
+  return typeof websiteLink?.url === 'string' && websiteLink.url.trim().length > 0 ? websiteLink.url : null;
+});
 
 </script>
 
