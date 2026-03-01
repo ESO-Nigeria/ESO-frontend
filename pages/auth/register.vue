@@ -150,19 +150,19 @@
               </div>
             </FormControl>
             <FormMessage />
-            <ul class="space-y-1 text-sm mt-3">
-              <li class="text-secondary-body-regular-contrast font-normal inline-flex items-center" :class="getIndicatorClass(criteria.length)">
+            <ul v-if="!Object.values(criteria).every(v => v)" class="space-y-1 text-sm mt-3">
+              <li v-if="!criteria.length" class="text-secondary-body-regular-contrast font-normal inline-flex items-center" :class="getIndicatorClass(criteria.length)">
                 <span v-if="criteria.length" class="text-green-500 mr-1 ">
                   <img src="~/assets/images/icons/secure_check.svg" />
                 </span>
                 Password must be at least 8 characters
               
               </li>
-              <li class="text-secondary-body-regular-contrast font-normal" :class="getIndicatorClass(criteria.uppercase)">
+              <li v-if="!criteria.uppercase" class="text-secondary-body-regular-contrast font-normal" :class="getIndicatorClass(criteria.uppercase)">
                 <span v-if="criteria.uppercase" class="text-green-500 mr-1">✔</span>Password must have at least one uppercase</li>
-              <li class="text-secondary-body-regular-contrast font-normal" :class="getIndicatorClass(criteria.number)">
+              <li v-if="!criteria.number" class="text-secondary-body-regular-contrast font-normal" :class="getIndicatorClass(criteria.number)">
                 <span v-if="criteria.number" class="text-green-500 mr-1">✔</span>Password must have one number</li>
-              <li class="text-secondary-body-regular-contrast font-normal" :class="getIndicatorClass(criteria.special)">
+              <li v-if="!criteria.special" class="text-secondary-body-regular-contrast font-normal" :class="getIndicatorClass(criteria.special)">
                 <span v-if="criteria.special" class="text-green-500 mr-1">✔</span>Password must have one special characters</li>
             </ul>
           </FormItem>
