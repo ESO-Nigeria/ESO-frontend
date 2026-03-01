@@ -23,6 +23,9 @@
                 class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                 placeholder="Enter Organization Name" v-bind="componentField" />
             </FormControl>
+            <FormDescription class="text-xs text-gray-400">
+              Enter the official registered name of your organization.
+            </FormDescription>
             <FormMessage />
           </FormItem>
         </FormField>
@@ -56,9 +59,8 @@
                 </SelectContent>
               </Select>
             </FormControl>
-            <FormDescription>
-              <!-- <p class="text-sm text-secondary-body-regular-contrast">(First Name & Last Name of Most senior executive
-                member)</p> -->
+            <FormDescription class="text-xs text-gray-400">
+              Select the category that best aligns with your organization's primary services.
             </FormDescription>
             <FormMessage />
           </FormItem>
@@ -73,6 +75,9 @@
                     class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                     placeholder="Enter First Name" v-bind="componentField" />
                 </FormControl>
+                <FormDescription class="text-xs text-gray-400">
+                  Senior executive's first name.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             </FormField>
@@ -84,12 +89,13 @@
                     class="h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                     placeholder="Enter Last Name" v-bind="componentField" />
                 </FormControl>
+                <FormDescription class="text-xs text-gray-400">
+                  Senior executive's last name.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             </FormField>
           </div>
-          <p class="text-sm text-secondary-body-regular-contrast">(First Name & Last Name of Most senior executive
-            member)</p>
         </div>
 
         <FormField v-slot="{ componentField }" name="email">
@@ -105,8 +111,10 @@
                   <Mail class="size-5 text-muted-foreground" />
                 </span>
               </div>
-
             </FormControl>
+            <FormDescription class="text-xs text-gray-400">
+              Use your official organization email address.
+            </FormDescription>
             <FormMessage />
           </FormItem>
         </FormField>
@@ -124,8 +132,10 @@
                   <span class="text-[#3F434A] text-sm font-medium">+234</span>
                 </span>
               </div>
-
             </FormControl>
+            <FormDescription class="text-xs text-gray-400">
+              Provide a valid WhatsApp number for easy communication.
+            </FormDescription>
             <FormMessage />
           </FormItem>
         </FormField>
@@ -138,7 +148,7 @@
                 <Input 
                   :type="isPasswordVisible ? 'text' : 'password'"
                   class="h-11 pl-10 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                  placeholder="Enter Password" v-bind="componentField"   @input="checkPasswordStrength" v-model="password"                  />
+                  placeholder="Enter Password" v-bind="componentField" />
                 <button type="button" @click="togglePasswordVisibility"  aria-label="Toggle password visibility" class="absolute cursor-pointer end-0 inset-y-0 flex items-center justify-center px-2">
 
                   <Eye v-if="!isPasswordVisible" class="size-5 text-muted-foreground" />
@@ -149,22 +159,10 @@
                 </span>
               </div>
             </FormControl>
+            <FormDescription class="text-xs text-gray-400">
+              Requirements will appear as you type to help you create a secure password.
+            </FormDescription>
             <FormMessage />
-            <ul v-if="!Object.values(criteria).every(v => v)" class="space-y-1 text-sm mt-3">
-              <li v-if="!criteria.length" class="text-secondary-body-regular-contrast font-normal inline-flex items-center" :class="getIndicatorClass(criteria.length)">
-                <span v-if="criteria.length" class="text-green-500 mr-1 ">
-                  <img src="~/assets/images/icons/secure_check.svg" />
-                </span>
-                Password must be at least 8 characters
-              
-              </li>
-              <li v-if="!criteria.uppercase" class="text-secondary-body-regular-contrast font-normal" :class="getIndicatorClass(criteria.uppercase)">
-                <span v-if="criteria.uppercase" class="text-green-500 mr-1">✔</span>Password must have at least one uppercase</li>
-              <li v-if="!criteria.number" class="text-secondary-body-regular-contrast font-normal" :class="getIndicatorClass(criteria.number)">
-                <span v-if="criteria.number" class="text-green-500 mr-1">✔</span>Password must have one number</li>
-              <li v-if="!criteria.special" class="text-secondary-body-regular-contrast font-normal" :class="getIndicatorClass(criteria.special)">
-                <span v-if="criteria.special" class="text-green-500 mr-1">✔</span>Password must have one special characters</li>
-            </ul>
           </FormItem>
         </FormField>
         <FormField v-slot="{ componentField }" name="confirm_password">
@@ -188,6 +186,10 @@
                 </button>
               </div>
             </FormControl>
+            <FormDescription class="text-xs text-gray-400">
+              Re-enter your password to confirm accuracy.
+            </FormDescription>
+            <FormMessage />
           </FormItem>
         </FormField>
         <!-- </div> -->
@@ -222,44 +224,27 @@ const formSchema = toTypedSchema(
     last_name: z.string({ required_error: "Last Name is required."}),
     email: z.string({ required_error: "Email is required."})
       .email({ message: "Must be a valid email" }),
-    whatsapp_number: z.string().optional(), // Ensure only digits
+    whatsapp_number: z.string().optional(),
        
-    password: z.string({ message: "Password is required" }),
-      // This can stay to ensure there's some input
-    confirm_password: z.string().optional()
+    password: z.string({ message: "Password is required" })
+      .min(8, "Password must be at least 8 characters")
+      .regex(/[A-Z]/, "Password must have at least one uppercase letter")
+      .regex(/[0-9]/, "Password must have at least one number")
+      .regex(/[@$!%*?&]/, "Password must have at least one special character"),
+    confirm_password: z.string({ message: "Confirm Password is required" })
+  }).refine((data) => data.password === data.confirm_password, {
+    message: "Passwords do not match",
+    path: ["confirm_password"],
   })
 );
 
 // Password and criteria state
-const password = ref('');
 const isPasswordVisible = ref(false);
-
-const criteria = ref({
-  length: false,
-  uppercase: false,
-  number: false,
-  special: false,
-});
-
-// Function to check password strength criteria
-function checkPasswordStrength() {
-  const value = password.value;
-  criteria.value.length = value.length >= 8;
-  criteria.value.uppercase = /[A-Z]/.test(value);
-  criteria.value.number = /[0-9]/.test(value);
-  criteria.value.special = /[@$!%*?&]/.test(value);
-}
-
-// Function to return CSS class for each criterion
-function getIndicatorClass(isPassed) {
-  return isPassed ? 'text-green-500' : 'text-gray-500';
-}
 
 function togglePasswordVisibility() {
   isPasswordVisible.value = !isPasswordVisible.value;
 }
 
-const authStore = useAuthStore()
 const { isFieldDirty, handleSubmit, values, setFieldValue } = useForm({
   validationSchema: formSchema,
 });
