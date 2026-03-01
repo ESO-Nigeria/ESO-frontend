@@ -169,13 +169,14 @@
               <FormLabel class="text-[#3F434A] text-base font-medium">WhatsApp Number</FormLabel>
               <FormControl>
                 <div class="relative w-full  items-center">
-                  <Input type="tel"
+                  <Input type="tel" maxlength="11"
                    :disabled="!edit"
-                    class="pl-10 h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                    placeholder="Enter Whatsapp Number" v-bind="componentField" />
-                  <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+                    class="pl-[5.5rem] h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
+                    placeholder="801 234 5678" v-bind="componentField" />
+                  <span class="absolute start-0 inset-y-0 flex items-center justify-center px-3 gap-1">
   
                     <img src="~/assets/images/icons/chat.svg" class="size-5 text-muted-foreground" />
+                    <span class="text-[#3F434A] text-sm font-medium">+234</span>
                   </span>
                 </div>
   
@@ -187,12 +188,13 @@
               <FormLabel class="text-[#3F434A] text-base font-medium">Phone Number</FormLabel>
               <FormControl>
                 <div class="relative w-full  items-center">
-                  <Input type="tel"
+                  <Input type="tel" maxlength="11"
                    :disabled="!edit"
-                    class="pl-10 h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                    placeholder="Enter Whatsapp Number" v-bind="componentField" />
-                  <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+                    class="pl-[5.5rem] h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
+                    placeholder="801 234 5678" v-bind="componentField" />
+                  <span class="absolute start-0 inset-y-0 flex items-center justify-center px-3 gap-1">
                     <PhoneCall class="size-5 text-muted-foreground" />
+                    <span class="text-[#3F434A] text-sm font-medium">+234</span>
                   </span>
                 </div>
   
@@ -370,7 +372,25 @@ const logo = ref()
 const logo_errors = ref({})
 const image_preview_link = ref()
 
-const { isFieldDirty, handleSubmit, values } = useForm({
+const { isFieldDirty, handleSubmit, values, setFieldValue } = useForm({
+});
+
+watch(() => values.whatsapp_number, (newVal) => {
+  if (newVal) {
+    let val = newVal.toString().replace(/[^0-9]/g, '');
+    if (val.startsWith('0')) val = val.substring(1);
+    if (val.length > 11) val = val.substring(0, 11);
+    if (val !== newVal) setFieldValue('whatsapp_number', val);
+  }
+});
+
+watch(() => values.phone_number, (newVal) => {
+  if (newVal) {
+    let val = newVal.toString().replace(/[^0-9]/g, '');
+    if (val.startsWith('0')) val = val.substring(1);
+    if (val.length > 11) val = val.substring(0, 11);
+    if (val !== newVal) setFieldValue('phone_number', val);
+  }
 });
 const states = ref([])
 const cities = ref([])
@@ -439,13 +459,24 @@ function onEditorChange(event, editor) {
 }
 
 const onSubmit = handleSubmit(async(values) => {
+      let final_whatsapp_number = values?.whatsapp_number;
+      if (final_whatsapp_number && final_whatsapp_number.trim() !== '') {
+        final_whatsapp_number = '+234' + final_whatsapp_number.replace(/^(\+234|0)/, '');
+      }
+
+      let final_phone_number = values?.phone_number;
+      if (final_phone_number && final_phone_number.trim() !== '') {
+        final_phone_number = '+234' + final_phone_number.replace(/^(\+234|0)/, '');
+      }
+
       const body =    {
     "country": values.country,
     "state": values.state,
     "city": values.city,
     "address": values?.organization_address,
     "company_email": values?.email,
-    "company_phone": values?.phone_number,
+    "company_phone": final_phone_number,
+    "company_whatsapp": final_whatsapp_number,
     "company_website": "",
     "description": editorData.value,
     "services": values?.services,

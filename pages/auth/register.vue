@@ -115,12 +115,13 @@
             <FormLabel class="text-[#3F434A] text-base font-medium">WhatsApp Number</FormLabel>
             <FormControl>
               <div class="relative w-full  items-center">
-                <Input type="tel"
-                  class="pl-10 h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-                  placeholder="Enter WhatsApp Number" v-bind="componentField" />
-                <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+                <Input type="tel" maxlength="11"
+                  class="pl-[5.5rem] h-11 border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
+                  placeholder="801 234 5678" v-bind="componentField" />
+                <span class="absolute start-0 inset-y-0 flex items-center justify-center px-3 gap-1">
 
                   <img src="~/assets/images/icons/chat.svg" class="size-5 text-muted-foreground" />
+                  <span class="text-[#3F434A] text-sm font-medium">+234</span>
                 </span>
               </div>
 
@@ -259,13 +260,35 @@ function togglePasswordVisibility() {
 }
 
 const authStore = useAuthStore()
-const { isFieldDirty, handleSubmit, values } = useForm({
+const { isFieldDirty, handleSubmit, values, setFieldValue } = useForm({
   validationSchema: formSchema,
+});
+
+watch(() => values.whatsapp_number, (newVal) => {
+  if (newVal) {
+    let val = newVal.toString().replace(/[^0-9]/g, '');
+    if (val.startsWith('0')) {
+      val = val.substring(1);
+    }
+    if (val.length > 11) {
+      val = val.substring(0, 11);
+    }
+    if (val !== newVal) {
+      setFieldValue('whatsapp_number', val);
+    }
+  }
 });
 const router = useRouter()
 const loading  = ref(false);
 
 const onSubmit = handleSubmit(async(values) => {
+
+  let final_whatsapp_number = values?.whatsapp_number;
+  if (final_whatsapp_number && final_whatsapp_number.trim() !== '') {
+    final_whatsapp_number = '+234' + final_whatsapp_number;
+  } else {
+    final_whatsapp_number = undefined;
+  }
 
   const body =  {
   "email": values.email,
@@ -275,7 +298,7 @@ const onSubmit = handleSubmit(async(values) => {
   "last_name": values.last_name,
   "organization_name": values.organization_name,
   "organization_type": values.organization_type,
-  "whatsapp_number": values?.whatsapp_number
+  "whatsapp_number": final_whatsapp_number
 }
   try {
     loading.value = true;
