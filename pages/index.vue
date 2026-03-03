@@ -160,6 +160,30 @@
         </div>
       </div>
     </section>
+    
+    <section class="my-16">
+      <div class="container mx-auto relative max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="space-y-4 mb-8 text-center sm:text-left">
+          <h2 class="text-3xl text-[#257F4A] ">
+            Step-by-Step Guide: Organization Onboarding & Program Management
+          </h2>
+          <p class="text-base text-[#475467] max-w-3xl">
+            A comprehensive walkthrough to help you seamlessly set up your organization profile and successfully launch your support programs on the platform.
+          </p>
+        </div>
+        <div class="aspect-video w-full rounded-[25px] overflow-hidden shadow-xl bg-gray-100">
+           <iframe 
+              class="w-full h-full"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+              title="Organization Onboarding and Program Management Guide"
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              referrerpolicy="strict-origin-when-cross-origin" 
+              allowfullscreen>
+            </iframe>
+        </div>
+      </div>
+    </section>
 
     <section class="my-8">
       <div class="container  mx-auto  relative max-w-7xl">
