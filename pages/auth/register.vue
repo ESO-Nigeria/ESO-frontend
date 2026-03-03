@@ -159,9 +159,9 @@
                 </span>
               </div>
             </FormControl>
-            <FormDescription class="text-xs text-gray-400">
+            <!-- <FormDescription class="text-xs text-gray-400">
               Requirements will appear as you type to help you create a secure password.
-            </FormDescription>
+            </FormDescription> -->
             <FormMessage />
           </FormItem>
         </FormField>
@@ -264,6 +264,7 @@ watch(() => values.whatsapp_number, (newVal) => {
   }
 });
 const router = useRouter()
+const authStore = useAuthStore()
 const loading  = ref(false);
 
 const onSubmit = handleSubmit(async(values) => {
