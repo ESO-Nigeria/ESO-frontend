@@ -151,7 +151,7 @@
             <FormLabel class="text-[#3F434A] text-base font-medium">Email Address (Work Email Address)</FormLabel>
             <FormControl>
               <div class="relative w-full  items-center">
-                <Input type="email" disabled
+                <Input type="email" :disabled="!edit"
                   class="pl-10 h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                   placeholder="Enter email address" v-bind="componentField" />
                 <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -346,6 +346,7 @@ import { Ckeditor } from '@ckeditor/ckeditor5-vue';
 
 import 'ckeditor5/ckeditor5.css';
 import { CheckIcon, LoaderCircle, Mail, PhoneCall, SquarePen } from 'lucide-vue-next';
+import { toast } from 'vue-sonner';
 import Avatar from '../ui/avatar/Avatar.vue';
 import AvatarFallback from '../ui/avatar/AvatarFallback.vue';
 import AvatarImage from '../ui/avatar/AvatarImage.vue';
@@ -490,10 +491,12 @@ const onSubmit = handleSubmit(async(values) => {
         success.value = true;
         edit.value = false
         fetchProfile()
-       
+        toast.success('Profile updated successfully')
         } else {
           loading.value = false;
-          // alert(response.data.message);
+          const error = response.error;
+          const msg = error?.error || (typeof error === 'string' ? error : 'This profile details have already been submitted. Please wait for admin feedback.');
+          toast.error(msg);
           }
         loading.value = false
       }catch(error) {
