@@ -11,7 +11,7 @@ export const useAuthStore = defineStore("auth", {
   }),
   getters: {
     getToken(state) {
-      // Check if localStorage is available (client-side)
+      // Check if sessionStorage is available (client-side)
       if (process.client) {
         const storedToken = getItem("token");
         if (storedToken && storedToken !== undefined) {
@@ -28,7 +28,7 @@ export const useAuthStore = defineStore("auth", {
         if (response?.data?.data) {
           setItem("token", JSON.stringify(response?.data?.data?.auth_token));
         }
-        
+
         return { data: response, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };
@@ -68,7 +68,7 @@ export const useAuthStore = defineStore("auth", {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
-    
+
     async change_password(body: any) {
       try {
         const response = await apiPostRequest(
@@ -104,14 +104,14 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
-    async getUser(){
+    async getUser() {
       this.loadingUser = true
-      try{
+      try {
         const response = await apiGetRequest("/auth/users/me/");
         this.user = response.data
         this.loadingUser = false
         return { data: response, error: response.error };
-      }catch (error){
+      } catch (error) {
         return { data: null, error: "Unknown error" }
       }
     }

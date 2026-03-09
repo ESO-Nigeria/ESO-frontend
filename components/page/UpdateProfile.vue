@@ -38,7 +38,7 @@
         </div>
         <div class="lg:flex-1">
           <form  class="flex gap-4 flex-col px-2 lg:px-0">
-            <FormField :modelValue="user?.organization_name" v-slot="{ componentField }" name="organization_name">
+            <FormField :modelValue="user?.organization_name || ''" v-slot="{ componentField }" name="organization_name">
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">Organization Name</FormLabel>
                 <FormControl>
@@ -49,7 +49,7 @@
                 </FormControl>
               </FormItem>
             </FormField>
-            <FormField :modelValue="user?.organization_type" v-slot="{ componentField }" name="organization_type">
+            <FormField :modelValue="user?.organization_type || ''" v-slot="{ componentField }" name="organization_type">
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">Organization Type</FormLabel>
                 <FormControl>
@@ -82,7 +82,7 @@
               </FormItem>
             </FormField>
             <FormField
-            :modelValue="profile?.description"
+            :modelValue="profile?.description || ''"
             v-slot="{ componentField }"
             name="description">
             <FormItem class="space-y-1">
@@ -103,7 +103,7 @@
             </FormItem>
           </FormField>
           <FormField
-           :modelValue="profile?.services"
+           :modelValue="profile?.services || ''"
           v-slot="{ componentField }"
           name="services">
           <FormItem class="space-y-1">
@@ -122,7 +122,7 @@
         </FormField>
         <div>
           <div class="grid grid-cols-2 gap-4">
-            <FormField :modelValue="user?.first_name" v-slot="{ componentField }" name="first_name">
+            <FormField :modelValue="user?.first_name || ''" v-slot="{ componentField }" name="first_name">
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">First Name</FormLabel>
                 <FormControl>
@@ -132,7 +132,7 @@
                 </FormControl>
               </FormItem>
             </FormField>
-            <FormField :modelValue="user?.last_name" v-slot="{ componentField }" name="last_name">
+            <FormField :modelValue="user?.last_name || ''" v-slot="{ componentField }" name="last_name">
               <FormItem class="space-y-1">
                 <FormLabel class="text-[#3F434A] text-base font-medium">Last Name</FormLabel>
                 <FormControl>
@@ -146,7 +146,7 @@
           <p class="text-sm text-secondary-body-regular-contrast">(First Name & Last Name of Most senior executive
             member)</p>
         </div>
-        <FormField :modelValue="user?.email" v-slot="{ componentField }" name="email">
+        <FormField :modelValue="user?.email || ''" v-slot="{ componentField }" name="email">
           <FormItem class="space-y-1">
             <FormLabel class="text-[#3F434A] text-base font-medium">Email Address (Work Email Address)</FormLabel>
             <FormControl>
@@ -164,7 +164,7 @@
           </FormItem>
         </FormField>
         <div class="grid grid-cols-2 gap-4">
-          <FormField :modelValue="user?.whatsapp_number" v-slot="{ componentField }" name="whatsapp_number">
+          <FormField :modelValue="user?.whatsapp_number || ''" v-slot="{ componentField }" name="whatsapp_number">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">WhatsApp Number</FormLabel>
               <FormControl>
@@ -183,7 +183,7 @@
               </FormControl>
             </FormItem>
           </FormField>
-          <FormField  :modelValue="profile?.company_phone" v-slot="{ componentField }" name="phone_number">
+          <FormField  :modelValue="profile?.company_phone || ''" v-slot="{ componentField }" name="phone_number">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">Phone Number</FormLabel>
               <FormControl>
@@ -202,7 +202,7 @@
             </FormItem>
           </FormField>
         </div>
-        <FormField :modelValue="profile?.address" v-slot="{ componentField }" name="organization_address">
+        <FormField :modelValue="profile?.address || ''" v-slot="{ componentField }" name="organization_address">
           <FormItem class="space-y-1">
             <FormLabel class="text-[#3F434A] text-base font-medium">Organization Address</FormLabel>
             <FormControl class=" relative w-full  items-center">
@@ -218,7 +218,7 @@
         </FormField>
       
         <div class="grid grid-cols-3 gap-4">
-          <FormField :modelValue="profile?.country"  v-slot="{ componentField }" name="country">
+          <FormField :modelValue="profile?.country || ''"  v-slot="{ componentField }" name="country">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">Country</FormLabel>
               <FormControl>
@@ -244,7 +244,7 @@
               </FormControl>
             </FormItem>
           </FormField>
-          <FormField :modelValue="profile?.state" v-slot="{ componentField }" name="state">
+          <FormField :modelValue="profile?.state || ''" v-slot="{ componentField }" name="state">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">State</FormLabel>
               <FormControl>
@@ -271,7 +271,7 @@
             </FormItem>
           </FormField>
 
-          <FormField :modelValue="profile?.city" v-slot="{ componentField }" name="city">
+          <FormField :modelValue="profile?.city || ''" v-slot="{ componentField }" name="city">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">City</FormLabel>
               <FormControl>
@@ -432,7 +432,7 @@ watch(
 const editorDataDescription = ref(profile.value?.description || '');
 const editorDataServices = ref(profile.value?.services || '');
 const editor = ClassicEditor;
-const editorData = ref(profile?.value?.description);
+const editorData = ref(profile?.value?.description || '');
 
 const editorConfig = {
   plugins: [ Bold, Essentials, Italic,  Paragraph, Heading, Undo, Font, List ],
@@ -508,7 +508,7 @@ const onSubmit = handleSubmit(async(values) => {
 watch(
   () => profile.value,
   (newPatient) => {
-    editorData.value = newPatient.description;
+    editorData.value = newPatient.description || '';
   }
 );
 

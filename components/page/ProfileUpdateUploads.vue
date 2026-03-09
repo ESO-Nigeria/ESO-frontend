@@ -96,7 +96,7 @@
           </div>
         </div>
 
-        <FormField :modelValue="certificates?.results?.[0]?.number_of_year_in_operation" v-slot="{ componentField }" name="organization_name" class="">
+        <FormField :modelValue="certificates?.results?.[0]?.number_of_year_in_operation || ''" v-slot="{ componentField }" name="organization_name" class="">
           <FormItem class="space-y-1 w-full lg:w-1/2">
             <FormLabel class="text-[#3F434A] text-base font-medium">Number of Years in Operation</FormLabel>
             <FormControl>
@@ -158,6 +158,7 @@ import * as z from "zod";
 import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
 import { CheckIcon, LoaderCircle } from "lucide-vue-next";
+import { toast } from 'vue-sonner';
 
 const { isFieldDirty, handleSubmit, values } = useForm({
 });
@@ -244,10 +245,12 @@ const onSubmit = handleSubmit(async(values) => {
         loading.value = false;
         success.value = true;
         profileStore.getCertificates()
-        
+        toast.success('Certificates uploaded successfully')
         } else {
           loading.value = false;
-          // alert(response.data.message);
+          const error = response.error;
+          const msg = error?.error || (typeof error === 'string' ? error : 'These documents have already been submitted. Please wait for admin feedback.');
+          toast.error(msg);
           }
         loading.value = false
       }catch(error) {

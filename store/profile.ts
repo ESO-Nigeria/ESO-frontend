@@ -35,7 +35,7 @@ export const useProfileStore = defineStore("profile", {
   }),
   getters: {
     getToken(state) {
-      // Check if localStorage is available (client-side)
+      // Check if sessionStorage is available (client-side)
       if (process.client) {
         const storedToken = getItem("token");
         if (storedToken && storedToken !== undefined) {

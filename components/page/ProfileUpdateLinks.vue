@@ -8,7 +8,7 @@
       <div class="flex-1 flex flex-col">
         <form class="flex gap-4 flex-col px-2 lg:px-0 w-full lg:w-2/6 ">
           
-          <FormField :modelValue="links?.results?.find(type => type.platform == 'WEBSITE')?.url" v-slot="{ componentField }" name="website_url">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'WEBSITE')?.url || ''" v-slot="{ componentField }" name="website_url">
             <FormItem class="space-y-1">
               <FormLabel class="text-[#3F434A] text-base font-medium">Website Url</FormLabel>
               <FormControl>
@@ -29,7 +29,7 @@
             </FormItem>
           </FormField>
         
-          <FormField :modelValue="links?.results?.find(type => type.platform == 'LINKEDIN')?.url" v-slot="{ componentField }" name="linkedIn">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'LINKEDIN')?.url || ''" v-slot="{ componentField }" name="linkedIn">
             <FormItem class="space-y-1">
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">LinkedIn</FormLabel>
               
@@ -54,7 +54,7 @@
             
           </FormField>
       
-          <FormField :modelValue="links?.results?.find(type => type.platform == 'INSTAGRAM')?.url" v-slot="{ componentField }" name="instagram">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'INSTAGRAM')?.url || ''" v-slot="{ componentField }" name="instagram">
             <FormItem class="space-y-1">
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">Instagram</FormLabel>
               
@@ -78,7 +78,7 @@
             </FormItem>
             
           </FormField>
-          <FormField :modelValue="links?.results?.find(type => type.platform == 'FACEBOOK')?.url" v-slot="{ componentField }" name="facebook">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'FACEBOOK')?.url || ''" v-slot="{ componentField }" name="facebook">
             <FormItem class="space-y-1">
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">Facebook</FormLabel>
               <FormControl>
@@ -101,7 +101,7 @@
             </FormItem>
             
           </FormField>
-          <FormField :modelValue="links?.results?.find(type => type.platform == 'TWITTER')?.url" v-slot="{ componentField }" name="twitter">
+          <FormField :modelValue="links?.results?.find(type => type.platform == 'TWITTER')?.url || ''" v-slot="{ componentField }" name="twitter">
             <FormItem class="space-y-1">
               <FormLabel for="vanity-url" class="text-[#3F434A] text-base font-medium">Twitter</FormLabel>
               
