@@ -1,18 +1,83 @@
-import axios from "axios";
-import { defineStore } from "pinia";
-// import { useToast } from '~/components/ui/toast';
 import { apiGetRequest } from "~/composables/api";
 
+export interface SocialLink {
+  id: number;
+  platform: string;
+  url: string | null;
+}
+
+export interface User {
+  email: string;
+  organization_name: string;
+  organization_type: string;
+  whatsapp_number: string;
+  first_name: string;
+  last_name: string;
+  is_active: boolean;
+}
+
+export interface Profile {
+  id: number;
+  user: User;
+  approval_status: string;
+  social_links: SocialLink[];
+  logo_url: string;
+  number_of_years_in_operation: number;
+  total_ratings: number;
+  average_rating: number;
+  logo?: string;
+  country: string;
+  state: string;
+  city: string;
+  phone_number: string | null;
+  address: string;
+  services: string;
+  company_phone: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  sectors: number[];
+}
+
+interface ProfileState {
+  profile: Profile | null;
+  token: string | null;
+  org_profile: Profile | Record<string, unknown>;
+  submittingForm: boolean;
+  loadingProfile: boolean;
+  loading: boolean;
+  certificates: Record<string, unknown>[];
+  links: { results?: SocialLink[] } | Record<string, unknown>;
+  events: Record<string, unknown>[];
+  event: Record<string, unknown>;
+  programs: Record<string, unknown>[];
+  program: Record<string, unknown>;
+  ESOs: Record<string, unknown>[];
+  singleESO: Record<string, unknown>;
+  articles: Record<string, unknown>;
+  loadingArticles: boolean;
+  singleArticles: Record<string, unknown>;
+  faqs: Record<string, unknown>[];
+  faq: Record<string, unknown>;
+  loadingFaqs: boolean;
+  galleries: Record<string, unknown>[];
+  gallery: Record<string, unknown>;
+  loadingGalleries: boolean;
+  reports: Record<string, unknown>[];
+  report: Record<string, unknown>;
+  loadingReports: boolean;
+}
+
 export const useProfileStore = defineStore("profile", {
-  state: () => ({
+  state: (): ProfileState => ({
     profile: null,
     token: null,
     org_profile: {},
     submittingForm: false,
-    loadingProfile: {},
+    loadingProfile: false,
     loading: false,
     certificates: [],
-    links: [],
+    links: {},
     events: [],
     event: {},
     programs: [],

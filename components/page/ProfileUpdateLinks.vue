@@ -170,7 +170,6 @@
 
 <script setup>
 import { CheckIcon, LoaderCircle, Mail, Globe, SquarePen } from 'lucide-vue-next';
-import { toast } from 'vue-sonner';
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";

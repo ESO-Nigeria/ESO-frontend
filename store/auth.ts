@@ -22,13 +22,13 @@ export const useAuthStore = defineStore("auth", {
     },
   },
   actions: {
-    async login(body: any) {
+    async login(body: Record<string, unknown>) {
       try {
         const response = await apiPostRequest("/auth/token/login", body, { auth: false });
         if (response?.data?.data) {
           setItem("token", JSON.stringify(response?.data?.data?.auth_token));
         }
-        
+
         return { data: response, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };
@@ -49,7 +49,7 @@ export const useAuthStore = defineStore("auth", {
       removeItem("token");
       // this.clearAuthDetails()
     },
-    async reset(body: any) {
+    async reset(body: Record<string, unknown>) {
       try {
         const response = await apiPostRequest(
           "/auth/users/reset_password/",
@@ -60,7 +60,7 @@ export const useAuthStore = defineStore("auth", {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
-    async email_verified(body: any) {
+    async email_verified(body: Record<string, unknown>) {
       try {
         const response = await apiPostRequest("/auth/users/activation/", body);
         return { data: response, error: response.error };
@@ -68,8 +68,8 @@ export const useAuthStore = defineStore("auth", {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
-    
-    async change_password(body: any) {
+
+    async change_password(body: Record<string, unknown>) {
       try {
         const response = await apiPostRequest(
           "/auth/users/reset_password_confirm/",
@@ -80,7 +80,7 @@ export const useAuthStore = defineStore("auth", {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
-    async change_current_password(body: any) {
+    async change_current_password(body: Record<string, unknown>) {
       try {
         const response = await apiPostFormRequest(
           "/auth/users/set_password/",
@@ -91,7 +91,7 @@ export const useAuthStore = defineStore("auth", {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
-    async new_password(body: any) {
+    async new_password(body: Record<string, unknown>) {
       try {
         // /auth/users/reset_password/
         const response = await apiPostRequest(
@@ -104,14 +104,14 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
-    async getUser(){
+    async getUser() {
       this.loadingUser = true
-      try{
+      try {
         const response = await apiGetRequest("/auth/users/me/");
         this.user = response.data
         this.loadingUser = false
         return { data: response, error: response.error };
-      }catch (error){
+      } catch (error) {
         return { data: null, error: "Unknown error" }
       }
     }

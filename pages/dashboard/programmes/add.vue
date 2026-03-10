@@ -644,9 +644,9 @@ async function handleFormSubmit() {
                 </form>
                 <!-- v-if="currentStep > 0" -->
                 <div class="flex justify-end mt-6 gap-4">
-                  <Button size="lg" class="py-3 px-5 h-11 w-[145px]" @click="goToPreviousStep" type="button"
+                  <Button size="lg" class="py-3 px-5 h-11 w-[145px]" @click="currentStep > 0 ? goToPreviousStep() : navigateTo('/dashboard/programmes')" type="button"
                     variant="outline">
-                    Cancel
+                    {{ currentStep > 0 ? 'Back' : 'Cancel' }}
                   </Button>
                   <Button class="py-3 px-5 h-11 w-[145px]" size="lg" v-if="currentStep < steps.length - 1"
                     @click="goToNextStep" type="button">
