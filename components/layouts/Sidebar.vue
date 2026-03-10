@@ -30,8 +30,17 @@
 
 <script setup lang="ts">
 import SidebarItem from './SidebarItem.vue';
-const menuGroups = ref([
+import { useProfileStore } from '~/store/profile';
+
+const profileStore = useProfileStore();
+
+const isApproved = computed(() => {
+  return profileStore.profile?.approval_status === 'APPROVED';
+});
+
+const menuGroups = computed(() => [
   {
+    name: 'General',
     menuItems: [
       {
         icon: `<svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -57,7 +66,8 @@ const menuGroups = ref([
 `,
         label: 'Programmes',
         route:  '/dashboard/programmes',
-
+        disabled: !isApproved.value,
+        disabledMessage: 'Your organization profile is pending approval. Please wait for admin feedback.'
       },
       {
         icon: `<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -78,6 +88,10 @@ const menuGroups = ref([
     ],
   },
 ]);
+
+onMounted(() => {
+  profileStore.getProfile();
+});
 </script>
 
 <style scoped></style>
