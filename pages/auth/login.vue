@@ -70,6 +70,7 @@ import { useAuthStore } from '~/store/auth';
 import { toast } from 'vue-sonner';
 
 const authStore = useAuthStore()
+const { showError, showSuccess } = useAppToast()
 const form = useForm({
   // validationSchema: formSchema,
 });
@@ -96,10 +97,9 @@ const onSubmit = form.handleSubmit(async(values) => {
       loading.value = false;
       // alert(response.data.message);
       }
-      if (response.error && response?.error?.error) {
-        const joined = response?.error?.error.join(' ');
-        toast.error(joined || 'Error registering, please check details and try again.');
-        }
+      if (response.error) {
+        showError(response.error, 'Error logging in, please check details and try again.');
+      }
     loading.value = false
   }catch(error) {
     loading.value = false

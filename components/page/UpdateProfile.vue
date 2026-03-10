@@ -368,6 +368,7 @@ const selectedCountry = ref(null);
 const selectedState = ref(null);
 const selectedCity = ref(null);
 const profileStore = useProfileStore()
+const { showError, showSuccess } = useAppToast()
 const success = ref(false)
 const logo = ref()
 const logo_errors = ref({})
@@ -494,10 +495,8 @@ const onSubmit = handleSubmit(async(values) => {
         toast.success('Profile updated successfully')
         } else {
           loading.value = false;
-          const error = response.error;
-          const msg = error?.error || (typeof error === 'string' ? error : 'This profile details have already been submitted. Please wait for admin feedback.');
-          toast.error(msg);
-          }
+          showError(response.error, 'This profile details have already been submitted. Please wait for admin feedback.');
+        }
         loading.value = false
       }catch(error) {
         loading.value = false

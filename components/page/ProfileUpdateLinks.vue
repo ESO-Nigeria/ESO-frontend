@@ -177,6 +177,7 @@ import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
 const authStore = useAuthStore()
 const profileStore = useProfileStore()
+const { showError, showSuccess } = useAppToast()
 const router = useRouter()
 const success = ref(false)
 const loading  = ref(false);
@@ -353,10 +354,8 @@ try {
    
     } else {
       loading.value = false;
-      const error = response.error;
-      const msg = error?.error || (typeof error === 'string' ? error : 'Social links have already been submitted. Please wait for admin feedback.');
-      toast.error(msg);
-      }
+      showError(response.error, 'Social links have already been submitted. Please wait for admin feedback.');
+    }
     loading.value = false
   }catch(error) {
     loading.value = false

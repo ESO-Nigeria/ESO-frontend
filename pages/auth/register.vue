@@ -265,6 +265,7 @@ watch(() => values.whatsapp_number, (newVal) => {
 });
 const router = useRouter()
 const authStore = useAuthStore()
+const { showError, showSuccess } = useAppToast()
 const loading  = ref(false);
 
 const onSubmit = handleSubmit(async(values) => {
@@ -297,17 +298,9 @@ const onSubmit = handleSubmit(async(values) => {
     } else {
       loading.value = false;
       }
-      if (response.error && response?.error?.email) {
-        const joined = response?.error?.email.join(' ');
-        toast.error(joined || 'Error registering, please check details and try again.');
-        }
-        else if(response?.error && response?.error?.whatsapp_number ){
-          const joined = response?.error?.whatsapp_number.join(' ');
-          toast.error(`Whatsapp Number: ${joined}`|| 'Error registering, please check details and try again.')
-        }else if (response.error && response?.error?.error) {
-          const joined = response?.error?.error?.join(' ');
-          toast.error(joined|| 'Error registering, please check details and try again.')
-        }
+      if (response.error) {
+        showError(response.error, 'Error registering, please check details and try again.');
+      }
     loading.value = false
   }catch(error) {
     loading.value = false

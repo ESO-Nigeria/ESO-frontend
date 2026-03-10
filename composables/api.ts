@@ -22,7 +22,7 @@ export const apiGetRequest = async (url: string): Promise<ApiResponse> => {
     
     return { data: response.data, error: null };
   } catch (error: any) {
-    return { data: null, error: error?.response?.data ?? 'Unknown error' };
+    return { data: null, error: error?.response?.data ?? error?.message ?? error?.toString() ?? 'Unknown error' };
   }
 };
 
@@ -42,7 +42,7 @@ export const apiGetUnRestrictedRequest = async (url: string): Promise<ApiRespons
     
     return { data: response.data, error: null };
   } catch (error: any) {
-    return { data: null, error: error?.response?.data ?? 'Unknown error' };
+    return { data: null, error: error?.response?.data ?? error?.message ?? error?.toString() ?? 'Unknown error' };
   }
 };
 export const apiPostRequest = async (url: string, body: object, options: { auth: boolean } = { auth: true }): Promise<ApiResponse> => {
@@ -60,7 +60,7 @@ export const apiPostRequest = async (url: string, body: object, options: { auth:
     });
     return { data: response, error: null };
   } catch (error: any) {
-    return { data: null, error: error?.response?.data ?? 'Unknown error' };
+    return { data: null, error: error?.response?.data ?? error?.message ?? error?.toString() ?? 'Unknown error' };
   }
 };
 
@@ -79,7 +79,7 @@ export const apiPostFormRequest = async (url: string, body: object): Promise<Api
     });
     return { data: response, error: null };
   } catch (error: any) {
-    return { data: null, error: error?.response?.data ?? 'Unknown error' };
+    return { data: null, error: error?.response?.data ?? error?.message ?? error?.toString() ?? 'Unknown error' };
   }
 };
 
@@ -99,7 +99,7 @@ export const apiPostRequestForFormData = async (url: string, body: object): Prom
 
     return { data: response.data, error: null };
   } catch (error: any) {
-    return { data: null, error: error?.response?.data ?? 'Unknown error' };
+    return { data: null, error: error?.response?.data ?? error?.message ?? error?.toString() ?? 'Unknown error' };
   }
 };
 
@@ -119,7 +119,7 @@ export const apiPutRequest = async (url: string, body: object): Promise<ApiRespo
 
     return { data: response.data, error: null };
   } catch (error: any) {
-    return { data: null, error: error?.response?.data ?? 'Unknown error' };
+    return { data: null, error: error?.response?.data ?? error?.message ?? error?.toString() ?? 'Unknown error' };
   }
 };
 
@@ -139,7 +139,7 @@ export const apiPatchRequest = async (url: string, body: object): Promise<ApiRes
 
     return { data: response.data, error: null };
   } catch (error: any) {
-    return { data: null, error: error?.response?.data ?? 'Unknown error' };
+    return { data: null, error: error?.response?.data ?? error?.message ?? error?.toString() ?? 'Unknown error' };
   }
 };
 
@@ -159,7 +159,7 @@ export const apiPatchRequestForFormData = async (url: string, body: object): Pro
 
     return { data: response.data, error: null };
   } catch (error: any) {
-    return { data: null, error: error?.response?.data ?? 'Unknown error' };
+    return { data: null, error: error?.response?.data ?? error?.message ?? error?.toString() ?? 'Unknown error' };
   }
 };
 
@@ -180,6 +180,6 @@ export const apiDeleteRequest = async (url: string, body: object): Promise<ApiRe
 
     return { data: response.data, error: null };
   } catch (error: any) {
-    return { data: null, error: error?.response?.data ?? 'Unknown error' };
+    return { data: null, error: error?.response?.data ?? error?.message ?? error?.toString() ?? 'Unknown error' };
   }
 };
