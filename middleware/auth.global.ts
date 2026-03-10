@@ -4,7 +4,7 @@ import { useProfileStore } from "~/store/profile";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   // const { authenticated } = storeToRefs(useAuthStore());
-  const { logUserOut, getToken } = useAuthStore();
+  const { logUserOut } = useAuthStore();
   const profileStore = useProfileStore();
   // const token = getToken;
   const token = getItem("token");

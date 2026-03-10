@@ -42,29 +42,29 @@ export interface Profile {
 interface ProfileState {
   profile: Profile | null;
   token: string | null;
-  org_profile: any;
+  org_profile: Profile | Record<string, unknown>;
   submittingForm: boolean;
-  loadingProfile: any;
+  loadingProfile: boolean;
   loading: boolean;
-  certificates: any[];
-  links: any[];
-  events: any[];
-  event: any;
-  programs: any[];
-  program: any;
-  ESOs: any[];
-  singleESO: any;
-  articles: any;
+  certificates: Record<string, unknown>[];
+  links: { results?: SocialLink[] } | Record<string, unknown>;
+  events: Record<string, unknown>[];
+  event: Record<string, unknown>;
+  programs: Record<string, unknown>[];
+  program: Record<string, unknown>;
+  ESOs: Record<string, unknown>[];
+  singleESO: Record<string, unknown>;
+  articles: Record<string, unknown>;
   loadingArticles: boolean;
-  singleArticles: any;
-  faqs: any[];
-  faq: any;
+  singleArticles: Record<string, unknown>;
+  faqs: Record<string, unknown>[];
+  faq: Record<string, unknown>;
   loadingFaqs: boolean;
-  galleries: any[];
-  gallery: any;
+  galleries: Record<string, unknown>[];
+  gallery: Record<string, unknown>;
   loadingGalleries: boolean;
-  reports: any[];
-  report: any;
+  reports: Record<string, unknown>[];
+  report: Record<string, unknown>;
   loadingReports: boolean;
 }
 
@@ -74,10 +74,10 @@ export const useProfileStore = defineStore("profile", {
     token: null,
     org_profile: {},
     submittingForm: false,
-    loadingProfile: {},
+    loadingProfile: false,
     loading: false,
     certificates: [],
-    links: [],
+    links: {},
     events: [],
     event: {},
     programs: [],
