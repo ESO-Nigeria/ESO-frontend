@@ -23,6 +23,9 @@
             <li>
               <NuxtLink to="/general/events" class="">Events</NuxtLink>
             </li>
+            <li>
+              <NuxtLink to="/general/faqs" class="">FAQs</NuxtLink>
+            </li>
           </nav>
         </div>
         <div class="lg:w-1/3 md:w-1/2 w-full px-4  mb-4 md:mb-0 text-base space-y-3">

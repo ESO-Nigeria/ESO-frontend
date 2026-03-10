@@ -4,7 +4,8 @@
      
           <div class="container py-4">
             <LayoutsBreadcrumb
-            :breadcrumbs="[{ text: 'Programmes' }]"></LayoutsBreadcrumb>
+            :breadcrumbs="[{ text: 'Programmes' }]">
+            </LayoutsBreadcrumb>
             <div class="py-6 h-full">
               <div class="grid h-full items-stretch gap-6 md:grid-cols-[350px_minmax(0,1fr)]">
                 <Dialog >
@@ -473,17 +474,15 @@ const sendApiRequest = async () => {
   const financialSupportString = Array.from(selectedValues.value.financial_support).join(',');
   
   const response = await profileStore.getProgrammes(
-                                                    sectorsString, 
-                                                    stagesString, 
-                                                    financialSupportString, 
-                                                    nonFinancialSupportString,
-                                                    searchValue.value, 
-                                                    filterOption.value,
-                                                    participationsString,
-                                                    modesString,
-                                                    
-
-                                                   );
+      sectorsString, 
+      stagesString, 
+      financialSupportString, 
+      nonFinancialSupportString,
+      searchValue.value, 
+      filterOption.value,
+      participationsString,
+      modesString,
+    );
   // You would typically use fetch or axios here
 };
 
@@ -497,16 +496,16 @@ const searchProgrammes = async () => {
   const financialSupportString = Array.from(selectedValues.value.financial_support).join(',');
   
   const response = await profileStore.getProgrammes(
-                                                    sectorsString, 
-                                                    stagesString, 
-                                                    financialSupportString, 
-                                                    nonFinancialSupportString, 
-                                                    searchValue.value,
-                                                    filterOption.value,
-                                                    participationsString,
-                                                    modesString,
+    sectorsString, 
+    stagesString, 
+    financialSupportString, 
+    nonFinancialSupportString, 
+    searchValue.value,
+    filterOption.value,
+    participationsString,
+    modesString,
                                                    
-                                                   );
+    );
 }
 const profileStore = useProfileStore()
 const programs = computed(() => {

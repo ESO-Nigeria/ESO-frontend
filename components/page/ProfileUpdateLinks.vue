@@ -23,7 +23,7 @@
                 </div>
               </FormControl>
               <FormDescription class="text-xs text-gray-400">
-                Enter your organization's full website URL (e.g., example.com)
+                Enter your organization's full website URL (e.g., esonigeria.org)
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -349,10 +349,13 @@ try {
     success.value = true;
     edit.value = false;
     profileStore.getLinks()
+    toast.success('Social links updated successfully')
    
     } else {
       loading.value = false;
-      // alert(response.data.message);
+      const error = response.error;
+      const msg = error?.error || (typeof error === 'string' ? error : 'Social links have already been submitted. Please wait for admin feedback.');
+      toast.error(msg);
       }
     loading.value = false
   }catch(error) {

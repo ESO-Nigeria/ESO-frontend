@@ -83,6 +83,7 @@ export default defineNuxtConfig({
   runtimeConfig:{
     public: {
       apiUrl: 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net',
+      // apiUrl: 'http://127.0.0.1:8000/',
     }
   }
 })

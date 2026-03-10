@@ -28,14 +28,11 @@
         <div class="hidden lg:flex lg:ml-14 lg:items-center lg:justify-center lg:space-x-6">
           <NuxtLink to="/general/esos" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> ESOs </NuxtLink>
           <NuxtLink to="/general/programmes" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Programme </NuxtLink>
-          <NuxtLink to="/general/events" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Events </NuxtLink>
-          <NuxtLink to="/general/about-us" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> About </NuxtLink>
-          <!-- <NuxtLink to="/general/mapping-report" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Mapping Report </NuxtLink> -->
 
-          <!-- Reports Dropdown -->
+          <!-- Events Dropdown -->
           <div class="relative group">
             <button class="nav-link flex items-center space-x-1 focus:outline-none" type="button">
-              <span>Reports</span>
+              <span>Events</span>
               <svg
                 class="w-4 h-4 transform transition-transform duration-200 group-hover:rotate-180"
                 fill="none"
@@ -50,17 +47,24 @@
             <div class="absolute left-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
               <ul class="flex flex-col">
                 <li>
-                  <NuxtLink to="/general/mapping-report" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                    ESO Mapping Report
+                  <NuxtLink to="/general/events" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    Latest Events
                   </NuxtLink>
                 </li>
-                <li><NuxtLink to="/general/annual-forum" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                    Annual Forum
+                <li><NuxtLink to="/general/gallery" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    Gallery
                   </NuxtLink>
                 </li>
               </ul>
             </div>
           </div>
+
+          <!-- <NuxtLink to="/general/events" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Events </NuxtLink> -->
+          <NuxtLink to="/general/about-us" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> About </NuxtLink>
+          <!-- <NuxtLink to="/general/mapping-report" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Mapping Report </NuxtLink> -->
+          <NuxtLink to="/general/reports" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Reports </NuxtLink>
+
+          
 
 
           <!-- <NuxtLink to="/general/about-us" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Join the Community </NuxtLink> -->
