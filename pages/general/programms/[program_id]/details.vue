@@ -38,8 +38,19 @@
           </span>
         </div>
                  
-        <a :href="program?.program_details?.registration_link" target="_blank" class="w-full mt-3">
-                    <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
+                         <a
+                  :href="program?.program_details?.application_status?.toLowerCase() === 'closed'
+                    ? null
+                    : checkLink(program?.program_details?.registration_link)"
+                  target="_blank"
+                  class="w-full"
+                >
+                  <Button
+                    size="lg"
+                    class="py-3 px-5 h-11 w-full"
+                    type="button"
+                    :disabled="program?.program_details?.application_status?.toLowerCase() === 'closed'"
+                  >
                     Apply Now
                   </Button>
                 </a>
@@ -154,12 +165,24 @@
                   </span>                  </p>
                   </div>
                 </div>
-                <div class="flex justify-end mt-6 gap-4">
-                  <a :href="program?.program_details?.registration_link" class="w-full"  target="_blank">
-                    <Button size="lg" class="py-3 px-5 h-11 w-full"  type="button" >
-                      Apply Now
-                    </Button>
-                  </a>
+                <div class="flex justify-end gap-4">
+                  <a
+                  :href="program?.program_details?.application_status?.toLowerCase() === 'closed'
+                    ? null
+                    : checkLink(program?.program_details?.registration_link)"
+                  target="_blank"
+                  class="w-full"
+                >
+                  <Button
+                    size="lg"
+                    class="py-3 px-5 h-11 w-full"
+                    type="button"
+                    :disabled="program?.program_details?.application_status?.toLowerCase() === 'closed'"
+                  >
+                    Apply Now
+                  </Button>
+                </a>
+               
                  
                   <a :href="program?.program_details?.website_link" target="_blank" class="w-full" rel="noopener noreferrer">
                     <Button class="py-3 px-5 h-11 w-full bg-[#257F4A]" size="lg" type="button">
