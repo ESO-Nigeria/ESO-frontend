@@ -428,6 +428,7 @@ import { sectors, targetAudience, nonFinancialSupport, financialSupport, program
 const all_countries = computed(()=>{
   return nigeria
 });
+const { showError, showSuccess } = useAppToast()
 const loading  = ref(false);
 const formSectors = ref([])
 const selectedCountry = ref(null);
@@ -568,10 +569,10 @@ for(let sector of formSectors.value){
         loading.value = false;
         success.value = true;
         fetchProfile()
-       
+        showSuccess('Profile created successfully')
         } else {
           loading.value = false;
-          // alert(response.data.message);
+          showError(response.error, 'Error creating profile, please check details and try again.');
           }
         loading.value = false
       }catch(error) {

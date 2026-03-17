@@ -42,12 +42,13 @@ import { watch } from 'vue';
 import { useProgrammeStore } from '~/store/programmme';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-import { toast } from 'vue-sonner';
+import { useAppToast } from '~/composables/useAppToast';
 
 
 const { program_id } = useRoute().params
 
 const programStore = useProgrammeStore()
+const { showError, showSuccess } = useAppToast()
 const props = defineProps({
  data: {
   type: Object
@@ -130,11 +131,11 @@ const onSubmit = form.handleSubmit( async (values) => {
     const response = await programStore.updateProgramme(program_id, body)
     if(response?.data?.data && response?.data?.data?.profile) {
       closeDialog()
-      toast.success("Programme updated successfully")
+      showSuccess("Programme updated successfully")
       programStore.getProgramme(program_id)
     }
     if (response?.error ) {
-      toast.error("Updating failed, Please check all fields.")
+      showError(response.error, "Updating failed, Please check all fields.");
     }
     loadingState.value = false
   } catch (error) {

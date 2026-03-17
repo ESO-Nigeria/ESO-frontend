@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { toast } from 'vue-sonner';
+import { useAppToast } from '~/composables/useAppToast';
 import type { Programme, ProgrammeDetails } from "~/types";
 
 export const useProgrammeStore = defineStore("programme", {
@@ -91,11 +92,13 @@ export const useProgrammeStore = defineStore("programme", {
             try {
                 const response = await apiPostRequestForFormData(`/api/programs/`, body);
                 if (response.error) {
-                    toast.error(response?.error?.error || "Unable to create programme, please try again")
+                    const { showError } = useAppToast();
+                    showError(response.error, "Unable to create programme, please try again");
                 }
                 return { data: response, error: response.error };
             } catch (error: any) {
-                toast.error(error?.response?.data?.error?.[0] || "Unable to create programme, please try again")
+                const { showError } = useAppToast();
+                showError(error, "Unable to create programme, please try again");
                 return { data: null, error: error ?? "Unknown error" };
             }
         },
@@ -103,11 +106,13 @@ export const useProgrammeStore = defineStore("programme", {
             try {
                 const response = await apiPostFormRequest(`/api/programdetails/`, body);
                 if (response.error) {
-                    toast.error(response?.error?.error?.[0] || "Unable to create programme details, please try again")
+                    const { showError } = useAppToast();
+                    showError(response.error, "Unable to create programme details, please try again");
                 }
                 return { data: response, error: response.error };
             } catch (error: any) {
-                toast.error(error?.response?.data?.error?.[0] || "Unable to create programme details, please try again")
+                const { showError } = useAppToast();
+                showError(error, "Unable to create programme details, please try again");
                 return { data: null, error: error ?? "Unknown error" };
             }
         },

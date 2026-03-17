@@ -137,9 +137,11 @@ import TabsList from '~/components/ui/tabs/TabsList.vue';
 import TabsTrigger from '~/components/ui/tabs/TabsTrigger.vue';
 import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
+import { useAppToast } from '~/composables/useAppToast';
 
 const authStore = useAuthStore();
 const profileStore = useProfileStore()
+const { showError } = useAppToast()
 const user = computed(() => {
   return authStore.user;
 })
@@ -151,9 +153,11 @@ const loading = computed(() => {
   return authStore.loadingUser
 })
 
-onMounted(() => {
-  authStore.getUser()
-
+onMounted(async () => {
+  const response = await authStore.getUser()
+  if (response.error) {
+    showError(response.error, 'Error fetching user details')
+  }
 })
 
 </script>

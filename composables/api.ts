@@ -16,7 +16,7 @@ export const apiGetRequest = async (url: string): Promise<ApiResponse> => {
     const response = await axios.get(baseURL + url, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'token ' + JSON.parse(storedToken), // Add your authorization header here
+        'Authorization': 'token ' + (storedToken ? JSON.parse(storedToken) : ''), // Add your authorization header here
       },
     });
     
@@ -36,7 +36,7 @@ export const apiGetUnRestrictedRequest = async (url: string): Promise<ApiRespons
     const response = await axios.get(baseURL + url, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + JSON.parse(storedToken), // Add your authorization header here
+        'Authorization': 'Bearer ' + (storedToken ? JSON.parse(storedToken) : ''), // Add your authorization header here
       },
     });
     
@@ -58,7 +58,7 @@ export const apiPostRequest = async (url: string, body: object, options: { auth:
         'Authorization': 'Bearer ' + token, // Add your authorization header here
       },
     });
-    return { data: response, error: null };
+    return { data: response.data, error: null };
   } catch (error: any) {
     return { data: null, error: error?.response?.data ?? error?.message ?? error?.toString() ?? 'Unknown error' };
   }
@@ -77,7 +77,7 @@ export const apiPostFormRequest = async (url: string, body: object): Promise<Api
         'Authorization': 'token ' + token, // Add your authorization header here
       },
     });
-    return { data: response, error: null };
+    return { data: response.data, error: null };
   } catch (error: any) {
     return { data: null, error: error?.response?.data ?? error?.message ?? error?.toString() ?? 'Unknown error' };
   }

@@ -71,6 +71,7 @@ import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 import { useAuthStore } from '~/store/auth';
 const authStore = useAuthStore()
+const { showError, showSuccess } = useAppToast()
 import { toast } from 'vue-sonner';
 const form = useForm({
   // validationSchema: formSchema,
@@ -103,14 +104,9 @@ const onSubmit = form.handleSubmit(async(values) => {
     router.push('/auth/reset-successful');
     } else {
       loading.value = false;
-      if (response.error && response?.error?.new_password) {
-        const joined = response?.error?.new_password.join(' ');
-        toast.error(joined || 'Error resetting, please contact admin')
-        }
-        else if(response?.error && response?.error?.token ){
-          const joined = response?.error?.token.join(' ');
-          toast.error(joined|| "Error resetting, please contact admin")
-        }
+      if (response.error) {
+        showError(response.error, 'Error resetting, please check details and try again.');
+      }
 
       // alert(response.data.message);
       }

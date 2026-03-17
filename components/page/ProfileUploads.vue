@@ -205,6 +205,7 @@ import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
+import { useAppToast } from '~/composables/useAppToast';
 import { CheckIcon, LoaderCircle } from "lucide-vue-next";
 
 const { isFieldDirty, handleSubmit, values } = useForm({
@@ -212,6 +213,7 @@ const { isFieldDirty, handleSubmit, values } = useForm({
 const LSprofile = ref()
 
 const profileStore = useProfileStore()
+const { showError, showSuccess } = useAppToast()
 const loading  = ref(false);
 const success = ref(false)
 const cac_doc = ref({})
@@ -284,10 +286,10 @@ const onSubmit = handleSubmit(async(values) => {
         loading.value = false;
         success.value = true;
         profileStore.getCertificates()
-       
+        showSuccess('Certificates uploaded successfully')
         } else {
           loading.value = false;
-          // alert(response.data.message);
+          showError(response.error, 'Error uploading certificates, please check details and try again.');
           }
         loading.value = false
       }catch(error) {

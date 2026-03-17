@@ -186,8 +186,8 @@ import { useProfileStore } from '~/store/profile';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
-import { toast } from 'vue-sonner';
 import { Eye, EyeOff, LoaderCircle } from 'lucide-vue-next';
+import { useAppToast } from '~/composables/useAppToast';
 
 
 const formSchema = toTypedSchema(
@@ -202,6 +202,7 @@ const form = useForm({
 })
 const authStore = useAuthStore();
 const profileStore = useProfileStore()
+const { showError, showSuccess } = useAppToast()
 const user = computed(() => {
   return authStore.user;
 })
@@ -224,24 +225,16 @@ const onSubmit  = form.handleSubmit(async( values) => {
   try {
     loadingSubmit.value = true;
   const response =  await authStore.change_current_password( values );
-  if (response.data && response?.data?.data?.status == 204) {
+    if (response.data && response?.data?.data?.status == 204) {
     loadingSubmit.value = false;
     form.handleReset()
-    toast.success( 'Password changed successfully')
+    showSuccess( 'Password changed successfully')
     } else {
       loadingSubmit.value = false;
       }
-      if (response.error && response?.error?.current_password) {
-        const joined = response?.error?.current_password.join(' ');
-        toast.error(joined || 'Error , please check details and try again.');
-        }
-        else if(response?.error && response?.error?.new_password ){
-          const joined = response?.error?.new_password.join(' ');
-          toast.error(`${joined}`|| 'Error , please check details and try again.')
-        }else if (response.error && response?.error?.error) {
-          const joined = response?.error?.error?.join(' ');
-          toast.error(joined|| 'Error registering, please check details and try again.')
-        }
+      if (response.error) {
+        showError(response.error, 'Error changing password, please check details and try again.');
+      }
         loadingSubmit.value = false
   }catch(error) {
     loadingSubmit.value = false

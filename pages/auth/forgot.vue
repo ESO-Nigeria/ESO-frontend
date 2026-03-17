@@ -45,6 +45,7 @@ import * as z from "zod";
 import { toast } from 'vue-sonner';
 import { useAuthStore } from '~/store/auth';
 const authStore = useAuthStore()
+const { showError, showSuccess } = useAppToast()
 const router = useRouter()
 
 const form = useForm({
@@ -69,8 +70,8 @@ const onSubmit = form.handleSubmit(async(values) => {
       loading.value = false;
       // alert(response.data.message);
       if (response.error) {
-        toast.error(response?.error?.[0] || "Error sending email, please try again")
-        }
+        showError(response.error, "Error sending email, please try again");
+      }
       }
     loading.value = false
   }catch(error) {

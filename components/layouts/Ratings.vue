@@ -151,7 +151,8 @@ import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 import { ArrowBigRight, Mail, MoveRight } from 'lucide-vue-next';
 import RateCard from './RateCard.vue';
-import { toast } from 'vue-sonner';
+import { useAppToast } from '~/composables/useAppToast';
+const { showError, showSuccess } = useAppToast();
 
 // Rating breakdown data
 
@@ -232,13 +233,11 @@ const onSubmit = form.handleSubmit(async(values) => {
     if (response?.data && response?.data?.status == 201) {
       const reviews = await apiGetUnRestrictedRequest(`/api/ratings/${eso_id}/profile-ratings/`)
       profileRatings.value = reviews.data
+      showSuccess('Review submitted successfully')
       cancelReview()
     }
-    if (response?.error && response?.error?.detail) {
-      toast.error(response.error.detail || '')
-    }
-    if (response?.error && response?.error?.rating) {
-      toast.error( 'Error: Rating required. Please choose a star to proceed.')
+    if (response?.error) {
+      showError(response.error, 'Error submitting review, please check details and try again.');
     }
     submitting.value = false
 })

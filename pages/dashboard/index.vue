@@ -181,9 +181,11 @@
 <script setup>
 import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
+import { useAppToast } from '~/composables/useAppToast';
 
 const authStore = useAuthStore();
 const profileStore = useProfileStore()
+const { showOnboarding } = useAppToast()
 
 const profile = computed(() => {
   return profileStore.org_profile
@@ -194,9 +196,13 @@ const user = computed(() => {
 const loading = computed(() => {
   return authStore.loadingUser
 })
-onMounted(() => {
-  authStore.getUser()
-  profileStore.getProfile()
+onMounted(async () => {
+  await authStore.getUser()
+  await profileStore.getProfile()
+  
+  if (profile.value?.approval_status !== 'APPROVED') {
+    showOnboarding()
+  }
 })
 
 </script>

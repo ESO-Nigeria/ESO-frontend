@@ -20,13 +20,15 @@
 
 <script setup>
 import { toast } from 'vue-sonner';
+import { useAppToast } from '~/composables/useAppToast';
+const { showError } = useAppToast();
 
 const props = defineProps(['item', 'index']);
 const currentPage = useRoute().name;
 
 const onDisabledClick = () => {
   if (props.item.disabledMessage) {
-    toast.error(props.item.disabledMessage);
+    showError(props.item.disabledMessage);
   }
 };
 </script>

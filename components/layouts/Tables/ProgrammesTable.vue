@@ -11,6 +11,7 @@ import {
 import { Plus, MoreVertical } from 'lucide-vue-next';
 import { useProgrammeStore } from '~/store/programmme';
 import { toast } from 'vue-sonner';
+import { useAppToast } from '~/composables/useAppToast';
 import { sectors, targetAudience, nonFinancialSupport, financialSupport, programMode } from '~/lib/data';
 
 
@@ -54,6 +55,7 @@ const tableData = [
 const isRequestStockOpen = ref(false)
 const isDetailsOpen = ref(false)
 const isMultipleRequestOpen = ref(false)
+const { showError } = useAppToast()
 
 const loading = ref(false)
 
@@ -75,10 +77,10 @@ const fetchProgrammes  = async () => {
     if (response?.data?.data) {
       programmes.value = response?.data?.data
     }else if (response?.error){
-      toast.error(response?.error?.error?.[0] || "Unable to fetch programmes, please try again")
+      showError(response.error, "Unable to fetch programmes, please try again")
     }
   } catch (error) {
-    toast.error(error?.response?.data?.error?.[0] || "Unable to fetch programmes, please try again")
+    showError(error, "Unable to fetch programmes, please try again")
   } finally {
     loading.value = false
   }

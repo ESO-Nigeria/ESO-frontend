@@ -176,10 +176,11 @@ import { CheckIcon, LoaderCircle, Mail } from 'lucide-vue-next';
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
-import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
+import { useAppToast } from '~/composables/useAppToast';
 const authStore = useAuthStore()
 const profileStore = useProfileStore()
+const { showError, showSuccess } = useAppToast()
 const router = useRouter()
 const success = ref(false)
 const loading  = ref(false);
@@ -237,9 +238,10 @@ try {
     loading.value = false;
     success.value = true;
     profileStore.getLinks()
+    showSuccess('Social links updated successfully')
     } else {
       loading.value = false;
-      // alert(response.data.message);
+      showError(response.error, 'Error updating social links, please check details and try again.');
       }
     loading.value = false
   }catch(error) {
