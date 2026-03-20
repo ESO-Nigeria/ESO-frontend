@@ -10,6 +10,16 @@
         </div>
       </div>
       <form @submit="onSubmit" class="flex pr-4 pl-4 sm:pr-6 sm:pl-6 gap-4 flex-col mt-4">
+        <div v-if="isUnverified" class="mt-4 p-3 bg-[#FEF6EE] rounded-xl flex items-center gap-3 border border-[#FDE1CC]">
+          <Info class="h-5 w-5 text-[#D97706] shrink-0" />
+          <p class="text-sm text-[#475467] leading-relaxed">
+            Email verification pending for <b class="font-bold">{{ maskedEmail }}</b>. Check your inbox or 
+            <Button variant="link" type="button" @click="onResendLink" :disabled="resendLoading" class="text-[#D97706] font-semibold underline p-0 h-auto text-sm inline-flex items-center">
+              resend the verification link
+              <LoaderCircle v-show="resendLoading" class="animate-spin h-3 w-3 ml-1" />
+            </Button>
+          </p>
+        </div>
         <div class="flex flex-col gap-2">
           <h6 class="text-secondary-header3 text-3xl font-bold">Welcome back,</h6>
           <p class=" text-secondary-body-300 font-medium text-lg ">Log in to continue</p>
@@ -62,7 +72,7 @@
 </template>
 
 <script setup>
-import { Eye, EyeOff, LoaderCircle } from 'lucide-vue-next'
+import { Eye, EyeOff, LoaderCircle, Info } from 'lucide-vue-next'
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
@@ -77,12 +87,45 @@ const isPasswordVisible = ref(false);
 
 const router = useRouter()
 const loading  = ref(false);
+const isUnverified = ref(false);
+const resendLoading = ref(false);
+const userEmail = ref('');
+const maskedEmail = computed(() => {
+  if (!userEmail.value || !userEmail.value.includes('@')) return userEmail.value;
+  const [localPart, domain] = userEmail.value.split('@');
+  const firstChar = localPart[0] || '';
+  const lastChar = localPart.length > 1 ? localPart[localPart.length - 1] : '';
+  return `${firstChar}******${lastChar}@${domain}`;
+});
 
 function togglePasswordVisibility() {
   isPasswordVisible.value = !isPasswordVisible.value;
 }
+
+async function onResendLink() {
+  if (!userEmail.value) return;
+  resendLoading.value = true;
+  try {
+    const response = await authStore.resend_activation({ email: userEmail.value });
+    if (response.data) {
+      toast.success('Verification link sent successfully. Please check your email.');
+      isUnverified.value = false;
+    } else {
+      const errorData = response.error;
+      const errorMsg = errorData?.error?.join(' ') || errorData?.non_field_errors?.join(' ') || errorData?.detail || (typeof errorData === 'string' ? errorData : 'Failed to resend verification link.');
+      toast.error(errorMsg);
+    }
+  } catch (error) {
+    toast.error('An error occurred. Please try again.');
+  } finally {
+    resendLoading.value = false;
+  }
+}
+
 const onSubmit = form.handleSubmit(async(values) => {
   const  { email, password } = values;
+  userEmail.value = email;
+  isUnverified.value = false;
  
   try {
     loading.value = true;
@@ -94,12 +137,31 @@ const onSubmit = form.handleSubmit(async(values) => {
 
     } else {
       loading.value = false;
-      // alert(response.data.message);
       }
-      if (response.error && response?.error?.error) {
-        const joined = response?.error?.error.join(' ');
-        toast.error(joined || 'Error registering, please check details and try again.');
+      
+      if (response.error) {
+        const errorData = response.error;
+        const errorMsg = errorData?.error?.join(' ') || errorData?.non_field_errors?.join(' ') || errorData?.detail || (typeof errorData === 'string' ? errorData : '');
+        
+        const lowerMsg = errorMsg.toLowerCase();
+        // Catch generic Djoser login errors to show resend link
+        const isLoginError = lowerMsg.includes('no active account') || 
+                            lowerMsg.includes('credentials') || 
+                            lowerMsg.includes('inactive') || 
+                            lowerMsg.includes('not verified') || 
+                            lowerMsg.includes('unverified') || 
+                            lowerMsg.includes('activate') || 
+                            lowerMsg.includes('verify your email');
+
+        if (isLoginError) {
+          isUnverified.value = true;
+          toast.error(`Email verification pending for ${maskedEmail.value}. Check your inbox or resend the verification link.`, {
+            duration: 5000,
+          });
+        } else {
+          toast.error(errorMsg || 'Error logging in, please check details and try again.');
         }
+      }
     loading.value = false
   }catch(error) {
     loading.value = false

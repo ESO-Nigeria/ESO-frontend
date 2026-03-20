@@ -114,6 +114,15 @@ export const useAuthStore = defineStore("auth", {
       } catch (error) {
         return { data: null, error: "Unknown error" }
       }
-    }
+    },
+
+    async resend_activation(body: Record<string, unknown>) {
+      try {
+        const response = await apiPostRequest("/auth/users/resend_activation/", body, { auth: false });
+        return { data: response, error: response.error };
+      } catch (error) {
+        return { data: null, error: error ?? "Unknown error" };
+      }
+    },
   },
 });

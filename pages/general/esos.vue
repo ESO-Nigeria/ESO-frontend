@@ -211,7 +211,7 @@
                       <CardContent class="p-4 space-y-2">
                         <div class=" flex ">
                          
-                          <div class="text-secondary-body-contrast inline-flex items-center text-nowrap text-xs px-1 py-1">
+                          <div class="text-secondary-body-contrast inline-flex items-center text-nowrap text-xs px-1 py-1 truncate">
                             <MapPin class="size-4 mr-1" />  {{ item?.address }}
                           </div>
                           
