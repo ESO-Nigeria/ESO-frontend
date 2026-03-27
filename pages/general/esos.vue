@@ -175,7 +175,7 @@
                     <div v-if="loading" class="flex h-screen justify-center items-center">
                       <LayoutsLoader />
                     </div>
-                    <div  v-else-if="ESOs?.results && ESOs?.results?.length == 0" class="col-span-3 flex items-center justify-center flex-col gap-2.5">
+                    <div  v-else-if="!ESOs?.results || ESOs?.results?.length == 0" class="col-span-3 flex items-center justify-center flex-col gap-2.5">
                       <svg width="37" height="36" viewBox="0 0 37 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="2.5" y="2" width="32" height="32" rx="16" fill="white"/>
                         <rect x="2.5" y="2" width="32" height="32" rx="16" stroke="#CEE8F7" stroke-width="4"/>
