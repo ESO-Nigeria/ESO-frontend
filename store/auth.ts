@@ -1,7 +1,7 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 // import { useToast } from '~/components/ui/toast';
-import { apiGetRequest } from "~/composables/api";
+import { apiGetRequest, apiPostRequest, apiPostFormRequest } from "~/composables/api";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
@@ -25,11 +25,11 @@ export const useAuthStore = defineStore("auth", {
     async login(body: Record<string, unknown>) {
       try {
         const response = await apiPostRequest("/auth/token/login", body, { auth: false });
-        if (response?.data?.data) {
-          setItem("token", JSON.stringify(response?.data?.data?.auth_token));
+        if (response?.data) {
+          setItem("token", JSON.stringify(response?.data?.auth_token));
         }
 
-        return { data: response, error: response.error };
+        return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };
       }
@@ -37,17 +37,14 @@ export const useAuthStore = defineStore("auth", {
     async register(body: object) {
       try {
         const response = await apiPostRequest("/auth/users/", body);
-        return { data: response, error: response.error };
+        return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
     logUserOut() {
-      // this.myprofile = null;
-      // this.token = '';
       removeItem("myprofile");
       removeItem("token");
-      // this.clearAuthDetails()
     },
     async reset(body: Record<string, unknown>) {
       try {
@@ -55,7 +52,7 @@ export const useAuthStore = defineStore("auth", {
           "/auth/users/reset_password/",
           body
         );
-        return { data: response, error: response.error };
+        return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };
       }
@@ -63,7 +60,7 @@ export const useAuthStore = defineStore("auth", {
     async email_verified(body: Record<string, unknown>) {
       try {
         const response = await apiPostRequest("/auth/users/activation/", body);
-        return { data: response, error: response.error };
+        return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };
       }
@@ -75,7 +72,7 @@ export const useAuthStore = defineStore("auth", {
           "/auth/users/reset_password_confirm/",
           body
         );
-        return { data: response, error: response.error };
+        return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };
       }
@@ -86,19 +83,18 @@ export const useAuthStore = defineStore("auth", {
           "/auth/users/set_password/",
           body
         );
-        return { data: response, error: response.error };
+        return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };
       }
     },
     async new_password(body: Record<string, unknown>) {
       try {
-        // /auth/users/reset_password/
         const response = await apiPostRequest(
           "/auth/users/reset_password_confirm/",
           body
         );
-        return { data: response, error: response.error };
+        return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };
       }
@@ -110,7 +106,7 @@ export const useAuthStore = defineStore("auth", {
         const response = await apiGetRequest("/auth/users/me/");
         this.user = response.data
         this.loadingUser = false
-        return { data: response, error: response.error };
+        return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: "Unknown error" }
       }
@@ -119,7 +115,7 @@ export const useAuthStore = defineStore("auth", {
     async resend_activation(body: Record<string, unknown>) {
       try {
         const response = await apiPostRequest("/auth/users/resend_activation/", body, { auth: false });
-        return { data: response, error: response.error };
+        return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: error ?? "Unknown error" };
       }

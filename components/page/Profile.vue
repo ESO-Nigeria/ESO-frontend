@@ -412,6 +412,7 @@
 
 <script setup>
 import { CheckIcon, LoaderCircle, Mail, PhoneCall } from 'lucide-vue-next';
+import { toast } from 'vue-sonner';
 import Avatar from '../ui/avatar/Avatar.vue';
 import AvatarFallback from '../ui/avatar/AvatarFallback.vue';
 import AvatarImage from '../ui/avatar/AvatarImage.vue';
@@ -564,10 +565,11 @@ for(let sector of formSectors.value){
       try {
         loading.value = true;
       const response =  await profileStore.createProfile(formData);
-      if (response.data && response?.data?.data) {
+      if (response.data) {
         loading.value = false;
         success.value = true;
         fetchProfile()
+        toast.success('This profile details have already been submitted. Please wait for admin feedback.', { closeButton: true })
        
         } else {
           loading.value = false;

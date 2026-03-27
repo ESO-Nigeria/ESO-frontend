@@ -158,6 +158,7 @@ import * as z from "zod";
 import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
 import { CheckIcon, LoaderCircle } from "lucide-vue-next";
+import { toast } from "vue-sonner";
 
 const { isFieldDirty, handleSubmit, values } = useForm({
 });
@@ -244,6 +245,7 @@ const onSubmit = handleSubmit(async(values) => {
         loading.value = false;
         success.value = true;
         profileStore.getCertificates()
+        toast.success('This profile details have already been submitted. Please wait for admin feedback.', { closeButton: true })
         
         } else {
           loading.value = false;

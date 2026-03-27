@@ -130,11 +130,11 @@ const onSubmit = form.handleSubmit( async (values) => {
     const response = await programStore.updateProgramme(program_id, body)
     if(response?.data?.data && response?.data?.data?.profile) {
       closeDialog()
-      toast.success("Programme updated successfully")
+      toast.success("Programme updated successfully", { closeButton: true })
       programStore.getProgramme(program_id)
     }
     if (response?.error ) {
-      toast.error("Updating failed, Please check all fields.")
+      toast.error(response?.error?.error?.[0] || response?.error?.detail || "Updating failed, Please verify that all required fields are correctly filled.");
     }
     loadingState.value = false
   } catch (error) {
@@ -222,9 +222,14 @@ watch(() => props.data, (newData) => {
         <FormItem class="space-y-1">
           <FormLabel class="text-[#3F434A] text-sm font-medium">Program Details</FormLabel>
           <FormControl>
-            <Textarea placeholder="Program Details"
-              class="border-0 ring-[#D0D5DD]  focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
-              v-model="formFields.brief_details" />
+            <div>
+              <ckeditor
+              :editor="editor"
+              :config="editorConfig"
+              v-model="formFields.brief_details"
+              @change="onEditorChange"
+            />
+          </div>
           </FormControl>
         </FormItem>
       </FormField>

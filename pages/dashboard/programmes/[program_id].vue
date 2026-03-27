@@ -31,7 +31,7 @@
                   </div>
                   <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Program Details</p>
-                    <p class="text-sm text-[#3F434A] font-normal">{{ program_details?.brief_details }}</p>
+                    <p class="text-sm text-[#3F434A] font-normal" v-html="program_details?.brief_details"></p>
                   </div>
                   <!-- <div class="space-y-2">
                     <p class="text-sm text-primary font-bold">Brief Detail of Instructors Used</p>

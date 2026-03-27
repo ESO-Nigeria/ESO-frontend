@@ -93,7 +93,7 @@ export const useProgrammeStore = defineStore("programme", {
                 if (response.error) {
                     toast.error(response?.error?.error || "Unable to create programme, please try again")
                 }
-                return { data: response, error: response.error };
+                return { data: response.data, error: response.error };
             } catch (error: any) {
                 toast.error(error?.response?.data?.error?.[0] || "Unable to create programme, please try again")
                 return { data: null, error: error ?? "Unknown error" };
@@ -105,7 +105,7 @@ export const useProgrammeStore = defineStore("programme", {
                 if (response.error) {
                     toast.error(response?.error?.error?.[0] || "Unable to create programme details, please try again")
                 }
-                return { data: response, error: response.error };
+                return { data: response.data, error: response.error };
             } catch (error: any) {
                 toast.error(error?.response?.data?.error?.[0] || "Unable to create programme details, please try again")
                 return { data: null, error: error ?? "Unknown error" };
@@ -114,7 +114,7 @@ export const useProgrammeStore = defineStore("programme", {
         async GET_PROGRAMMES() {
             try {
                 const response = await apiGetRequest(`/api/programs/`);
-                return { data: response, error: response.error };
+                return { data: response.data, error: response.error };
             } catch (error) {
                 return { data: null, error: "Unknown error" }
             }
@@ -123,7 +123,7 @@ export const useProgrammeStore = defineStore("programme", {
             try {
                 const response = await apiGetRequest(`/api/programs/${id}`);
                 this.program = response.data
-                return { data: response, error: response.error };
+                return { data: response.data, error: response.error };
             } catch (error) {
                 return { data: null, error: "Unknown error" }
             }
@@ -131,7 +131,7 @@ export const useProgrammeStore = defineStore("programme", {
         async updateProgramme(id: any, body: object){
             try {
                 const response = await apiPutRequest(`/api/programs/${id}/`, body);
-                return { data: response, error: response.error };
+                return { data: response.data, error: response.error };
             } catch (error) {
                 return { data: null, error: "Unknown error" }
             }

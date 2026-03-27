@@ -170,6 +170,7 @@
 
 <script setup>
 import { CheckIcon, LoaderCircle, Mail, Globe, SquarePen } from 'lucide-vue-next';
+import { toast } from 'vue-sonner';
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
@@ -344,12 +345,12 @@ const onSubmit = form.handleSubmit(async(values) => {
 try {
     loading.value = true;
   const response =  await profileStore.socialLinks(body);
-  if (response.data && response?.data?.data) {
+  if (response.data) {
     loading.value = false;
     success.value = true;
     edit.value = false;
     profileStore.getLinks()
-    toast.success('Social links updated successfully')
+    toast.success('This profile details have already been submitted. Please wait for admin feedback.', { closeButton: true })
    
     } else {
       loading.value = false;

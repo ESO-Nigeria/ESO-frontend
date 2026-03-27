@@ -57,7 +57,7 @@
       <img src="~/assets/images/icons/upload.svg" />
       <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
       <p class="text-xs">.pdf, .jpeg, .png (max.900kb)</p>
-      <p class="text-xs text-destructive capitalize mt-1">{{ cac_doc_errors ? cac_doc_errors.code : null }}</p>
+      <p class="text-xs text-destructive capitalize mt-1">{{ cac_doc_errors ? cac_doc_errors.code : (backendErrors.cac_certificate ? backendErrors.cac_certificate[0] : null) }}</p>
 
     </div>
             </div>
@@ -97,7 +97,7 @@
       <img src="~/assets/images/icons/upload.svg" />
       <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
       <p class="text-xs">.pdf, .jpeg, .png (max.900kb)</p>
-      <p class="text-xs text-destructive capitalize mt-1">{{ tin_doc_errors ? tin_doc_errors.code : null }}</p>
+      <p class="text-xs text-destructive capitalize mt-1">{{ tin_doc_errors ? tin_doc_errors.code : (backendErrors.tin_certificate ? backendErrors.tin_certificate[0] : null) }}</p>
 
     </div>
             </div>
@@ -136,7 +136,7 @@
                 <img src="~/assets/images/icons/upload.svg" />
                 <p><b class="text-[#131438] text-sm">Click to upload</b> or drag and drop</p>
                 <p class="text-xs">.pdf, .jpeg, .png (max.900kb)</p>
-                <p class="text-xs text-destructive capitalize mt-1">{{ license_doc_errors ? license_doc_errors.code : null }}</p>
+                <p class="text-xs text-destructive capitalize mt-1">{{ license_doc_errors ? license_doc_errors.code : (backendErrors.other_license ? backendErrors.other_license[0] : null) }}</p>
 
               </div>
             </div>
@@ -151,6 +151,7 @@
                 :disabled="certificates?.results?.[0]?.number_of_year_in_operation"
                 class="h-11 border-0 ring-[#D0D5DD] disabled:bg-[#EAECF0] focus:bg-[#F5F5F5] ring-[1.5px]  rounded-[8px] focus-visible:ring-[1.5px] focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-gray-400 text-sm"
                 placeholder="Years in Operation" v-bind="componentField" />
+              <p v-if="backendErrors.number_of_year_in_operation" class="text-xs text-destructive mt-1">{{ backendErrors.number_of_year_in_operation[0] }}</p>
             </FormControl>
           </FormItem>
         </FormField>
@@ -206,6 +207,7 @@ import * as z from "zod";
 import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
 import { CheckIcon, LoaderCircle } from "lucide-vue-next";
+import { toast } from "vue-sonner";
 
 const { isFieldDirty, handleSubmit, values } = useForm({
 });
@@ -267,33 +269,47 @@ const deleteLicense = () => {
 const { getRootProps: getRootProps3, getInputProps: getInputProps3 } = useDropzone({ onDrop: onDrop3, maxSize: 900000, accept: ".pdf, .jpeg, .png", maxFiles: 1 });
 
 
+const backendErrors = ref({});
+
 const onSubmit = handleSubmit(async(values) => {
-     
+  backendErrors.value = {};
   const formData = new FormData();
-  // Append each property to the FormData object
-  formData.append('cac_certificate', cac_doc.value);
-  formData.append('tin_certificate', tin_doc.value);
+  
+  if (cac_doc.value instanceof File) {
+    formData.append('cac_certificate', cac_doc.value);
+  }
+  if (tin_doc.value instanceof File) {
+    formData.append('tin_certificate', tin_doc.value);
+  }
+  if (license_doc.value instanceof File) {
+    formData.append('other_license', license_doc.value);
+  }
+  
   formData.append('profile', LSprofile?.value?.id);
-  formData.append('other_license', license_doc.value)
-  formData.append('number_of_year_in_operation', values?.number_of_years_in_operation)
-    // const form = serialize(newBody);
-      try {
-        loading.value = true;
-      const response =  await profileStore.uploadCertificates(LSprofile?.value?.id,formData);
-      if (response.data && response?.data?.data) {
-        loading.value = false;
-        success.value = true;
-        profileStore.getCertificates()
-       
-        } else {
-          loading.value = false;
-          // alert(response.data.message);
-          }
-        loading.value = false
-      }catch(error) {
-        loading.value = false
-        console.log('error', error)
+  if (values?.number_of_years_in_operation) {
+    formData.append('number_of_year_in_operation', values.number_of_years_in_operation);
+  }
+
+  try {
+    loading.value = true;
+    const response = await profileStore.uploadCertificates(LSprofile?.value?.id, formData);
+    if (response.data) {
+      loading.value = false;
+      success.value = true;
+      profileStore.getCertificates();
+      toast.success('Your certificates have been uploaded successfully.');
+    } else {
+      loading.value = false;
+      if (response.error) {
+        backendErrors.value = response.error;
+        toast.error("Validation error: Please check the form for details.");
       }
+    }
+  } catch(error) {
+    loading.value = false;
+    console.log('error', error);
+    toast.error("An unexpected error occurred. Please try again.");
+  }
 });
 onMounted(() => {
   if (process.client) {

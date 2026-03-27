@@ -196,7 +196,7 @@ async function handleFormSubmit() {
 
     if(programmeData){
       programmeStore.RESET_PROGRAMME()
-      toast.success('Programme created successfully')
+      toast.success('Programme created successfully', { closeButton: true })
       navigateTo(`/dashboard/programmes`);
     }
   } catch (error) {
@@ -537,11 +537,11 @@ async function handleFormSubmit() {
                       </div>
                       <div class="space-y-2">
                         <p class="text-sm text-primary font-bold">Program Description</p>
-                        <p class="text-sm text-[#3F434A] font-normal">{{ programme.description }}</p>
+                        <p class="text-sm text-[#3F434A] font-normal" v-html="programme.description"></p>
                       </div>
                       <div class="space-y-2">
                         <p class="text-sm text-primary font-bold">Program Details</p>
-                        <p class="text-sm text-[#3F434A] font-normal">{{ programme.brief_details }}</p>
+                        <p class="text-sm text-[#3F434A] font-normal" v-html="programme.brief_details"></p>
                       </div>
                       <!-- <div class="space-y-2">
                         <p class="text-sm text-primary font-bold">Brief Detail of Instructors Used</p>

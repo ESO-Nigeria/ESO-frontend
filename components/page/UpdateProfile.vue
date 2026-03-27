@@ -491,7 +491,7 @@ const onSubmit = handleSubmit(async(values) => {
         success.value = true;
         edit.value = false
         fetchProfile()
-        toast.success('Profile updated successfully')
+        toast.success('This profile details have already been submitted. Please wait for admin feedback.', { closeButton: true })
         } else {
           loading.value = false;
           const error = response.error;

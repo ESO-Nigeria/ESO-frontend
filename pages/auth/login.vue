@@ -108,7 +108,7 @@ async function onResendLink() {
   try {
     const response = await authStore.resend_activation({ email: userEmail.value });
     if (response.data) {
-      toast.success('Verification link sent successfully. Please check your email.');
+      toast.success('Verification link sent successfully. Please check your email.', { closeButton: true });
       isUnverified.value = false;
     } else {
       const errorData = response.error;
@@ -116,7 +116,7 @@ async function onResendLink() {
       toast.error(errorMsg);
     }
   } catch (error) {
-    toast.error('An error occurred. Please try again.');
+    toast.error('Network issue preventing resend from completing. Please check your connection and try again.');
   } finally {
     resendLoading.value = false;
   }
@@ -130,7 +130,7 @@ const onSubmit = form.handleSubmit(async(values) => {
   try {
     loading.value = true;
   const response =  await authStore.login( {email, password} );
-  if (response.data && response?.data?.data?.data?.auth_token) {
+  if (response.data && (response.data.auth_token || response.data.data?.auth_token)) {
     loading.value = false;
     // redirect to dashboard
     router.push('/dashboard');

@@ -323,7 +323,7 @@ watch(
   () => searchValue.value,
   (newValue) => {
     if(newValue == ''){
-      searchProgrammes()
+      searchESOs()
     }
   }
 );

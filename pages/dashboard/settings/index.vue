@@ -227,20 +227,20 @@ const onSubmit  = form.handleSubmit(async( values) => {
   if (response.data && response?.data?.data?.status == 204) {
     loadingSubmit.value = false;
     form.handleReset()
-    toast.success( 'Password changed successfully')
+    toast.success( 'Password changed successfully', { closeButton: true })
     } else {
       loadingSubmit.value = false;
       }
       if (response.error && response?.error?.current_password) {
         const joined = response?.error?.current_password.join(' ');
-        toast.error(joined || 'Error , please check details and try again.');
+        toast.error(joined || 'Error updating password, please check details and try again.');
         }
         else if(response?.error && response?.error?.new_password ){
           const joined = response?.error?.new_password.join(' ');
-          toast.error(`${joined}`|| 'Error , please check details and try again.')
+          toast.error(`${joined}`|| 'Error updating password, please check details and try again.')
         }else if (response.error && response?.error?.error) {
           const joined = response?.error?.error?.join(' ');
-          toast.error(joined|| 'Error registering, please check details and try again.')
+          toast.error(joined|| 'Error updating password, please check details and try again.')
         }
         loadingSubmit.value = false
   }catch(error) {
