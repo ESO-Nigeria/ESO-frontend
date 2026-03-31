@@ -88,76 +88,69 @@
       </div>
 
       <!-- Mobile Navigation -->
-      <nav v-if="expanded" class="lg:hidden absolute top-20	 bg-white w-full left-0 z-30 px-5">
+      <nav v-if="expanded" class="lg:hidden absolute top-20 bg-white w-full left-0 z-30 px-5 shadow-xl border-b">
         <div class="px-1 py-8">
           <div class="grid gap-y-7">
-            <NuxtLink to="/general/esos" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> ESOs </NuxtLink>
-          <NuxtLink to="/general/programmes" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Programme </NuxtLink>
-          <NuxtLink to="/general/events" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Events </NuxtLink>
-          <NuxtLink to="/general/about-us" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> About </NuxtLink>
-          <NuxtLink to="/general/about-us" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Mapping Report </NuxtLink>
-          
-          <!-- Reports Dropdown -->
-<div class="relative group">
-  <button
-    class="nav-link flex items-center space-x-1 focus:outline-none"
-    type="button"
-  >
-    <span>Reports</span>
-    <svg
-      class="w-4 h-4 transform transition-transform duration-200 group-hover:rotate-180"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      viewBox="0 0 24 24"
-    >
-      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-    </svg>
-  </button>
+            <NuxtLink to="/general/esos" @click="expanded = false" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50"> ESOs </NuxtLink>
+            <NuxtLink to="/general/programmes" @click="expanded = false" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50"> Programme </NuxtLink>
+            
+            <!-- Mobile Events Dropdown -->
+            <div class="relative">
+              <button
+                class="flex items-center justify-between w-full text-base font-medium text-gray-900 focus:outline-none"
+                type="button"
+                @click="expandedEvents = !expandedEvents"
+              >
+                <span>Events</span>
+                <svg
+                  class="w-4 h-4 transform transition-transform duration-200"
+                  :class="{ 'rotate-180': expandedEvents }"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
 
-  <!-- Dropdown Menu -->
-  <div
-    class="absolute left-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50"
-  >
-    <ul class="flex flex-col">
-      <li>
-        <NuxtLink
-          to="/general/mapping-report"
-          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-        >
-          ESO Mapping Report
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink
-          to="/general/annual-forum"
-          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-        >
-          Annual Forum
-        </NuxtLink>
-      </li>
-      
-    </ul>
-  </div>
-</div>
+              <div v-if="expandedEvents" class="mt-4 ml-4 flex flex-col gap-y-4">
+                <NuxtLink
+                  to="/general/events"
+                  @click="expanded = false"
+                  class="text-sm font-medium text-gray-700 hover:text-gray-900"
+                >
+                  Latest Events
+                </NuxtLink>
+                <NuxtLink
+                  to="/general/gallery"
+                  @click="expanded = false"
+                  class="text-sm font-medium text-gray-700 hover:text-gray-900"
+                >
+                  Gallery
+                </NuxtLink>
+              </div>
+            </div>
 
+            <NuxtLink to="/general/about-us" @click="expanded = false" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50"> About </NuxtLink>
+            <NuxtLink to="/general/reports" @click="expanded = false" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50">Reports</NuxtLink>
+            
+            <a href="https://docs.google.com/forms/d/1_lE4s9DZz2yhYYBUsCHc3YHrbtIRYbJ8OnzLt_wqpb0/viewform?edit_requested=true" target="_blank" rel="noopener noreferrer" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50">Join the Community</a>
 
-          <a href="https://docs.google.com/forms/d/1_lE4s9DZz2yhYYBUsCHc3YHrbtIRYbJ8OnzLt_wqpb0/viewform?edit_requested=true" target="_blank" rel="noopener noreferrer" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">Join the Community</a>
-
-          <div v-if="token">
-            <NuxtLink to="/dashboard">
-              <Button size="lg" title="" class="text-base font-medium w-full">Dashboard</Button>
-            </NuxtLink>
+            <div v-if="token">
+              <NuxtLink to="/dashboard" @click="expanded = false">
+                <Button size="lg" class="text-base font-medium w-full">Dashboard</Button>
+              </NuxtLink>
+            </div>
+            <div v-else class="flex w-full flex-col gap-y-3">
+              <NuxtLink to="/auth/login" @click="expanded = false">
+                <Button variant="outline" size="lg" class="w-full text-base font-medium">Login</Button>
+              </NuxtLink>
+              <NuxtLink to="/auth/register" @click="expanded = false">
+                <Button size="lg" class="w-full">Create Account</Button>
+              </NuxtLink>
+            </div>
           </div>
-          <div v-else class="flex w-full flex-col gap-y-3">
-            <NuxtLink to="/auth/login">
-              <Button variant="outline" size="lg" title="" class="w-full text-base font-medium">Login</Button>
-            </NuxtLink>
-            <NuxtLink to="/auth/register">
-              <Button size="lg" class="w-full">Create Account</Button>
-            </NuxtLink>
-          </div>
-        </div>
         </div>
       </nav>
     </div>
@@ -167,22 +160,23 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const token = ref();
-const expanded = ref(false); // Step 1: Add state for mobile nav
+const token = ref(null);
+const expanded = ref(false);
+const expandedEvents = ref(false);
 
 onMounted(() => {
   if (process.client) {
+    // Handle Token
     const storedToken = getItem("token");
-    if (storedToken && storedToken !== undefined) {
-      token.value = JSON.parse(storedToken);
+    if (storedToken && storedToken !== 'undefined') {
+      try {
+        token.value = JSON.parse(storedToken);
+      } catch (e) {
+        token.value = storedToken;
+      }
     }
-  }
-});
-</script>
 
-<script>
-export default {
-  mounted() {
+    // Google Tag Manager
     const script1 = document.createElement("script");
     script1.async = true;
     script1.src = "https://www.googletagmanager.com/gtag/js?id=G-BXN8PVE3HB";
@@ -196,8 +190,8 @@ export default {
       gtag('config', 'G-BXN8PVE3HB');
     `;
     document.head.appendChild(script2);
-  },
-};
+  }
+});
 </script>
 
 <style lang="scss" scoped>
