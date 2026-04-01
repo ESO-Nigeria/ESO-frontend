@@ -226,14 +226,15 @@
 
     <section class="my-8 ">
       <div class="container  mx-auto  relative max-w-7xl">
-        <div class="space-y-4">
+        <div class="flex justify-between items-center mb-4">
           <h6 class="text-3xl text-[#257F4A]">
             Featured Articles
           </h6>
-          <p class="text-base text-[#475467]">
-            Our featured articles showcase the expertise and perspectives of our team, providing timely and informative content to help you stay ahead of the curve. Explore our curated collection of stories, analysis, and commentary to gain a deeper understanding of the topics that matter most.
-          </p>
+          <NuxtLink to="/general/articles" class="text-primary text-xl font-medium">See all</NuxtLink>
         </div>
+        <p class="text-base text-[#475467]">
+          Our featured articles showcase the expertise and perspectives of our team, providing timely and informative content to help you stay ahead of the curve. Explore our curated collection of stories, analysis, and commentary to gain a deeper understanding of the topics that matter most.
+        </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
           <div v-if="loading" class="flex  justify-center items-center col-span-full ">

@@ -278,10 +278,10 @@ export const useProfileStore = defineStore("profile", {
         this.loading = false
       }
     },
-    async getArticles() {
+    async getArticles(title: string | undefined, sectors?: string, org_types?: string) {
       this.loadingArticles = true
       try {
-        const response = await apiGetUnRestrictedRequest(`/api/articles/`);
+        const response = await apiGetUnRestrictedRequest(`/api/articles/?title=${title || ''}&sectors=${sectors || ''}&organization_type=${org_types || ''}`);
         this.articles = response.data
         return { data: response.data, error: response.error };
       } catch (error) {

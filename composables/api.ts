@@ -11,7 +11,7 @@ export const apiGetRequest = async (url: string): Promise<ApiResponse> => {
   const baseURL = config.public.apiUrl;
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
-  
+
   try {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export const apiPostRequest = async (url: string, body: object, options: { auth:
   const baseURL = config.public.apiUrl;
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
-  
+
   try {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ export const apiPostFormRequest = async (url: string, body: object): Promise<Api
   const baseURL = config.public.apiUrl;
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
-  
+
   try {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ export const apiPostRequestForFormData = async (url: string, body: object): Prom
   const baseURL = config.public.apiUrl;
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
-  
+
   try {
     const headers: Record<string, string> = {
       'Content-Type': 'multipart/form-data',
@@ -111,7 +111,7 @@ export const apiPutRequest = async (url: string, body: object): Promise<ApiRespo
   const baseURL = config.public.apiUrl;
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
-  
+
   try {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ export const apiPatchRequest = async (url: string, body: object): Promise<ApiRes
   const baseURL = config.public.apiUrl;
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
-  
+
   try {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ export const apiPatchRequestForFormData = async (url: string, body: object): Pro
   const baseURL = config.public.apiUrl;
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
-  
+
   try {
     const headers: Record<string, string> = {
       'Content-Type': 'multipart/form-data',
@@ -171,7 +171,7 @@ export const apiDeleteRequest = async (url: string, body: object): Promise<ApiRe
   const baseURL = config.public.apiUrl;
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
-  
+
   try {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
