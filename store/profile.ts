@@ -345,10 +345,10 @@ export const useProfileStore = defineStore("profile", {
       }
     },
 
-    async getReports() {
+    async getReports(title?: string) {
       this.loadingReports = true
       try {
-        const response = await apiGetUnRestrictedRequest(`/api/reports/`);
+        const response = await apiGetUnRestrictedRequest(`/api/reports/?search=${title || ''}`);
         this.reports = response.data
         return { data: response.data, error: response.error };
       } catch (error) {

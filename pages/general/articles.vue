@@ -53,22 +53,22 @@
                         </div>
                       </div>
                       <div>
-                        <p class="text-primary text-base font-medium">Organization Type</p>
+                        <p class="text-primary text-base font-medium">Target Audience</p>
                         <div>
                           <FormField 
-                            v-for="item in organization_types" 
+                            v-for="item in targetAudience" 
                             :key="item.id" 
                             v-slot="{ value, handleChange }" 
                             type="checkbox" 
-                            :name="'organization_types'"
+                            :name="'target_audience'"
                             :unchecked-value="false"
                             :value="item.id"
                           >
                             <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
                               <FormControl>
                                 <Checkbox class="size-5" 
-                                  :checked="isSelected(item.id, 'organization_types')" 
-                                  @update:checked="(value) => handleCheckboxChange(value, item.id, 'organization_types')"
+                                  :checked="isSelected(item.id, 'target_audience')" 
+                                  @update:checked="(value) => handleCheckboxChange(value, item.id, 'target_audience')"
                                 />
                               </FormControl>
                               <div class="leading-none text-secondary-body-500 text-sm">
@@ -115,21 +115,21 @@
                       </div>
                     </div>
                     <div>
-                      <p class="text-primary text-base font-medium">Organization Type</p>
+                      <p class="text-primary text-base font-medium">Target Audience</p>
                       <div>
                         <FormField 
-                          v-for="item in organization_types" 
+                          v-for="item in targetAudience" 
                           :key="item.id" 
                           type="checkbox" 
-                          :name="'organization_types'"
+                          :name="'target_audience'"
                           :unchecked-value="false"
                           :value="item.id"
                         >
                           <FormItem class="flex flex-row items-center gap-x-2 space-y-0 px-4 py-3">
                             <FormControl>
                               <Checkbox class="size-5" 
-                                :checked="isSelected(item.id, 'organization_types')" 
-                                @update:checked="(value) => handleCheckboxChange(value, item.id, 'organization_types')"
+                                :checked="isSelected(item.id, 'target_audience')" 
+                                @update:checked="(value) => handleCheckboxChange(value, item.id, 'target_audience')"
                               />
                             </FormControl>
                             <div class="leading-none text-secondary-body-500 text-sm">
@@ -183,7 +183,7 @@
                   </div>
 
                   <!-- Articles Grid -->
-                  <div class="grid lg:grid-cols-2 gap-7">
+                  <div class="grid lg:grid-cols-3 gap-7">
                     <div v-if="loading" class="col-span-full flex h-64 justify-center items-center">
                       <LayoutsLoader />
                     </div>
@@ -193,7 +193,7 @@
                         <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                       <span class="text-lg text-[#3F434A] font-medium">Articles Not Found</span>
-                      <Button v-if="searchValue || selectedSectors.size > 0 || selectedOrganizationTypes.size > 0" variant="ghost" @click="clearFilters">Clear filters</Button>
+                      <Button v-if="searchValue || selectedSectors.size > 0 || selectedTargetAudience.size > 0" variant="ghost" @click="clearFilters">Clear filters</Button>
                     </div>
 
                     <LayoutsArticleCard 
@@ -215,7 +215,7 @@
 <script setup>
 import { Search } from 'lucide-vue-next';
 import { useProfileStore } from '~/store/profile';
-import { organization_types } from '~/lib/data';
+import { targetAudience } from '~/lib/data';
 import Dialog from '~/components/ui/dialog/Dialog.vue';
 import DialogTrigger from '~/components/ui/dialog/DialogTrigger.vue';
 import DialogScrollContent from '~/components/ui/dialog/DialogScrollContent.vue';
@@ -248,7 +248,7 @@ const profileStore = useProfileStore();
 const searchValue = ref("");
 const sortOption = ref("newest");
 const selectedSectors = ref(new Set());
-const selectedOrganizationTypes = ref(new Set());
+const selectedTargetAudience = ref(new Set());
 
 const sortLabel = computed(() => {
   return sortOption.value === 'newest' ? 'Newest First' : 'Oldest First';
@@ -268,16 +268,16 @@ const articlesList = computed(() => {
 });
 
 const isSelected = (id, type) => {
-  return type === 'sectors' ? selectedSectors.value.has(id) : selectedOrganizationTypes.value.has(id);
+  return type === 'sectors' ? selectedSectors.value.has(id) : selectedTargetAudience.value.has(id);
 };
 
 const handleCheckboxChange = (checked, id, type) => {
   if (checked) {
     if (type === 'sectors') selectedSectors.value.add(id);
-    else selectedOrganizationTypes.value.add(id);
+    else selectedTargetAudience.value.add(id);
   } else {
     if (type === 'sectors') selectedSectors.value.delete(id);
-    else selectedOrganizationTypes.value.delete(id);
+    else selectedTargetAudience.value.delete(id);
   }
   
   clearTimeout(timeout);
@@ -286,14 +286,14 @@ const handleCheckboxChange = (checked, id, type) => {
 
 const searchArticles = async () => {
   const sectorsString = Array.from(selectedSectors.value).join(',');
-  const orgTypesString = Array.from(selectedOrganizationTypes.value).join(',');
-  await profileStore.getArticles(searchValue.value, sectorsString, orgTypesString);
+  const targetAudienceString = Array.from(selectedTargetAudience.value).join(',');
+  await profileStore.getArticles(searchValue.value, sectorsString, targetAudienceString);
 };
 
 const clearFilters = () => {
   searchValue.value = '';
   selectedSectors.value.clear();
-  selectedOrganizationTypes.value.clear();
+  selectedTargetAudience.value.clear();
   searchArticles();
 };
 

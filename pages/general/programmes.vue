@@ -320,9 +320,9 @@
                     <Card v-else v-for="(item, index) in programs?.results"  :key="index"  class="shadow-lg rounded-lg !px-0 !py-0 overflow-hidden">
                       <CardHeader class="p-0 relative">
                         <img
-                          :src="  item?.program_image?.url || item?.program_image_url || placeholderImg"
+                          :src="item?.program_image?.url || item?.program_image_url || placeholderImg"
                           alt="Program Image"
-                          class="w-full h-[300px] object-cover rounded-lg"
+                          class="w-full h-[300px] object-cover rounded-lg bg-gray-200"
                         />  
                       </CardHeader>
                       <CardContent class="p-4 space-y-2">
