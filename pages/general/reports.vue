@@ -58,12 +58,11 @@
                  <div class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-primary/30 hover:-translate-y-1 cursor-pointer h-[350px] flex flex-col">
                    <!-- Image Section -->
                    <div class="relative overflow-hidden h-40 flex-shrink-0 bg-yellow-400">
-                     <img 
-                       v-if="report.thumbnail"
-                       :src="report.thumbnail" 
-                       :alt="report.title" 
-                       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                     >
+                      <img 
+                        :src="report.thumbnail_url || placeholderImg" 
+                        :alt="report.title" 
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      >
                      <div class="absolute top-3 left-3">
                       
                      </div>

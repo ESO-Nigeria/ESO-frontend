@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="h-full p-4 shadow-lg border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-      <img class="lg:h-[306px] md:h-36 w-full object-cover object-center" :src="`${article?.image_url}`" alt="blog">
+      <img class="lg:h-[306px] md:h-36 w-full object-cover object-center" :src="article?.image_url || placeholderImg" alt="blog">
       <div class="mt-4">
       
         <h1 class="title-font text-2xl font-semibold text-[#101828] mb-3">{{ article?.title }}</h1>
@@ -18,11 +18,11 @@
 </template>
 
 <script setup>
+import placeholderImg from '~/assets/images/placeholderImg.png';
 const props = defineProps({
   article:{
     type: Object
   },
- 
 })
 </script>
 
