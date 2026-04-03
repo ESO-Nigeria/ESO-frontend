@@ -474,18 +474,16 @@ const sendApiRequest = async () => {
   const nonFinancialSupportString = Array.from(selectedValues.value.non_financial_support).join(',');
   const financialSupportString = Array.from(selectedValues.value.financial_support).join(',');
   
-  const response = await profileStore.getProgrammes(
-                                                    sectorsString, 
-                                                    stagesString, 
-                                                    financialSupportString, 
-                                                    nonFinancialSupportString,
-                                                    searchValue.value, 
-                                                    filterOption.value,
-                                                    participationsString,
-                                                    modesString,
-                                                    
-
-                                                   );
+  const response = await profileStore.getProgrammes({
+    sectors: sectorsString, 
+    target_audience: stagesString, 
+    financial_supports: financialSupportString, 
+    non_financial_supports: nonFinancialSupportString,
+    title: searchValue.value, 
+    sort_by: filterOption.value,
+    details__amount: participationsString,
+    details__program_mode: modesString,
+  });
   // You would typically use fetch or axios here
 };
 
@@ -498,17 +496,16 @@ const searchProgrammes = async () => {
   const nonFinancialSupportString = Array.from(selectedValues.value.non_financial_support).join(',');
   const financialSupportString = Array.from(selectedValues.value.financial_support).join(',');
   
-  const response = await profileStore.getProgrammes(
-                                                    sectorsString, 
-                                                    stagesString, 
-                                                    financialSupportString, 
-                                                    nonFinancialSupportString, 
-                                                    searchValue.value,
-                                                    filterOption.value,
-                                                    participationsString,
-                                                    modesString,
-                                                   
-                                                   );
+  const response = await profileStore.getProgrammes({
+    sectors: sectorsString, 
+    target_audience: stagesString, 
+    financial_supports: financialSupportString, 
+    non_financial_supports: nonFinancialSupportString, 
+    title: searchValue.value,
+    sort_by: filterOption.value,
+    details__amount: participationsString,
+    details__program_mode: modesString,
+  });
 }
 const profileStore = useProfileStore()
 const programs = computed(() => {

@@ -60,9 +60,35 @@
           </div>
 
           <!-- <NuxtLink to="/general/events" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Events </NuxtLink> -->
-          <NuxtLink to="/general/about-us" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> About </NuxtLink>
-          <!-- <NuxtLink to="/general/mapping-report" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Mapping Report </NuxtLink> -->
-          <NuxtLink to="/general/reports" title="" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"> Reports </NuxtLink>
+          <!-- Publications Dropdown -->
+          <div class="relative group">
+            <button class="nav-link flex items-center space-x-1 focus:outline-none" type="button">
+              <span>Publications</span>
+              <svg
+                class="w-4 h-4 transform transition-transform duration-200 group-hover:rotate-180"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div class="absolute left-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+              <ul class="flex flex-col">
+                <li>
+                  <NuxtLink to="/general/articles" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    Articles
+                  </NuxtLink>
+                </li>
+                <li><NuxtLink to="/general/reports" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    Reports
+                  </NuxtLink>
+                </li>
+              </ul>
+            </div>
+          </div>
 
           
 
@@ -133,7 +159,44 @@
             </div>
 
             <NuxtLink to="/general/about-us" @click="expanded = false" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50"> About </NuxtLink>
-            <NuxtLink to="/general/reports" @click="expanded = false" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50">Reports</NuxtLink>
+            
+            <!-- Mobile Publications Dropdown -->
+            <div class="relative">
+              <button
+                class="flex items-center justify-between w-full text-base font-medium text-gray-900 focus:outline-none"
+                type="button"
+                @click="expandedPublications = !expandedPublications"
+              >
+                <span>Publications</span>
+                <svg
+                  class="w-4 h-4 transform transition-transform duration-200"
+                  :class="{ 'rotate-180': expandedPublications }"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <div v-if="expandedPublications" class="mt-4 ml-4 flex flex-col gap-y-4">
+                <NuxtLink
+                  to="/general/articles"
+                  @click="expanded = false"
+                  class="text-sm font-medium text-gray-700 hover:text-gray-900"
+                >
+                  Articles
+                </NuxtLink>
+                <NuxtLink
+                  to="/general/reports"
+                  @click="expanded = false"
+                  class="text-sm font-medium text-gray-700 hover:text-gray-900"
+                >
+                  Reports
+                </NuxtLink>
+              </div>
+            </div>
             
             <a href="https://docs.google.com/forms/d/1_lE4s9DZz2yhYYBUsCHc3YHrbtIRYbJ8OnzLt_wqpb0/viewform?edit_requested=true" target="_blank" rel="noopener noreferrer" class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50">Join the Community</a>
 
@@ -163,6 +226,7 @@ import { ref, onMounted } from 'vue';
 const token = ref(null);
 const expanded = ref(false);
 const expandedEvents = ref(false);
+const expandedPublications = ref(false);
 
 onMounted(() => {
   if (process.client) {
@@ -195,5 +259,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-/* You can add specific styles for the mobile navigation here if needed */
+.nav-link {
+  @apply text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-dmSans hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2;
+}
 </style>

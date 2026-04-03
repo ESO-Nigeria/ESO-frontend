@@ -34,6 +34,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     'general-mapping-report',
     'general-annual-forum',
     'general-article-article_id',
+    'general-articles',
     'general-searchResult'
 
   ];

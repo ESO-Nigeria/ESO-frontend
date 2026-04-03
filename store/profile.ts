@@ -278,10 +278,16 @@ export const useProfileStore = defineStore("profile", {
         this.loading = false
       }
     },
-    async getArticles() {
+    async getArticles(search: string | undefined, sectors?: string, stages?: string) {
       this.loadingArticles = true
       try {
-        const response = await apiGetUnRestrictedRequest(`/api/articles/`);
+        const params = new URLSearchParams();
+        if (search) params.append('search', search);
+        if (sectors) params.append('sectors', sectors);
+        if (stages) params.append('stages', stages);
+        
+        const queryString = params.toString();
+        const response = await apiGetUnRestrictedRequest(`/api/articles/${queryString ? '?' + queryString : ''}`);
         this.articles = response.data
         return { data: response.data, error: response.error };
       } catch (error) {
@@ -345,10 +351,10 @@ export const useProfileStore = defineStore("profile", {
       }
     },
 
-    async getReports() {
+    async getReports(title?: string) {
       this.loadingReports = true
       try {
-        const response = await apiGetUnRestrictedRequest(`/api/reports/`);
+        const response = await apiGetUnRestrictedRequest(`/api/reports/?search=${title || ''}`);
         this.reports = response.data
         return { data: response.data, error: response.error };
       } catch (error) {

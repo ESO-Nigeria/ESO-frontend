@@ -2,28 +2,52 @@
   <div>
     <NuxtLayout name="general" title="Reports">
 
-      <div class="container py-8">
+      <div class="container py-4">
         <LayoutsBreadcrumb
             :breadcrumbs="[{ text: 'Reports' }]"></LayoutsBreadcrumb>
         
-        <!-- Main Content -->
-         <div class="w-full max-w-screen-lg mx-auto p-4 sm:p-8 md:flex md:gap-6">
-           <div class="max-w-7xl mx-auto w-full">
-             <!-- Page Header -->
-             <div class="text-center mb-12">
-               <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">Insights & Research</h1>
-               <p class="text-xl text-[#4F5865] max-w-3xl mx-auto">
-                 Discover comprehensive reports and analysis on Nigeria's enterprise support ecosystem
-               </p>
-             </div>
-    
-             <!-- Loading State -->
-             <div v-if="loading" class="flex justify-center items-center py-20">
+        <div class="py-6 h-full">
+          <div class="grid h-full items-stretch gap-6">
+            <div class="space-y-5">
+                 <div class="flex flex-col lg:flex-row justify-between gap-x-6 gap-y-4 lg:gap-y-0 w-full lg:w-1/2">
+                 <div class="flex-1">
+                   <div class="relative flex border items-center border-primary rounded-md ">
+                     <Input v-model="searchValue" id="search" type="text" placeholder="Search for Reports" 
+                     class="pl-10 h-11 border-0  ring-0 disabled:bg-[#EAECF0] focus:bg-[#F5F5F5]   rounded-[8px] focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D0D5DD] text-[#3F434A] placeholder:text-[#333] text-sm"
+                     />
+                     <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+                       <Search class="size-5 text-muted-foreground" />
+                     </span>
+                     <Button @click="searchReports" type="button" size="lg" class="h-11 rounded-none px-6">Search</Button>
+                   </div>
+                 </div>
+                 <DropdownMenu>
+                   <DropdownMenuTrigger as-child>
+                     <Button variant="outline" class="h-11 font-normal text-base shrink-0">
+                       Sort by: {{ sortLabel }}
+                     </Button>
+                   </DropdownMenuTrigger>
+                   <DropdownMenuContent class="w-56">
+                     <DropdownMenuLabel>Select Order</DropdownMenuLabel>
+                     <DropdownMenuRadioGroup v-model="filterOption">
+                       <DropdownMenuRadioItem class="text-sm font-normal" value="newest">
+                         Newest First
+                       </DropdownMenuRadioItem>
+                       <DropdownMenuRadioItem class="text-sm font-normal" value="oldest">
+                         Oldest First
+                       </DropdownMenuRadioItem>
+                     </DropdownMenuRadioGroup>
+                   </DropdownMenuContent>
+                 </DropdownMenu>
+               </div>
+
+              <!-- Loading State -->
+              <div v-if="loading" class="flex h-screen justify-center items-center col-span-full">
                <LayoutsLoader />
              </div>
 
-             <!-- Reports Grid -->
-             <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              <!-- Reports Grid -->
+              <div v-else class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-7">
                <!-- Dynamic Report Cards -->
                <NuxtLink 
                  v-for="report in reportsList" 
@@ -33,12 +57,12 @@
                >
                  <div class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-primary/30 hover:-translate-y-1 cursor-pointer h-[350px] flex flex-col">
                    <!-- Image Section -->
-                   <div class="relative overflow-hidden h-40 flex-shrink-0">
-                     <img 
-                       :src="report.thumbnail || placeholderImg" 
-                       :alt="report.title" 
-                       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                     >
+                   <div class="relative overflow-hidden h-40 flex-shrink-0 bg-yellow-400">
+                      <img 
+                        :src="report.thumbnail_url || placeholderImg" 
+                        :alt="report.title" 
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      >
                      <div class="absolute top-3 left-3">
                       
                      </div>
@@ -69,22 +93,51 @@
                </NuxtLink>
              </div>
     
-           </div>
-
-         </div>
-      </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </NuxtLayout>
   </div>
 </template>
 
 <script setup>
+import { ref, watch, computed, onMounted } from 'vue';
+import { Search } from 'lucide-vue-next';
+import Input from '~/components/ui/input/Input.vue';
+import Button from '~/components/ui/button/Button.vue';
 import { useProfileStore } from '~/store/profile';
 import placeholderImg from '~/assets/images/placeholderImg.png';
 
 const profileStore = useProfileStore()
 
-const reportsList = computed(() => profileStore.reports?.results || [])
+const filterOption = ref("newest");
+const sortLabel = computed(() => filterOption.value === "newest" ? "Newest First" : "Oldest First");
+
+const reportsList = computed(() => {
+  let list = [...(profileStore.reports?.results || [])];
+  if (filterOption.value === 'newest') {
+    list.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  } else {
+    list.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+  }
+  return list;
+});
 const loading = computed(() => profileStore.loadingReports)
+
+const searchValue = ref("")
+const searchReports = () => {
+  profileStore.getReports(searchValue.value)
+}
+
+watch(
+  () => searchValue.value,
+  (newValue) => {
+    if(newValue === ''){
+      profileStore.getReports()
+    }
+  }
+);
 
 onMounted(() => {
   profileStore.getReports()

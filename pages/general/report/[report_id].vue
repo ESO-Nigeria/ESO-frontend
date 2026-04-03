@@ -14,7 +14,7 @@
         <div class="w-full max-w-screen-lg mx-auto p-4 sm:p-8 md:flex md:gap-6">
           <!-- Left Section with Image -->
           <div class="md:w-1/2 mb-4 md:mb-0">
-             <img :src="report?.thumbnail || placeholderImg" :alt="report?.title" class="w-full h-auto rounded-lg object-contain">
+             <img :src="report?.thumbnail_url || placeholderImg" :alt="report?.title" class="w-full h-auto rounded-lg object-contain">
           </div>
           
           <!-- Right Section with Content -->
