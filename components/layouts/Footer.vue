@@ -43,7 +43,7 @@
                 </defs>
                 </svg>
               </span>
-              <span>Standard Chartered Building, 989 Workspace, 10th Floor, 142 Ahmadu Bello Way, Victoria Island Lagos.</span>
+              <span>The Chair Centre, 18 Providence Street, Lekki, Lagos.</span>
             </li>
             <li class="inline-flex items-center gap-2">
               <p class=""><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
