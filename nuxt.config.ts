@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
+  devServer: {
+    port: 4000
+  },
   devtools: { enabled: false },
   app: {
     baseURL: process.env.NUXT_PUBLIC_PATH || '/',
@@ -57,6 +60,12 @@ export default defineNuxtConfig({
   '@nuxtjs/tailwindcss', 
   'shadcn-nuxt', 
   'dayjs-nuxt'
+  ],
+  components: [
+    {
+      path: '~/components',
+      ignore: ['ui/**']
+    }
   ],
   dayjs:{
     plugins: ['utc', 'localizedFormat'],
