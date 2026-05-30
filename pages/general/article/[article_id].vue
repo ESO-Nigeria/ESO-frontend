@@ -42,10 +42,15 @@
           <!-- RELATED ARTICLES (FIXED) -->
           <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4">
             <div class="grid grid-cols-1 gap-5">
-              <p class="text-primary text-xl font-medium flex items-center gap-2">
-                <CalendarDays class="w-5 h-5" />
-                Related Articles
-              </p>
+              <div class="flex items-center justify-between">
+                <p class="text-primary text-xl font-medium flex items-center gap-2">
+                  <CalendarDays class="w-5 h-5" />
+                  Related Articles
+                </p>
+                <NuxtLink :to="`/general/articles`" class="text-primary inline-flex items-center font-medium md:mb-2 lg:mb-0">
+                  See all
+                </NuxtLink>
+              </div>
               <div v-if="!articlesList.length" class="text-center py-10">
                 No related articles
               </div>
