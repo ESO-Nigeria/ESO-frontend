@@ -95,3 +95,12 @@ export function getDuration(startDate: string | number , endDate: string | numbe
       return `${totalDays} day${totalDays > 1 ? 's' : ''}`;
   }
 }
+
+export function getPlainText(html: string | undefined = '') {
+  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+export function makeAbsoluteUrl(url: string | undefined = '', siteUrl: string) {
+  if (!url) return ''
+  return url.startsWith('http') ? url : `${siteUrl.replace(/\/$/, '')}${url.startsWith('/') ? '' : '/'}${url}`
+}

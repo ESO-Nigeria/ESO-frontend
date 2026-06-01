@@ -207,10 +207,14 @@ import { useProfileStore } from '~/store/profile';
 import { useDayjs } from '#dayjs' // not need if you are using auto import
 import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
 import { targetAudience, sectors, nonFinancialSupport, financialSupport, programMode, organization_types } from '~/lib/data';
-import { formatToNaira, reverseTransform, getDuration } from '~/lib/utils';
+import { formatToNaira, reverseTransform, getDuration, getPlainText, makeAbsoluteUrl } from '~/lib/utils';
+import { useHead, useRuntimeConfig } from '#imports';
 const dayjs = useDayjs()
+const route = useRoute()
+const runtimeConfig = useRuntimeConfig()
+const siteUrl = runtimeConfig.public.siteUrl?.replace(/\/$/, '') || 'http://localhost:3000'
 
-const { program_id } = useRoute().params
+const { program_id } = route.params
 const profileStore = useProfileStore()
 
 const { getSafeHtml } = useSanitize()
@@ -218,6 +222,13 @@ const { getSafeHtml } = useSanitize()
 const program = computed(() => {
   return profileStore.program
 })
+
+const pageUrl = computed(() => `${siteUrl}${route.path}`)
+const pageDescription = computed(() => {
+  const raw = program.value?.description || program.value?.brief_details || ''
+  return (getPlainText(raw) || 'Learn more about this programme on ESO').slice(0, 160)
+})
+const pageImage = computed(() => makeAbsoluteUrl(program.value?.program_image_url, siteUrl))
 
 const sanitizedDescription = computed(() => {
   return program.value?.description ? getSafeHtml(program.value.description) : ''
@@ -230,6 +241,25 @@ const sanitizedBriefDetails = computed(() => {
 const loading = computed(() => {
   return profileStore.loading
 })
+
+useHead(() => ({
+  title: program.value?.title
+    ? `${program.value.title} | ESO Programmes`
+    : 'Enterprise Support Organisations (ESO) Collaborative',
+  meta: [
+    { name: 'description', content: pageDescription.value },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:title', content: program.value?.title || 'ESO Programme' },
+    { property: 'og:description', content: pageDescription.value },
+    { property: 'og:url', content: pageUrl.value },
+    ...(pageImage.value ? [{ property: 'og:image', content: pageImage.value }] : []),
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: program.value?.title || 'ESO Programme' },
+    { name: 'twitter:description', content: pageDescription.value },
+    ...(pageImage.value ? [{ name: 'twitter:image', content: pageImage.value }] : [])
+  ]
+}))
+
 onMounted(() => {
   profileStore.getSingleProgramme(reverseTransform(program_id))
 })

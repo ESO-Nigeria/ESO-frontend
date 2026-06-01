@@ -166,11 +166,15 @@ import { CalendarDays } from 'lucide-vue-next';
 import { useProfileStore } from '~/store/profile';
 import { useDayjs } from '#dayjs' // not need if you are using auto import
 import { organization_types, sectors } from '~/lib/data';
-import { checkLink } from '~/lib/utils';
+import { checkLink, getPlainText, makeAbsoluteUrl } from '~/lib/utils';
+import { useHead, useRuntimeConfig } from '#imports';
 
 const dayjs = useDayjs()
+const route = useRoute()
+const runtimeConfig = useRuntimeConfig()
+const siteUrl = runtimeConfig.public.siteUrl?.replace(/\/$/, '') || 'http://localhost:3000'
 
-const { eso_id } = useRoute().params
+const { eso_id } = route.params
 const profileStore = useProfileStore()
 
 const ESO = computed(() => {
@@ -179,6 +183,32 @@ const ESO = computed(() => {
 const loading = computed(() => {
   return profileStore.loading
 })
+
+const pageUrl = computed(() => `${siteUrl}${route.path}`)
+const pageDescription = computed(() => {
+  const raw = ESO.value?.description || ''
+  return (getPlainText(raw) || `${ESO.value?.user?.organization_name || 'ESO profile'} on ESO`).slice(0, 160)
+})
+const pageImage = computed(() => makeAbsoluteUrl(ESO.value?.logo_url, siteUrl))
+
+useHead(() => ({
+  title: ESO.value?.user?.organization_name
+    ? `${ESO.value.user.organization_name} | ESO`
+    : 'Enterprise Support Organisations (ESO) Collaborative',
+  meta: [
+    { name: 'description', content: pageDescription.value },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:title', content: ESO.value?.user?.organization_name || 'ESO Profile' },
+    { property: 'og:description', content: pageDescription.value },
+    { property: 'og:url', content: pageUrl.value },
+    ...(pageImage.value ? [{ property: 'og:image', content: pageImage.value }] : []),
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: ESO.value?.user?.organization_name || 'ESO Profile' },
+    { name: 'twitter:description', content: pageDescription.value },
+    ...(pageImage.value ? [{ name: 'twitter:image', content: pageImage.value }] : [])
+  ]
+}))
+
 onMounted(() => {
   profileStore.getSingleESO(eso_id)
 })

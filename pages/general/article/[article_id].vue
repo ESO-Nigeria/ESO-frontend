@@ -76,11 +76,15 @@
 import { CalendarDays } from 'lucide-vue-next';
 import { useProfileStore } from '~/store/profile';
 import { useDayjs } from '#dayjs';
-import { reverseTransform } from '~/lib/utils';
+import { reverseTransform, getPlainText, makeAbsoluteUrl } from '~/lib/utils';
+import { useHead, useRuntimeConfig } from '#imports';
 
 const dayjs = useDayjs()
+const route = useRoute()
+const runtimeConfig = useRuntimeConfig()
+const siteUrl = runtimeConfig.public.siteUrl?.replace(/\/$/, '') || 'http://localhost:3000'
 
-const { article_id } = useRoute().params
+const { article_id } = route.params
 const profileStore = useProfileStore()
 
 const article = computed(() => {
@@ -90,6 +94,33 @@ const article = computed(() => {
 const loading = computed(() => {
   return profileStore.loading
 })
+
+const pageUrl = computed(() => `${siteUrl}${route.path}`)
+const pageDescription = computed(() => {
+  const raw = article.value?.content || ''
+  return (article.value?.description || getPlainText(raw) || 'Read this article on ESO').slice(0, 160)
+})
+const pageImage = computed(() => {
+  return makeAbsoluteUrl(article.value?.image_url, siteUrl)
+})
+
+useHead(() => ({
+  title: article.value?.title
+    ? `${article.value.title} | Enterprise Support Organisations (ESO) Collaborative`
+    : 'Enterprise Support Organisations (ESO) Collaborative',
+  meta: [
+    { name: 'description', content: pageDescription.value },
+    { property: 'og:type', content: 'article' },
+    { property: 'og:title', content: article.value?.title || 'Enterprise Support Organisations (ESO) Collaborative' },
+    { property: 'og:description', content: pageDescription.value },
+    { property: 'og:url', content: pageUrl.value },
+    ...(pageImage.value ? [{ property: 'og:image', content: pageImage.value }] : []),
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: article.value?.title || 'Enterprise Support Organisations (ESO) Collaborative' },
+    { name: 'twitter:description', content: pageDescription.value },
+    ...(pageImage.value ? [{ name: 'twitter:image', content: pageImage.value }] : [])
+  ]
+}))
 
 const articlesList = computed(() => {
   const list = profileStore.articles?.results || []

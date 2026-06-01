@@ -53,8 +53,14 @@
 <script setup>
 import { useProfileStore } from '~/store/profile';
 import placeholderImg from '~/assets/images/placeholderImg.png';
+import { useHead, useRuntimeConfig } from '#imports';
+import { getPlainText, makeAbsoluteUrl } from '~/lib/utils';
 
-const { report_id } = useRoute().params
+const route = useRoute()
+const runtimeConfig = useRuntimeConfig()
+const siteUrl = runtimeConfig.public.siteUrl?.replace(/\/$/, '') || 'http://localhost:3000'
+
+const { report_id } = route.params
 const profileStore = useProfileStore()
 
 const { getSafeHtml } = useSanitize()
@@ -62,9 +68,36 @@ const { getSafeHtml } = useSanitize()
 const report = computed(() => profileStore.report)
 const loading = computed(() => profileStore.loadingReports)
 
+const pageUrl = computed(() => `${siteUrl}${route.path}`)
+const pageDescription = computed(() => {
+  const raw = report.value?.content || ''
+  return (report.value?.excerpt || getPlainText(raw) || 'Download this report now from ESO').slice(0, 160)
+})
+const pageImage = computed(() => {
+  return makeAbsoluteUrl(report.value?.thumbnail_url, siteUrl)
+})
+
 const sanitizedContent = computed(() => {
   return report.value?.content ? getSafeHtml(report.value.content) : ''
 })
+
+useHead(() => ({
+  title: report.value?.title
+    ? `${report.value.title} | ESO Reports`
+    : 'Enterprise Support Organisations (ESO) Collaborative',
+  meta: [
+    { name: 'description', content: pageDescription.value },
+    { property: 'og:type', content: 'article' },
+    { property: 'og:title', content: report.value?.title || 'ESO Report' },
+    { property: 'og:description', content: pageDescription.value },
+    { property: 'og:url', content: pageUrl.value },
+    ...(pageImage.value ? [{ property: 'og:image', content: pageImage.value }] : []),
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: report.value?.title || 'ESO Report' },
+    { name: 'twitter:description', content: pageDescription.value },
+    ...(pageImage.value ? [{ name: 'twitter:image', content: pageImage.value }] : [])
+  ]
+}))
 
 onMounted(() => {
   profileStore.getSingleReport(report_id)

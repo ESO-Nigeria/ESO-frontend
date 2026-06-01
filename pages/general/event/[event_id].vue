@@ -120,20 +120,50 @@
   import { CalendarDays } from 'lucide-vue-next';
   import { useProfileStore } from '~/store/profile';
   import { useDayjs } from '#dayjs' // not need if you are using auto import
-  import { checkLink, reverseTransform } from '~/lib/utils';
+import { checkLink, reverseTransform, getPlainText, makeAbsoluteUrl } from '~/lib/utils';
+import { useHead, useRuntimeConfig } from '#imports';
 import Ratings from '~/components/layouts/Ratings.vue';
   
   const dayjs = useDayjs()
+  const route = useRoute()
+  const runtimeConfig = useRuntimeConfig()
+  const siteUrl = runtimeConfig.public.siteUrl?.replace(/\/$/, '') || 'http://localhost:3000'
   
-  const { event_id } = useRoute().params
+  const { event_id } = route.params
   const profileStore = useProfileStore()
-  
+
   const event = computed(() => {
     return profileStore.event
   })
   const loading = computed(() => {
     return profileStore.loading
   })
+
+  const pageUrl = computed(() => `${siteUrl}${route.path}`)
+  const pageDescription = computed(() => {
+    const raw = event.value?.description || ''
+    return (event.value?.excerpt || getPlainText(raw) || 'Find out more about this event on ESO').slice(0, 160)
+  })
+  const pageImage = computed(() => makeAbsoluteUrl(event.value?.event_image_url, siteUrl))
+
+  useHead(() => ({
+    title: event.value?.title
+      ? `${event.value.title} | ESO Events`
+      : 'Enterprise Support Organisations (ESO) Collaborative',
+    meta: [
+      { name: 'description', content: pageDescription.value },
+      { property: 'og:type', content: 'article' },
+      { property: 'og:title', content: event.value?.title || 'ESO Event' },
+      { property: 'og:description', content: pageDescription.value },
+      { property: 'og:url', content: pageUrl.value },
+      ...(pageImage.value ? [{ property: 'og:image', content: pageImage.value }] : []),
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: event.value?.title || 'ESO Event' },
+      { name: 'twitter:description', content: pageDescription.value },
+      ...(pageImage.value ? [{ name: 'twitter:image', content: pageImage.value }] : [])
+    ]
+  }))
+
   onMounted(() => {
     profileStore.getSingleEvents(reverseTransform(event_id) )
   })

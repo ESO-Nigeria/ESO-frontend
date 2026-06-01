@@ -23,12 +23,28 @@ export default defineNuxtConfig({
           content:
             'We are a group of Professionals providing support to MSMEs in Nigeria and building a stronger ecosystem',
         },
-        { hid: 'og-type', property: 'og:type', content: 'website' },
+        { hid: 'og:type', property: 'og:type', content: 'website' },
         {
-          hid: 'og-title',
+          hid: 'og:title',
           property: 'og:title',
           content:
+            'Enterprise Support Organisations (ESO) Collaborative',
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content:
             'We are a group of Professionals providing support to MSMEs in Nigeria and building a stronger ecosystem',
+        },
+        {
+          hid: 'og:site_name',
+          property: 'og:site_name',
+          content: 'Enterprise Support Organisations (ESO) Collaborative',
+        },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: process.env.NUXT_PUBLIC_SITE_URL || process.env.NUXT_PUBLIC_PATH || 'https://esonigeria.org',
         },
         {
           hid: 't-type',
@@ -72,10 +88,10 @@ export default defineNuxtConfig({
      */
     componentDir: './components/ui'
   },
-  routeRules: {    
+  routeRules: {
     // Render these routes on the client (SPA)
-    '/dashboard/**': { ssr: false },    
-    'general/**':{ ssr: false}
+    '/dashboard/**': { ssr: false },
+    '/general/**': { ssr: false }
   },
   build: {
     transpile: ['@vuepic/vue-datepicker', 'vue-sonner']
@@ -83,6 +99,7 @@ export default defineNuxtConfig({
   runtimeConfig:{
     public: {
       apiUrl: 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || process.env.NUXT_PUBLIC_PATH || 'https://esonigeria.org',
       // apiUrl: 'http://127.0.0.1:8000/',
     }
   }
