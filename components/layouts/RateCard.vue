@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import StarRating from 'vue-star-rating';
+
 import { useDayjs } from '#dayjs' // not need if you are using auto import
 
 const dayjs = useDayjs()

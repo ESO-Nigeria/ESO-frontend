@@ -56,9 +56,10 @@ export function reverseTransform(href: string) {
   return href.replace(/-/g, ' '); // Replace hyphens with spaces
 }
 
-export function checkLink(link: string) {
+export function checkLink(link: string | undefined | null) {
+  if (!link) return '';
   // Check if the link starts with https
-  if (link.startsWith("https")) {
+  if (link.startsWith("https") || link.startsWith("http")) {
     // If it does, return the link as it is
     return link;
   } else {

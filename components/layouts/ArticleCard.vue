@@ -7,7 +7,7 @@
         <h3 class="text-base font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-2 break-words">{{ article?.title }}</h3>
         <p class="leading-relaxed mb-3 text-secondary-body-regular-contrast line-clamp-3 break-words" v-html="article?.content"></p>
         <div class="flex items-center flex-wrap ">
-          <NuxtLink :to="`/general/article/${article?.id}`" class="text-primary inline-flex items-center font-medium md:mb-2 lg:mb-0">
+          <NuxtLink :to="`/general/article/${article?.id}-${transformHref(article?.title || '')}`" class="text-primary inline-flex items-center font-medium md:mb-2 lg:mb-0">
             Read More
           </NuxtLink>
           
@@ -19,6 +19,7 @@
 
 <script setup>
 import placeholderImg from '~/assets/images/placeholderImg.png';
+import { transformHref } from '~/lib/utils';
 const props = defineProps({
   article:{
     type: Object

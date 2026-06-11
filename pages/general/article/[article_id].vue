@@ -85,9 +85,10 @@ const runtimeConfig = useRuntimeConfig()
 const siteUrl = runtimeConfig.public.siteUrl?.replace(/\/$/, '') || 'http://localhost:3000'
 
 const { article_id } = route.params
+const actualId = String(article_id).split('-')[0]
 const profileStore = useProfileStore()
 
-await profileStore.getSingleArticles(article_id)
+await profileStore.getSingleArticles(actualId)
 
 const article = computed(() => {
   return profileStore.singleArticles
