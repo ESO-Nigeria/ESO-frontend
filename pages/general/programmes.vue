@@ -387,6 +387,16 @@ import { targetAudience } from '~/lib/data';
 import { useProfileStore } from '~/store/profile';
 import { transformHref } from '~/lib/utils';
 import Dialog from '~/components/ui/dialog/Dialog.vue';
+import { useSeoMeta } from '#imports';
+
+useSeoMeta({
+  title: 'Programmes | Enterprise Support Organisations (ESO) Collaborative',
+  ogTitle: 'Programmes | Enterprise Support Organisations (ESO) Collaborative',
+  description: 'View and apply for verified entrepreneurship support programmes in Nigeria.',
+  ogDescription: 'View and apply for verified entrepreneurship support programmes in Nigeria.',
+  twitterTitle: 'Programmes | Enterprise Support Organisations (ESO) Collaborative',
+  twitterDescription: 'View and apply for verified entrepreneurship support programmes in Nigeria.'
+})
 
 const sectors = [
   { id: 1, name: 'Agriculture' },

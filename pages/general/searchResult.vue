@@ -370,6 +370,16 @@
 
 <script setup>
 import { Building2, CalendarDays, FilterIcon, Search } from 'lucide-vue-next';
+import { useSeoMeta } from '#imports';
+
+useSeoMeta({
+  title: 'Search Results | Enterprise Support Organisations (ESO) Collaborative',
+  ogTitle: 'Search Results | Enterprise Support Organisations (ESO) Collaborative',
+  description: 'View search results for programmes and ESOs in Nigeria.',
+  ogDescription: 'View search results for programmes and ESOs in Nigeria.',
+  twitterTitle: 'Search Results | Enterprise Support Organisations (ESO) Collaborative',
+  twitterDescription: 'View search results for programmes and ESOs in Nigeria.'
+})
 import Card from '~/components/layouts/Card.vue';
 import CardContent from '~/components/ui/card/CardContent.vue';
 import CardFooter from '~/components/ui/card/CardFooter.vue';

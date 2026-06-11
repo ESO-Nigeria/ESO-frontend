@@ -257,7 +257,16 @@
 </template>
 
 <script setup>
-// Your script logic here
+import { useSeoMeta } from '#imports';
+
+useSeoMeta({
+  title: 'About Us | Enterprise Support Organisations (ESO) Collaborative',
+  ogTitle: 'About Us | Enterprise Support Organisations (ESO) Collaborative',
+  description: 'Learn about the Nigerian ESO Collaborative. A network of dedicated enterprise support organizations committed to fostering the growth and development of Nigeria\'s entrepreneurial ecosystem.',
+  ogDescription: 'Learn about the Nigerian ESO Collaborative. A network of dedicated enterprise support organizations committed to fostering the growth and development of Nigeria\'s entrepreneurial ecosystem.',
+  twitterTitle: 'About Us | Enterprise Support Organisations (ESO) Collaborative',
+  twitterDescription: 'Learn about the Nigerian ESO Collaborative. A network of dedicated enterprise support organizations committed to fostering the growth and development of Nigeria\'s entrepreneurial ecosystem.'
+})
 </script>
 
 <style lang="scss" scoped>

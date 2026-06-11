@@ -51,6 +51,16 @@ export default defineNuxtConfig({
           name: 'twitter:card',
           content: 'summary_large_image',
         },
+        {
+          hid: 't-title',
+          name: 'twitter:title',
+          content: 'Enterprise Support Organisations (ESO) Collaborative',
+        },
+        {
+          hid: 't-desc',
+          name: 'twitter:description',
+          content: 'We are a group of Professionals providing support to MSMEs in Nigeria and building a stronger ecosystem',
+        },
       ],
     }
   },
@@ -89,9 +99,10 @@ export default defineNuxtConfig({
     componentDir: './components/ui'
   },
   routeRules: {
-    // Render these routes on the client (SPA)
+    // Render dashboard routes on the client (SPA)
     '/dashboard/**': { ssr: false },
-    '/general/**': { ssr: false }
+    // Enable SSR for auth pages
+    '/auth/**': { ssr: false },
   },
   build: {
     transpile: ['@vuepic/vue-datepicker', 'vue-sonner']

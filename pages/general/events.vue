@@ -68,6 +68,16 @@
 <script setup>
 import { useProfileStore } from '~/store/profile';
 import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
+import { useSeoMeta } from '#imports';
+
+useSeoMeta({
+  title: 'Events | Enterprise Support Organisations (ESO) Collaborative',
+  ogTitle: 'Events | Enterprise Support Organisations (ESO) Collaborative',
+  description: 'Find upcoming entrepreneurship events and programmes to help you grow your business.',
+  ogDescription: 'Find upcoming entrepreneurship events and programmes to help you grow your business.',
+  twitterTitle: 'Events | Enterprise Support Organisations (ESO) Collaborative',
+  twitterDescription: 'Find upcoming entrepreneurship events and programmes to help you grow your business.'
+})
 
 const filterOption = ref('Date Created')
 

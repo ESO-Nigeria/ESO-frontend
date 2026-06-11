@@ -7,8 +7,7 @@ interface ApiResponse {
 }
 
 export const apiGetRequest = async (url: string): Promise<ApiResponse> => {
-  const config = useRuntimeConfig();
-  const baseURL = config.public.apiUrl;
+  const baseURL = process.env.NUXT_PUBLIC_API_URL || 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net';
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
 
@@ -27,8 +26,7 @@ export const apiGetRequest = async (url: string): Promise<ApiResponse> => {
 };
 
 export const apiGetUnRestrictedRequest = async (url: string): Promise<ApiResponse> => {
-  const config = useRuntimeConfig();
-  const baseURL = config.public.apiUrl;
+  const baseURL = process.env.NUXT_PUBLIC_API_URL || 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net';
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
 
@@ -47,8 +45,7 @@ export const apiGetUnRestrictedRequest = async (url: string): Promise<ApiRespons
 };
 
 export const apiPostRequest = async (url: string, body: object, options: { auth: boolean } = { auth: true }): Promise<ApiResponse> => {
-  const config = useRuntimeConfig();
-  const baseURL = config.public.apiUrl;
+  const baseURL = process.env.NUXT_PUBLIC_API_URL || 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net';
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
 
@@ -67,8 +64,7 @@ export const apiPostRequest = async (url: string, body: object, options: { auth:
 };
 
 export const apiPostFormRequest = async (url: string, body: object): Promise<ApiResponse> => {
-  const config = useRuntimeConfig();
-  const baseURL = config.public.apiUrl;
+  const baseURL = process.env.NUXT_PUBLIC_API_URL || 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net';
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
 
@@ -87,8 +83,7 @@ export const apiPostFormRequest = async (url: string, body: object): Promise<Api
 };
 
 export const apiPostRequestForFormData = async (url: string, body: object): Promise<ApiResponse> => {
-  const config = useRuntimeConfig();
-  const baseURL = config.public.apiUrl;
+  const baseURL = process.env.NUXT_PUBLIC_API_URL || 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net';
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
 
@@ -107,8 +102,7 @@ export const apiPostRequestForFormData = async (url: string, body: object): Prom
 };
 
 export const apiPutRequest = async (url: string, body: object): Promise<ApiResponse> => {
-  const config = useRuntimeConfig();
-  const baseURL = config.public.apiUrl;
+  const baseURL = process.env.NUXT_PUBLIC_API_URL || 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net';
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
 
@@ -127,8 +121,7 @@ export const apiPutRequest = async (url: string, body: object): Promise<ApiRespo
 };
 
 export const apiPatchRequest = async (url: string, body: object): Promise<ApiResponse> => {
-  const config = useRuntimeConfig();
-  const baseURL = config.public.apiUrl;
+  const baseURL = process.env.NUXT_PUBLIC_API_URL || 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net';
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
 
@@ -147,8 +140,7 @@ export const apiPatchRequest = async (url: string, body: object): Promise<ApiRes
 };
 
 export const apiPatchRequestForFormData = async (url: string, body: object): Promise<ApiResponse> => {
-  const config = useRuntimeConfig();
-  const baseURL = config.public.apiUrl;
+  const baseURL = process.env.NUXT_PUBLIC_API_URL || 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net';
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
 
@@ -167,8 +159,7 @@ export const apiPatchRequestForFormData = async (url: string, body: object): Pro
 };
 
 export const apiDeleteRequest = async (url: string, body: object): Promise<ApiResponse> => {
-  const config = useRuntimeConfig();
-  const baseURL = config.public.apiUrl;
+  const baseURL = process.env.NUXT_PUBLIC_API_URL || 'https://eso-nigeria-e4cfh7hpegawcjab.canadacentral-01.azurewebsites.net';
   const storedToken = getItem("token");
   const token = storedToken ? JSON.parse(storedToken) : null;
 

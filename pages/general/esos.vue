@@ -259,6 +259,16 @@ import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the p
 import { organization_types } from '~/lib/data';
 
 import { useProfileStore } from '~/store/profile';
+import { useSeoMeta } from '#imports';
+
+useSeoMeta({
+  title: 'Enterprise Support Organisations (ESOs) | ESO Collaborative',
+  ogTitle: 'Enterprise Support Organisations (ESOs) | ESO Collaborative',
+  description: 'Discover and connect with verified Enterprise Support Organisations (ESOs) across Nigeria.',
+  ogDescription: 'Discover and connect with verified Enterprise Support Organisations (ESOs) across Nigeria.',
+  twitterTitle: 'Enterprise Support Organisations (ESOs) | ESO Collaborative',
+  twitterDescription: 'Discover and connect with verified Enterprise Support Organisations (ESOs) across Nigeria.'
+})
 const sectors = [
   { id: 1, name: 'Agriculture' },
   { id: 2, name: 'Healthcare ' },

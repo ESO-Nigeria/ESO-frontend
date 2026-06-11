@@ -270,6 +270,16 @@
 <script setup>
 import { useProfileStore } from '~/store/profile';
 import { articlesDetails } from '~/lib/data';
+import { useSeoMeta } from '#imports';
+
+useSeoMeta({
+  title: 'Home | Enterprise Support Organisations (ESO) Collaborative',
+  ogTitle: 'Home | Enterprise Support Organisations (ESO) Collaborative',
+  description: 'We are a group of Professionals providing support to MSMEs in Nigeria and building a stronger ecosystem.',
+  ogDescription: 'We are a group of Professionals providing support to MSMEs in Nigeria and building a stronger ecosystem.',
+  twitterTitle: 'Home | Enterprise Support Organisations (ESO) Collaborative',
+  twitterDescription: 'We are a group of Professionals providing support to MSMEs in Nigeria and building a stronger ecosystem.'
+})
 
 const profileStore = useProfileStore()
 const search = ref("")

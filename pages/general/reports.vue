@@ -108,6 +108,16 @@ import Input from '~/components/ui/input/Input.vue';
 import Button from '~/components/ui/button/Button.vue';
 import { useProfileStore } from '~/store/profile';
 import placeholderImg from '~/assets/images/placeholderImg.png';
+import { useSeoMeta } from '#imports';
+
+useSeoMeta({
+  title: 'Reports | Enterprise Support Organisations (ESO) Collaborative',
+  ogTitle: 'Reports | Enterprise Support Organisations (ESO) Collaborative',
+  description: 'Download and read insights from our mapping reports and ecosystem studies.',
+  ogDescription: 'Download and read insights from our mapping reports and ecosystem studies.',
+  twitterTitle: 'Reports | Enterprise Support Organisations (ESO) Collaborative',
+  twitterDescription: 'Download and read insights from our mapping reports and ecosystem studies.'
+})
 
 const profileStore = useProfileStore()
 

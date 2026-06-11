@@ -63,7 +63,16 @@
 </template>
 
 <script setup>
+import { useSeoMeta } from '#imports';
 
+useSeoMeta({
+  title: 'Annual Forum | Enterprise Support Organisations (ESO) Collaborative',
+  ogTitle: 'Annual Forum | Enterprise Support Organisations (ESO) Collaborative',
+  description: 'Download the report of the First Annual Forum to build MSME Investment Readiness Capacity.',
+  ogDescription: 'Download the report of the First Annual Forum to build MSME Investment Readiness Capacity.',
+  twitterTitle: 'Annual Forum | Enterprise Support Organisations (ESO) Collaborative',
+  twitterDescription: 'Download the report of the First Annual Forum to build MSME Investment Readiness Capacity.'
+})
 </script>
 
 <style lang="scss" scoped>

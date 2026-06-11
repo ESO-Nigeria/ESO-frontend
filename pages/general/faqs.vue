@@ -117,6 +117,16 @@
 
 <script setup>
 import { Search, HelpCircle, MessageSquareText, Mail } from 'lucide-vue-next'
+import { useSeoMeta } from '#imports';
+
+useSeoMeta({
+  title: 'FAQs | Enterprise Support Organisations (ESO) Collaborative',
+  ogTitle: 'FAQs | Enterprise Support Organisations (ESO) Collaborative',
+  description: 'Find answers to frequently asked questions about the ESO Collaborative and its programs.',
+  ogDescription: 'Find answers to frequently asked questions about the ESO Collaborative and its programs.',
+  twitterTitle: 'FAQs | Enterprise Support Organisations (ESO) Collaborative',
+  twitterDescription: 'Find answers to frequently asked questions about the ESO Collaborative and its programs.'
+})
 import {
   Accordion,
   AccordionContent,

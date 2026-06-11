@@ -188,6 +188,16 @@ import {
   ChevronRight,
   Search
 } from 'lucide-vue-next'
+import { useSeoMeta } from '#imports';
+
+useSeoMeta({
+  title: 'Gallery | Enterprise Support Organisations (ESO) Collaborative',
+  ogTitle: 'Gallery | Enterprise Support Organisations (ESO) Collaborative',
+  description: 'Explore the ESO Collaborative gallery: Moments Turned Into Masterpieces.',
+  ogDescription: 'Explore the ESO Collaborative gallery: Moments Turned Into Masterpieces.',
+  twitterTitle: 'Gallery | Enterprise Support Organisations (ESO) Collaborative',
+  twitterDescription: 'Explore the ESO Collaborative gallery: Moments Turned Into Masterpieces.'
+})
 import {
   FormControl,
   FormField,

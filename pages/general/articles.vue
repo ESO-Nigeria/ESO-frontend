@@ -216,6 +216,16 @@
 import { Search } from 'lucide-vue-next';
 import { useProfileStore } from '~/store/profile';
 import { targetAudience } from '~/lib/data';
+import { useSeoMeta } from '#imports';
+
+useSeoMeta({
+  title: 'Articles | Enterprise Support Organisations (ESO) Collaborative',
+  ogTitle: 'Articles | Enterprise Support Organisations (ESO) Collaborative',
+  description: 'Explore our curated collection of articles, stories, analysis, and commentary to gain a deeper understanding of the topics that matter most.',
+  ogDescription: 'Explore our curated collection of articles, stories, analysis, and commentary to gain a deeper understanding of the topics that matter most.',
+  twitterTitle: 'Articles | Enterprise Support Organisations (ESO) Collaborative',
+  twitterDescription: 'Explore our curated collection of articles, stories, analysis, and commentary to gain a deeper understanding of the topics that matter most.'
+})
 import Dialog from '~/components/ui/dialog/Dialog.vue';
 import DialogTrigger from '~/components/ui/dialog/DialogTrigger.vue';
 import DialogScrollContent from '~/components/ui/dialog/DialogScrollContent.vue';

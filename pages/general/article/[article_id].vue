@@ -87,6 +87,8 @@ const siteUrl = runtimeConfig.public.siteUrl?.replace(/\/$/, '') || 'http://loca
 const { article_id } = route.params
 const profileStore = useProfileStore()
 
+await profileStore.getSingleArticles(article_id)
+
 const article = computed(() => {
   return profileStore.singleArticles
 })
@@ -130,8 +132,7 @@ const articlesList = computed(() => {
 })
 
 onMounted(() => {
-  profileStore.getSingleArticles(article_id)
-  profileStore.getArticles() 
+  profileStore.getArticles()
 })
 </script>
 

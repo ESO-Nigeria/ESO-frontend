@@ -179,7 +179,16 @@
 </template>
 
 <script setup>
+import { useSeoMeta } from '#imports';
 
+useSeoMeta({
+  title: 'Mapping Report | Enterprise Support Organisations (ESO) Collaborative',
+  ogTitle: 'Mapping Report | Enterprise Support Organisations (ESO) Collaborative',
+  description: 'Uncover key insights from the Mapping and Analysis of Enterprise Support Organisations in Nigeria.',
+  ogDescription: 'Uncover key insights from the Mapping and Analysis of Enterprise Support Organisations in Nigeria.',
+  twitterTitle: 'Mapping Report | Enterprise Support Organisations (ESO) Collaborative',
+  twitterDescription: 'Uncover key insights from the Mapping and Analysis of Enterprise Support Organisations in Nigeria.'
+})
 </script>
 
 <style lang="scss" scoped>
