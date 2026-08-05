@@ -132,6 +132,8 @@ import Ratings from '~/components/layouts/Ratings.vue';
   const { event_id } = route.params
   const profileStore = useProfileStore()
 
+  await profileStore.getSingleEvents(reverseTransform(event_id))
+
   const event = computed(() => {
     return profileStore.event
   })
@@ -163,8 +165,6 @@ import Ratings from '~/components/layouts/Ratings.vue';
       ...(pageImage.value ? [{ name: 'twitter:image', content: pageImage.value }] : [])
     ]
   }))
-
-  await profileStore.getSingleEvents(reverseTransform(event_id))
   </script>
   
   <style lang="scss" scoped>
