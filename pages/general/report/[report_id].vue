@@ -99,9 +99,7 @@ useHead(() => ({
   ]
 }))
 
-onMounted(() => {
-  profileStore.getSingleReport(report_id)
-})
+await profileStore.getSingleReport(report_id)
 </script>
 
 <style lang="scss" scoped>

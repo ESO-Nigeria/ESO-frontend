@@ -164,9 +164,7 @@ import Ratings from '~/components/layouts/Ratings.vue';
     ]
   }))
 
-  onMounted(() => {
-    profileStore.getSingleEvents(reverseTransform(event_id) )
-  })
+  await profileStore.getSingleEvents(reverseTransform(event_id))
   </script>
   
   <style lang="scss" scoped>

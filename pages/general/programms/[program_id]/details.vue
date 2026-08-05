@@ -260,9 +260,7 @@ useHead(() => ({
   ]
 }))
 
-onMounted(() => {
-  profileStore.getSingleProgramme(reverseTransform(program_id))
-})
+await profileStore.getSingleProgramme(reverseTransform(program_id))
 </script>
 
 <style lang="scss" scoped>

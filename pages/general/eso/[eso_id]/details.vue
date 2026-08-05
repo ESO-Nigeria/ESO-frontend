@@ -209,9 +209,7 @@ useHead(() => ({
   ]
 }))
 
-onMounted(() => {
-  profileStore.getSingleESO(eso_id)
-})
+await profileStore.getSingleESO(eso_id)
 
 const websiteUrl = computed(() => {
   const websiteLink = ESO.value?.social_links?.find(link => link?.platform === 'WEBSITE');

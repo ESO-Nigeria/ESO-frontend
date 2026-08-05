@@ -103,10 +103,10 @@ watch(
     }
   }
 );
-onMounted(() => {
-  profileStore.getEvents()
-  // profileStore.
-
+onMounted(async () => {
+  await profileStore.getEvents()
+  console.log("Last two events:", events.value?.results?.slice(0, 2))
+  console.log("All events:", events.value)
 })
 </script>
 
