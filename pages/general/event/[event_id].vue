@@ -146,7 +146,10 @@ import Ratings from '~/components/layouts/Ratings.vue';
     const raw = event.value?.description || ''
     return (event.value?.excerpt || getPlainText(raw) || 'Find out more about this event on ESO').slice(0, 160)
   })
-  const pageImage = computed(() => makeAbsoluteUrl(event.value?.event_image_url, siteUrl))
+  const pageImage = computed(() => {
+    const imageUrl = event.value?.event_image_url || event.value?.image_url || event.value?.event_image || event.value?.image
+    return makeAbsoluteUrl(imageUrl, siteUrl)
+  })
 
   useHead(() => ({
     title: event.value?.title
@@ -158,11 +161,22 @@ import Ratings from '~/components/layouts/Ratings.vue';
       { property: 'og:title', content: event.value?.title || 'ESO Event' },
       { property: 'og:description', content: pageDescription.value },
       { property: 'og:url', content: pageUrl.value },
-      ...(pageImage.value ? [{ property: 'og:image', content: pageImage.value }] : []),
+      ...(pageImage.value
+        ? [
+            { property: 'og:image', content: pageImage.value },
+            { property: 'og:image:url', content: pageImage.value },
+            ...(pageImage.value.startsWith('https') ? [{ property: 'og:image:secure_url', content: pageImage.value }] : [])
+          ]
+        : []),
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: event.value?.title || 'ESO Event' },
       { name: 'twitter:description', content: pageDescription.value },
-      ...(pageImage.value ? [{ name: 'twitter:image', content: pageImage.value }] : [])
+      ...(pageImage.value
+        ? [
+            { name: 'twitter:image', content: pageImage.value },
+            { name: 'twitter:image:src', content: pageImage.value }
+          ]
+        : [])
     ]
   }))
   </script>

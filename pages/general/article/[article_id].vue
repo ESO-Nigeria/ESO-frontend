@@ -104,7 +104,8 @@ const pageDescription = computed(() => {
   return (article.value?.description || getPlainText(raw) || 'Read this article on ESO').slice(0, 160)
 })
 const pageImage = computed(() => {
-  return makeAbsoluteUrl(article.value?.image_url, siteUrl)
+  const imageUrl = article.value?.image_url || article.value?.article_image_url || article.value?.image
+  return makeAbsoluteUrl(imageUrl, siteUrl)
 })
 
 useHead(() => ({
@@ -117,11 +118,22 @@ useHead(() => ({
     { property: 'og:title', content: article.value?.title || 'Enterprise Support Organisations (ESO) Collaborative' },
     { property: 'og:description', content: pageDescription.value },
     { property: 'og:url', content: pageUrl.value },
-    ...(pageImage.value ? [{ property: 'og:image', content: pageImage.value }] : []),
+    ...(pageImage.value
+      ? [
+          { property: 'og:image', content: pageImage.value },
+          { property: 'og:image:url', content: pageImage.value },
+          ...(pageImage.value.startsWith('https') ? [{ property: 'og:image:secure_url', content: pageImage.value }] : [])
+        ]
+      : []),
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: article.value?.title || 'Enterprise Support Organisations (ESO) Collaborative' },
     { name: 'twitter:description', content: pageDescription.value },
-    ...(pageImage.value ? [{ name: 'twitter:image', content: pageImage.value }] : [])
+    ...(pageImage.value
+      ? [
+          { name: 'twitter:image', content: pageImage.value },
+          { name: 'twitter:image:src', content: pageImage.value }
+        ]
+      : [])
   ]
 }))
 

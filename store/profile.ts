@@ -205,7 +205,8 @@ export const useProfileStore = defineStore("profile", {
     async getSingleEvents(id: string | number) {
       this.loading = true
       try {
-        const response = await apiGetUnRestrictedRequest(`/api/events/${id}`);
+        const encodedId = typeof id === 'string' ? encodeURIComponent(id) : id;
+        const response = await apiGetUnRestrictedRequest(`/api/events/${encodedId}`);
         // this.links = response.data
         this.event = response.data
         return { data: response.data, error: response.error };
@@ -237,7 +238,8 @@ export const useProfileStore = defineStore("profile", {
     async getSingleProgramme(id: string | number) {
       this.loading = true
       try {
-        const response = await apiGetUnRestrictedRequest(`/api/programs/${id}`);
+        const encodedId = typeof id === 'string' ? encodeURIComponent(id) : id;
+        const response = await apiGetUnRestrictedRequest(`/api/programs/${encodedId}`);
         // this.links = response.data
         this.program = response.data
         return { data: response.data, error: response.error };
@@ -268,7 +270,8 @@ export const useProfileStore = defineStore("profile", {
     async getSingleESO(id: string | number) {
       this.loading = true
       try {
-        const response = await apiGetUnRestrictedRequest(`/api/profiles/${id}`);
+        const encodedId = typeof id === 'string' ? encodeURIComponent(id) : id;
+        const response = await apiGetUnRestrictedRequest(`/api/profiles/${encodedId}`);
         // this.links = response.data
         this.singleESO = response.data
         return { data: response.data, error: response.error };
@@ -299,7 +302,8 @@ export const useProfileStore = defineStore("profile", {
     async getSingleArticles(id: string | number) {
       this.loading = true
       try {
-        const response = await apiGetUnRestrictedRequest(`/api/articles/${id}`);
+        const encodedId = typeof id === 'string' ? encodeURIComponent(id) : id;
+        const response = await apiGetUnRestrictedRequest(`/api/articles/${encodedId}`);
         this.singleArticles = response.data
         return { data: response.data, error: response.error };
       } catch (error) {
@@ -341,7 +345,8 @@ export const useProfileStore = defineStore("profile", {
     async getSingleGallery(id: string | number) {
       this.loading = true
       try {
-        const response = await apiGetUnRestrictedRequest(`/api/galleries/${id}`);
+        const encodedId = typeof id === 'string' ? encodeURIComponent(id) : id;
+        const response = await apiGetUnRestrictedRequest(`/api/galleries/${encodedId}`);
         this.gallery = response.data
         return { data: response.data, error: response.error };
       } catch (error) {
@@ -367,7 +372,8 @@ export const useProfileStore = defineStore("profile", {
     async getSingleReport(id: string | number) {
       this.loadingReports = true
       try {
-        const response = await apiGetUnRestrictedRequest(`/api/reports/${id}/`);
+        const encodedId = typeof id === 'string' ? encodeURIComponent(id) : id;
+        const response = await apiGetUnRestrictedRequest(`/api/reports/${encodedId}/`);
         this.report = response.data
         return { data: response.data, error: response.error };
       } catch (error) {
