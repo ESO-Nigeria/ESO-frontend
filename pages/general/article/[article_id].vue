@@ -94,9 +94,7 @@ const article = computed(() => {
   return profileStore.singleArticles
 })
 
-const loading = computed(() => {
-  return profileStore.loading
-})
+const loading = ref(false)
 
 const pageUrl = computed(() => `${siteUrl}${route.path}`)
 const pageDescription = computed(() => {

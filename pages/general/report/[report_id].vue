@@ -66,7 +66,7 @@ const profileStore = useProfileStore()
 const { getSafeHtml } = useSanitize()
 
 const report = computed(() => profileStore.report)
-const loading = computed(() => profileStore.loadingReports)
+const loading = ref(false)
 
 const pageUrl = computed(() => `${siteUrl}${route.path}`)
 const pageDescription = computed(() => {

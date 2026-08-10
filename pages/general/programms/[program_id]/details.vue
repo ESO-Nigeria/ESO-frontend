@@ -241,9 +241,7 @@ const sanitizedBriefDetails = computed(() => {
   return program.value?.brief_details ? getSafeHtml(program.value.brief_details) : ''
 })
 
-const loading = computed(() => {
-  return profileStore.loading
-})
+const loading = ref(false)
 
 useHead(() => ({
   title: program.value?.title

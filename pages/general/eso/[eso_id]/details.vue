@@ -180,9 +180,7 @@ const profileStore = useProfileStore()
 const ESO = computed(() => {
   return profileStore.singleESO
 })
-const loading = computed(() => {
-  return profileStore.loading
-})
+const loading = ref(false)
 
 const pageUrl = computed(() => `${siteUrl}${route.path}`)
 const pageDescription = computed(() => {

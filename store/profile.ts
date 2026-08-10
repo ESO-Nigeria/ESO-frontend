@@ -203,17 +203,25 @@ export const useProfileStore = defineStore("profile", {
       }
     },
     async getSingleEvents(id: string | number) {
-      this.loading = true
       try {
-        const encodedId = typeof id === 'string' ? encodeURIComponent(id) : id;
-        const response = await apiGetUnRestrictedRequest(`/api/events/${encodedId}`);
-        // this.links = response.data
-        this.event = response.data
+        const strId = String(id).trim();
+        const encodedId = encodeURIComponent(strId);
+        let response = await apiGetUnRestrictedRequest(`/api/events/${encodedId}`);
+        if (!response.data || response.error || response.data.detail === "Not found.") {
+          const altRes = await apiGetUnRestrictedRequest(`/api/events/${encodedId}/`);
+          if (altRes.data && !altRes.error && !altRes.data.detail) {
+            response = altRes;
+          } else {
+            const searchRes = await apiGetUnRestrictedRequest(`/api/events/?title=${encodedId}`);
+            if (searchRes.data?.results?.[0]) {
+              response = { data: searchRes.data.results[0], error: null };
+            }
+          }
+        }
+        this.event = response.data || {};
         return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: "Unknown error" }
-      } finally {
-        this.loading = false
       }
     },
     async getProgrammes(params: Record<string, string | number | undefined> = {}) {
@@ -236,17 +244,13 @@ export const useProfileStore = defineStore("profile", {
       }
     },
     async getSingleProgramme(id: string | number) {
-      this.loading = true
       try {
         const encodedId = typeof id === 'string' ? encodeURIComponent(id) : id;
         const response = await apiGetUnRestrictedRequest(`/api/programs/${encodedId}`);
-        // this.links = response.data
-        this.program = response.data
+        this.program = response.data || {}
         return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: "Unknown error" }
-      } finally {
-        this.loading = false
       }
     },
     async getESOs(organization_types?: string, sectors?: string, user__organization_name?: string) {
@@ -268,17 +272,13 @@ export const useProfileStore = defineStore("profile", {
       }
     },
     async getSingleESO(id: string | number) {
-      this.loading = true
       try {
         const encodedId = typeof id === 'string' ? encodeURIComponent(id) : id;
         const response = await apiGetUnRestrictedRequest(`/api/profiles/${encodedId}`);
-        // this.links = response.data
-        this.singleESO = response.data
+        this.singleESO = response.data || {}
         return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: "Unknown error" }
-      } finally {
-        this.loading = false
       }
     },
     async getArticles(search: string | undefined, sectors?: string, stages?: string) {
@@ -300,16 +300,13 @@ export const useProfileStore = defineStore("profile", {
       }
     },
     async getSingleArticles(id: string | number) {
-      this.loading = true
       try {
         const encodedId = typeof id === 'string' ? encodeURIComponent(id) : id;
         const response = await apiGetUnRestrictedRequest(`/api/articles/${encodedId}`);
-        this.singleArticles = response.data
+        this.singleArticles = response.data || {}
         return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: "Unknown error" }
-      } finally {
-        this.loading = false
       }
     },
 
@@ -343,16 +340,13 @@ export const useProfileStore = defineStore("profile", {
     },
 
     async getSingleGallery(id: string | number) {
-      this.loading = true
       try {
         const encodedId = typeof id === 'string' ? encodeURIComponent(id) : id;
         const response = await apiGetUnRestrictedRequest(`/api/galleries/${encodedId}`);
-        this.gallery = response.data
+        this.gallery = response.data || {}
         return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: "Unknown error" }
-      } finally {
-        this.loading = false
       }
     },
 
@@ -370,16 +364,13 @@ export const useProfileStore = defineStore("profile", {
     },
 
     async getSingleReport(id: string | number) {
-      this.loadingReports = true
       try {
         const encodedId = typeof id === 'string' ? encodeURIComponent(id) : id;
         const response = await apiGetUnRestrictedRequest(`/api/reports/${encodedId}/`);
-        this.report = response.data
+        this.report = response.data || {}
         return { data: response.data, error: response.error };
       } catch (error) {
         return { data: null, error: "Unknown error" }
-      } finally {
-        this.loadingReports = false
       }
     },
 
