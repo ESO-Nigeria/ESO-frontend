@@ -184,7 +184,7 @@
                 </a>
                
                  
-                  <a :href="program?.program_details?.website_link" target="_blank" class="w-full" rel="noopener noreferrer">
+                  <a :href="checkLink(program?.program_details?.website_link)" target="_blank" class="w-full" rel="noopener noreferrer">
                     <Button class="py-3 px-5 h-11 w-full bg-[#257F4A]" size="lg" type="button">
                       Visit Website
                     </Button>
@@ -207,7 +207,7 @@ import { useProfileStore } from '~/store/profile';
 import { useDayjs } from '#dayjs' // not need if you are using auto import
 import placeholderImg from '~/assets/images/placeholderImg.png'; // Import the placeholder image
 import { targetAudience, sectors, nonFinancialSupport, financialSupport, programMode, organization_types } from '~/lib/data';
-import { formatToNaira, reverseTransform, getDuration, getPlainText, makeAbsoluteUrl } from '~/lib/utils';
+import { formatToNaira, reverseTransform, getDuration, getPlainText, makeAbsoluteUrl, checkLink } from '~/lib/utils';
 import { useHead, useRuntimeConfig } from '#imports';
 const dayjs = useDayjs()
 const route = useRoute()
