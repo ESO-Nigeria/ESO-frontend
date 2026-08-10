@@ -228,7 +228,10 @@ const pageDescription = computed(() => {
   const raw = program.value?.description || program.value?.brief_details || ''
   return (getPlainText(raw) || 'Learn more about this programme on ESO').slice(0, 160)
 })
-const pageImage = computed(() => makeAbsoluteUrl(program.value?.program_image_url, siteUrl))
+const pageImage = computed(() => {
+  const imageUrl = program.value?.program_image_url || program.value?.image_url || program.value?.program_image || program.value?.image
+  return makeAbsoluteUrl(imageUrl, siteUrl)
+})
 
 const sanitizedDescription = computed(() => {
   return program.value?.description ? getSafeHtml(program.value.description) : ''
@@ -238,9 +241,7 @@ const sanitizedBriefDetails = computed(() => {
   return program.value?.brief_details ? getSafeHtml(program.value.brief_details) : ''
 })
 
-const loading = computed(() => {
-  return profileStore.loading
-})
+const loading = ref(false)
 
 useHead(() => ({
   title: program.value?.title
@@ -252,11 +253,22 @@ useHead(() => ({
     { property: 'og:title', content: program.value?.title || 'ESO Programme' },
     { property: 'og:description', content: pageDescription.value },
     { property: 'og:url', content: pageUrl.value },
-    ...(pageImage.value ? [{ property: 'og:image', content: pageImage.value }] : []),
+    ...(pageImage.value
+      ? [
+          { property: 'og:image', content: pageImage.value },
+          { property: 'og:image:url', content: pageImage.value },
+          ...(pageImage.value.startsWith('https') ? [{ property: 'og:image:secure_url', content: pageImage.value }] : [])
+        ]
+      : []),
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: program.value?.title || 'ESO Programme' },
     { name: 'twitter:description', content: pageDescription.value },
-    ...(pageImage.value ? [{ name: 'twitter:image', content: pageImage.value }] : [])
+    ...(pageImage.value
+      ? [
+          { name: 'twitter:image', content: pageImage.value },
+          { name: 'twitter:image:src', content: pageImage.value }
+        ]
+      : [])
   ]
 }))
 

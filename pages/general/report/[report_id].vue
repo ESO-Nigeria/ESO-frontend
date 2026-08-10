@@ -66,7 +66,7 @@ const profileStore = useProfileStore()
 const { getSafeHtml } = useSanitize()
 
 const report = computed(() => profileStore.report)
-const loading = computed(() => profileStore.loadingReports)
+const loading = ref(false)
 
 const pageUrl = computed(() => `${siteUrl}${route.path}`)
 const pageDescription = computed(() => {
@@ -74,7 +74,8 @@ const pageDescription = computed(() => {
   return (report.value?.excerpt || getPlainText(raw) || 'Download this report now from ESO').slice(0, 160)
 })
 const pageImage = computed(() => {
-  return makeAbsoluteUrl(report.value?.thumbnail_url, siteUrl)
+  const imageUrl = report.value?.thumbnail_url || report.value?.image_url || report.value?.image
+  return makeAbsoluteUrl(imageUrl, siteUrl)
 })
 
 const sanitizedContent = computed(() => {
@@ -91,11 +92,22 @@ useHead(() => ({
     { property: 'og:title', content: report.value?.title || 'ESO Report' },
     { property: 'og:description', content: pageDescription.value },
     { property: 'og:url', content: pageUrl.value },
-    ...(pageImage.value ? [{ property: 'og:image', content: pageImage.value }] : []),
+    ...(pageImage.value
+      ? [
+          { property: 'og:image', content: pageImage.value },
+          { property: 'og:image:url', content: pageImage.value },
+          ...(pageImage.value.startsWith('https') ? [{ property: 'og:image:secure_url', content: pageImage.value }] : [])
+        ]
+      : []),
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: report.value?.title || 'ESO Report' },
     { name: 'twitter:description', content: pageDescription.value },
-    ...(pageImage.value ? [{ name: 'twitter:image', content: pageImage.value }] : [])
+    ...(pageImage.value
+      ? [
+          { name: 'twitter:image', content: pageImage.value },
+          { name: 'twitter:image:src', content: pageImage.value }
+        ]
+      : [])
   ]
 }))
 

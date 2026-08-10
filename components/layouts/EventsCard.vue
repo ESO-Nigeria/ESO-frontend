@@ -3,7 +3,7 @@
    
     <Card class="grid grid-cols-1 md:grid-cols-[160px_minmax(0,1fr)] border border-primary rounded-lg p-4 overflow-hidden">
       <CardHeader class="p-0 relative">
-        <NuxtLink :to="`/general/event/${transformHref(event?.title)}`" class="capitalize text-base font-semibold text-primary">
+        <NuxtLink :to="`/general/event/${event?.id}-${transformHref(event?.title || '')}`" class="capitalize text-base font-semibold text-primary">
 
         <img
           :src="event?.event_image_url || placeholderImg"
@@ -13,7 +13,7 @@
         </NuxtLink>
       </CardHeader>
       <CardContent class="p-4 space-y-2">
-        <NuxtLink :to="`/general/event/${transformHref(event?.title)}`" class="capitalize text-base font-semibold text-primary">
+        <NuxtLink :to="`/general/event/${event?.id}-${transformHref(event?.title || '')}`" class="capitalize text-base font-semibold text-primary">
           {{ event?.title || 'N/A' }}
         </NuxtLink>
         <div class="text-sm text-[#475467] flex items-center space-x-2">

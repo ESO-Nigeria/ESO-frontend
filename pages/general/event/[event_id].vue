@@ -132,6 +132,8 @@ import Ratings from '~/components/layouts/Ratings.vue';
   const { event_id } = route.params
   const profileStore = useProfileStore()
 
+  await profileStore.getSingleEvents(event_id)
+
   const event = computed(() => {
     return profileStore.event
   })
@@ -140,31 +142,47 @@ import Ratings from '~/components/layouts/Ratings.vue';
   })
 
   const pageUrl = computed(() => `${siteUrl}${route.path}`)
+  const pageTitle = computed(() => event.value?.title ? `${event.value.title} | ESO Events` : 'Enterprise Support Organisations (ESO) Collaborative')
   const pageDescription = computed(() => {
     const raw = event.value?.description || ''
     return (event.value?.excerpt || getPlainText(raw) || 'Find out more about this event on ESO').slice(0, 160)
   })
-  const pageImage = computed(() => makeAbsoluteUrl(event.value?.event_image_url, siteUrl))
+  const pageImage = computed(() => {
+    const imageUrl = event.value?.event_image_url || event.value?.image_url || event.value?.event_image || event.value?.image
+    return makeAbsoluteUrl(imageUrl, siteUrl)
+  })
 
   useHead(() => ({
-    title: event.value?.title
-      ? `${event.value.title} | ESO Events`
-      : 'Enterprise Support Organisations (ESO) Collaborative',
+    title: pageTitle.value,
     meta: [
+      { name: 'title', content: pageTitle.value },
       { name: 'description', content: pageDescription.value },
+      { property: 'og:site_name', content: 'Enterprise Support Organisations (ESO) Collaborative' },
       { property: 'og:type', content: 'article' },
       { property: 'og:title', content: event.value?.title || 'ESO Event' },
       { property: 'og:description', content: pageDescription.value },
       { property: 'og:url', content: pageUrl.value },
-      ...(pageImage.value ? [{ property: 'og:image', content: pageImage.value }] : []),
+      ...(pageImage.value
+        ? [
+            { property: 'og:image', content: pageImage.value },
+            { property: 'og:image:url', content: pageImage.value },
+            ...(pageImage.value.startsWith('https') ? [{ property: 'og:image:secure_url', content: pageImage.value }] : []),
+            { property: 'og:image:type', content: 'image/jpeg' },
+            { property: 'og:image:width', content: '1200' },
+            { property: 'og:image:height', content: '630' }
+          ]
+        : []),
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: event.value?.title || 'ESO Event' },
       { name: 'twitter:description', content: pageDescription.value },
-      ...(pageImage.value ? [{ name: 'twitter:image', content: pageImage.value }] : [])
+      ...(pageImage.value
+        ? [
+            { name: 'twitter:image', content: pageImage.value },
+            { name: 'twitter:image:src', content: pageImage.value }
+          ]
+        : [])
     ]
   }))
-
-  await profileStore.getSingleEvents(reverseTransform(event_id))
   </script>
   
   <style lang="scss" scoped>
