@@ -203,25 +203,66 @@ export const useProfileStore = defineStore("profile", {
       }
     },
     async getSingleEvents(id: string | number) {
+      this.loading = true
       try {
         const strId = String(id).trim();
-        const encodedId = encodeURIComponent(strId);
-        let response = await apiGetUnRestrictedRequest(`/api/events/${encodedId}`);
-        if (!response.data || response.error || response.data.detail === "Not found.") {
-          const altRes = await apiGetUnRestrictedRequest(`/api/events/${encodedId}/`);
-          if (altRes.data && !altRes.error && !altRes.data.detail) {
-            response = altRes;
-          } else {
-            const searchRes = await apiGetUnRestrictedRequest(`/api/events/?title=${encodedId}`);
-            if (searchRes.data?.results?.[0]) {
-              response = { data: searchRes.data.results[0], error: null };
+        const firstPart = strId.split('-')[0];
+        const isFirstPartNumeric = !isNaN(Number(firstPart)) && firstPart.trim() !== '';
+
+        const candidatesToTry: string[] = [strId];
+        if (isFirstPartNumeric && firstPart !== strId) {
+          candidatesToTry.push(firstPart);
+        }
+
+        let foundData = null;
+
+        for (const candidate of candidatesToTry) {
+          const encoded = encodeURIComponent(candidate);
+          const res1 = await apiGetUnRestrictedRequest(`/api/events/${encoded}`);
+          if (res1.data && !res1.error && !res1.data.detail) {
+            foundData = res1.data;
+            break;
+          }
+          const res2 = await apiGetUnRestrictedRequest(`/api/events/${encoded}/`);
+          if (res2.data && !res2.error && !res2.data.detail) {
+            foundData = res2.data;
+            break;
+          }
+        }
+
+        if (!foundData) {
+          const cleanTitle = strId.replace(/-/g, ' ');
+          const searchQueries = [cleanTitle, strId];
+
+          for (const q of searchQueries) {
+            const encodedQ = encodeURIComponent(q);
+            const titleRes = await apiGetUnRestrictedRequest(`/api/events/?title=${encodedQ}`);
+            const titleList = Array.isArray(titleRes.data)
+              ? titleRes.data
+              : (titleRes.data?.results || titleRes.data?.data || []);
+            if (titleList?.[0]) {
+              foundData = titleList[0];
+              break;
+            }
+
+            const searchRes = await apiGetUnRestrictedRequest(`/api/events/?search=${encodedQ}`);
+            const searchList = Array.isArray(searchRes.data)
+              ? searchRes.data
+              : (searchRes.data?.results || searchRes.data?.data || []);
+            if (searchList?.[0]) {
+              foundData = searchList[0];
+              break;
             }
           }
         }
-        this.event = response.data || {};
-        return { data: response.data, error: response.error };
+
+        this.event = foundData || {};
+        return { data: foundData, error: foundData ? null : "Not found" };
       } catch (error) {
-        return { data: null, error: "Unknown error" }
+        this.event = {};
+        return { data: null, error: "Unknown error" };
+      } finally {
+        this.loading = false;
       }
     },
     async getProgrammes(params: Record<string, string | number | undefined> = {}) {

@@ -132,17 +132,14 @@ import Ratings from '~/components/layouts/Ratings.vue';
   const { event_id } = route.params
   const profileStore = useProfileStore()
 
-  const rawParam = String(event_id)
-  const firstPart = rawParam.split('-')[0]
-  const isNumeric = !isNaN(Number(firstPart)) && firstPart.trim() !== ''
-  const targetQuery = isNumeric ? firstPart : reverseTransform(rawParam)
-
-  await profileStore.getSingleEvents(targetQuery)
+  await profileStore.getSingleEvents(event_id)
 
   const event = computed(() => {
     return profileStore.event
   })
-  const loading = ref(false)
+  const loading = computed(() => {
+    return profileStore.loading
+  })
 
   const pageUrl = computed(() => `${siteUrl}${route.path}`)
   const pageTitle = computed(() => event.value?.title ? `${event.value.title} | ESO Events` : 'Enterprise Support Organisations (ESO) Collaborative')
