@@ -56,47 +56,57 @@
             <LayoutsLoader />
           </div>
 
-          <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 md:gap-10">
             <div 
-              v-for="image in galleries?.results || []" 
-              :key="image.id"
-              class="group relative overflow-hidden rounded-none cursor-pointer"
-              @click="openLightbox(image)"
+              v-for="event in galleries?.results || []" 
+              :key="event.id"
+              class="group relative overflow-hidden rounded-2xl cursor-pointer shadow-md hover:shadow-xl shadow-black/10 hover:shadow-black/20 transition-all duration-300"
+              @click="openLightbox(event)"
             >
               <!-- Image Container -->
-              <div class="aspect-square overflow-hidden">
+              <div class="aspect-[4/5] overflow-hidden relative bg-[#D97706]">
                 <img 
-                  :src="image.gallery_image_url || image.gallery_image || '/placeholder-image.jpg'" 
-                  :alt="image.title || 'Gallery image'"
+                  :src="event.image_cover_url || event.image_cover || eventPhotos(event)[0]?.image_url || '/placeholder-image.jpg'" 
+                  :alt="event.title || 'Gallery image'"
                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
+                  @error="(e) => { e.target.style.display = 'none' }"
                 />
+
+                <!-- Photo count badge for multi-photo events -->
+                <div 
+                  v-if="eventPhotos(event).length > 1"
+                  class="absolute top-3 right-3 bg-black/60 text-white text-xs font-medium px-2.5 py-1 rounded-full flex items-center gap-1"
+                >
+                  <ImageIcon class="size-3" />
+                  {{ eventPhotos(event).length }}
+                </div>
               </div>
               
               <!-- Hover Overlay -->
-              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 flex items-end">
-                <div class="p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <h3 class="text-white font-semibold text-lg mb-2">{{ image.title || 'Untitled' }}</h3>
-                  <p v-if="image.description" class="text-white/80 text-sm line-clamp-2">{{ image.description }}</p>
+              <div class="absolute inset-0 bg-gradient-to-t from-[#257F4A] via-[#257F4A]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div class="p-4 w-full transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300">
+                  <h3 class="text-white font-semibold text-lg mb-1 leading-snug">{{ event.title || 'Untitled' }}</h3>
+                  <p v-if="event.description" class="text-white/90 text-sm line-clamp-2">{{ event.description }}</p>
                   <div class="flex items-center gap-2 mt-2">
-                    <Calendar class="size-4 text-white/60" />
-                    <span class="text-white/60 text-sm">{{ formatDate(image.created_at) }}</span>
+                    <Calendar class="size-4 text-white/80" />
+                    <span class="text-white/80 text-sm">{{ formatDate(event.created_at) }}</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- No Images Message -->
+          <!-- No Events Message -->
           <div v-if="!loadingGalleries && (!galleries?.results || galleries.results.length === 0)" class="text-center py-12">
             <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-gray-100 mb-4">
               <ImageIcon class="size-8 text-gray-400" />
             </div>
             <h3 class="text-xl font-semibold text-gray-700 mb-2">
-              No images found
+              No events found
             </h3>
             <p class="text-gray-500">
-              Check back later for new images
+              Check back later for new gallery events
             </p>
           </div>
         </div>
@@ -104,7 +114,7 @@
 
       <!-- Lightbox Modal -->
       <div 
-        v-if="selectedImage"
+        v-if="selectedEvent"
         class="fixed inset-0 z-50 flex items-center justify-center p-4"
         @click="closeLightbox"
       >
@@ -114,62 +124,66 @@
         <!-- Close Button -->
         <button 
           @click.stop="closeLightbox"
-          class="absolute top-6 right-6 size-12 rounded-full bg-white/50 hover:bg-white/70 transition-all duration-300 flex items-center justify-center z-10"
+          class="absolute top-6 right-6 size-12 rounded-full bg-white/50 hover:bg-white/70 transition-all duration-300 flex items-center justify-center z-20"
         >
           <X class="size-6" />
         </button>
 
         <!-- Lightbox Content -->
-        <div class="relative max-w-6xl w-full max-h-[90vh]" @click.stop>
+        <div class="relative max-w-6xl w-full max-h-[90vh] overflow-y-auto rounded-xl" @click.stop>
           <div class="flex flex-col lg:flex-row gap-8">
             <!-- Main Image -->
             <div class="lg:w-2/3">
-              <div class="relative aspect-video overflow-hidden rounded-xl">
+              <div class="relative aspect-video overflow-hidden rounded-xl bg-[#D97706]/20">
+                <!-- Loading state (fixes the blank flash on open/navigate) -->
+                <div v-if="imageLoading" class="absolute inset-0 flex items-center justify-center">
+                  <LayoutsLoader />
+                </div>
+
                 <img 
-                  :src="selectedImage.gallery_image_url || selectedImage.gallery_image" 
-                  :alt="selectedImage.title"
-                  class="w-full h-full object-contain"
+                  :key="currentPhotoUrl"
+                  :src="currentPhotoUrl" 
+                  :alt="selectedEvent.title"
+                  class="w-full h-full object-contain transition-opacity duration-300"
+                  :class="imageLoading ? 'opacity-0' : 'opacity-100'"
+                  @load="imageLoading = false"
                 />
+
+                <!-- Prev / Next, only shown when the event has more than one photo -->
+                <template v-if="currentPhotos.length > 1">
+                  <button
+                    @click.stop="prevPhoto"
+                    :disabled="currentPhotoIndex === 0"
+                    class="absolute left-3 top-1/2 -translate-y-1/2 size-10 rounded-full bg-white/50 hover:bg-white/70 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center"
+                  >
+                    <ChevronLeft class="size-5" />
+                  </button>
+                  <button
+                    @click.stop="nextPhoto"
+                    :disabled="currentPhotoIndex === currentPhotos.length - 1"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 size-10 rounded-full bg-white/50 hover:bg-white/70 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center"
+                  >
+                    <ChevronRight class="size-5" />
+                  </button>
+
+                  <!-- Photo counter, e.g. 2 / 5 -->
+                  <span class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/60 text-white text-xs font-medium px-3 py-1 rounded-full">
+                    {{ currentPhotoIndex + 1 }} / {{ currentPhotos.length }}
+                  </span>
+                </template>
               </div>
             </div>
 
-            <!-- Image Info -->
-            <div class="lg:w-1/3 bg-white/10 backdrop-blur-sm rounded-xl p-6">
-              <h2 class="text-2xl font-bold text-white mb-4">{{ selectedImage.title || 'Untitled' }}</h2>
-              <p v-if="selectedImage.description" class="text-white/80 mb-6">{{ selectedImage.description }}</p>
+            <!-- Event Info -->
+            <div class="lg:w-1/3 bg-white/10 backdrop-blur-sm rounded-xl p-6 max-h-[60vh] lg:max-h-[70vh] overflow-y-auto">
+              <h2 class="text-2xl font-bold text-white mb-4">{{ selectedEvent.title || 'Untitled' }}</h2>
+              <p v-if="selectedEvent.description" class="text-white/80 mb-6 whitespace-pre-line">{{ selectedEvent.description }}</p>
               
               <div class="space-y-4">
                 <div class="flex items-center gap-3">
                   <Calendar class="size-5 text-white/60" />
-                  <span class="text-white">{{ formatDate(selectedImage.created_at) }}</span>
+                  <span class="text-white">{{ formatDate(selectedEvent.created_at) }}</span>
                 </div>
-              </div>
-
-              <!-- Navigation -->
-              <div v-if="galleries?.results?.length > 1" class="flex items-center justify-between mt-8 pt-6 border-t border-white/20">
-                <Button 
-                  @click.stop="prevImage"
-                  :disabled="currentImageIndex === 0"
-                  variant="outline"
-                  class="text-white border-white/30 hover:bg-white/10 bg-white/10 hover:text-black"
-                >
-                  <ChevronLeft class="size-4 mr-2" />
-                  Previous
-                </Button>
-                
-                <span class="text-white/60">
-                  {{ currentImageIndex + 1 }} / {{ galleries?.results?.length || 0 }}
-                </span>
-                
-                <Button 
-                  @click.stop="nextImage"
-                  :disabled="currentImageIndex === (galleries?.results?.length || 0) - 1"
-                  variant="outline"
-                  class="text-white border-white/30 hover:bg-white/10 bg-white/10 hover:text-black"
-                >
-                  Next
-                  <ChevronRight class="size-4 ml-2" />
-                </Button>
               </div>
             </div>
           </div>
@@ -209,8 +223,11 @@ import { useProfileStore } from '~/store/profile'
 
 const profileStore = useProfileStore()
 const searchQuery = ref('')
-const selectedImage = ref(null)
-const currentImageIndex = ref(0)
+
+// Lightbox state — scoped to a single EVENT, not the whole gallery
+const selectedEvent = ref(null)
+const currentPhotoIndex = ref(0)
+const imageLoading = ref(true)
 
 // Computed properties from store
 const galleries = computed(() => {
@@ -219,6 +236,34 @@ const galleries = computed(() => {
 
 const loadingGalleries = computed(() => {
   return profileStore.loadingGalleries
+})
+
+// Normalizes an event's photos into a flat array of { image_url }.
+// Always includes the main cover image as the first image of the slideshow,
+// and appends any additional child photos.
+const eventPhotos = (event) => {
+  if (!event) return []
+  const photos = []
+  const cover = event.image_cover_url || event.image_cover
+  if (cover) {
+    photos.push({ image_url: cover })
+  }
+  if (Array.isArray(event.images)) {
+    event.images.forEach(img => {
+      const imgUrl = img?.image_url || img?.image_cover_url || img
+      if (imgUrl && imgUrl !== cover) {
+        photos.push({ image_url: imgUrl })
+      }
+    })
+  }
+  return photos
+}
+
+const currentPhotos = computed(() => eventPhotos(selectedEvent.value))
+
+const currentPhotoUrl = computed(() => {
+  const photo = currentPhotos.value[currentPhotoIndex.value]
+  return photo?.image_url || photo?.gallery_image_url || photo || '/placeholder-image.jpg'
 })
 
 // Fetch galleries
@@ -243,41 +288,50 @@ const formatDate = (dateString) => {
   })
 }
 
-// Open lightbox
-const openLightbox = (image) => {
-  selectedImage.value = image
-  // Find the index of the selected image in the current results
-  if (galleries.value?.results) {
-    currentImageIndex.value = galleries.value.results.findIndex(img => img.id === image.id)
-  }
+// Open lightbox for a given event, always starting at its first photo
+const openLightbox = (event) => {
+  selectedEvent.value = event
+  currentPhotoIndex.value = 0
+  imageLoading.value = true
   document.body.style.overflow = 'hidden'
 }
 
 // Close lightbox
 const closeLightbox = () => {
-  selectedImage.value = null
+  selectedEvent.value = null
+  currentPhotoIndex.value = 0
   document.body.style.overflow = 'auto'
 }
 
-// Navigate to next image
-const nextImage = () => {
-  if (!galleries.value?.results) return
-  
-  if (currentImageIndex.value < galleries.value.results.length - 1) {
-    currentImageIndex.value++
-    selectedImage.value = galleries.value.results[currentImageIndex.value]
+// Navigate to next photo within the current event
+const nextPhoto = () => {
+  if (currentPhotoIndex.value < currentPhotos.value.length - 1) {
+    currentPhotoIndex.value++
+    imageLoading.value = true
   }
 }
 
-// Navigate to previous image
-const prevImage = () => {
-  if (!galleries.value?.results) return
-  
-  if (currentImageIndex.value > 0) {
-    currentImageIndex.value--
-    selectedImage.value = galleries.value.results[currentImageIndex.value]
+// Navigate to previous photo within the current event
+const prevPhoto = () => {
+  if (currentPhotoIndex.value > 0) {
+    currentPhotoIndex.value--
+    imageLoading.value = true
   }
 }
+
+// Preload the neighbouring photos so next/prev feels instant
+// instead of showing another blank flash.
+watch([selectedEvent, currentPhotoIndex], () => {
+  const photos = currentPhotos.value
+  ;[currentPhotoIndex.value - 1, currentPhotoIndex.value + 1].forEach((i) => {
+    const photo = photos[i]
+    const url = photo?.image_url || photo?.gallery_image_url || photo
+    if (url) {
+      const img = new Image()
+      img.src = url
+    }
+  })
+})
 
 // Watch for empty search to reset
 watch(
@@ -292,14 +346,14 @@ watch(
 // Handle keyboard navigation for lightbox
 onMounted(() => {
   const handleKeydown = (e) => {
-    if (!selectedImage.value) return
+    if (!selectedEvent.value) return
     
     if (e.key === 'Escape') {
       closeLightbox()
     } else if (e.key === 'ArrowRight') {
-      nextImage()
+      nextPhoto()
     } else if (e.key === 'ArrowLeft') {
-      prevImage()
+      prevPhoto()
     }
   }
   
