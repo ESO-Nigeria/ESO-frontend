@@ -131,7 +131,7 @@ import Ratings from '~/components/layouts/Ratings.vue';
   
   const profileStore = useProfileStore()
 
-  const fetchEvent = async (id: string | string[]) => {
+  const fetchEvent = async (id) => {
     if (!id) return
     await profileStore.getSingleEvents(id)
   }
