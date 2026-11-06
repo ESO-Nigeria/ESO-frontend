@@ -129,10 +129,22 @@ import Ratings from '~/components/layouts/Ratings.vue';
   const runtimeConfig = useRuntimeConfig()
   const siteUrl = runtimeConfig.public.siteUrl?.replace(/\/$/, '') || 'http://localhost:3000'
   
-  const { event_id } = route.params
   const profileStore = useProfileStore()
 
-  await profileStore.getSingleEvents(event_id)
+  const fetchEvent = async (id: string | string[]) => {
+    if (!id) return
+    await profileStore.getSingleEvents(id)
+  }
+
+  watch(
+    () => route.params.event_id,
+    async (newEventId) => {
+      if (newEventId) {
+        await fetchEvent(newEventId)
+      }
+    },
+    { immediate: true }
+  )
 
   const event = computed(() => {
     return profileStore.event
