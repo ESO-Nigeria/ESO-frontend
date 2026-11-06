@@ -205,27 +205,63 @@ export const useProfileStore = defineStore("profile", {
     async getSingleEvents(id: string | number) {
       this.loading = true
       try {
-        const strId = String(id).trim();
-        const firstPart = strId.split('-')[0];
-        const isFirstPartNumeric = !isNaN(Number(firstPart)) && firstPart.trim() !== '';
+        const strId = String(id ?? '').trim();
+        const firstPart = strId.split('-')[0] || '';
+        const isFirstPartNumeric = !!firstPart && !isNaN(Number(firstPart)) && firstPart.trim() !== '';
+        const directCandidate = isFirstPartNumeric ? firstPart : strId;
 
         const candidatesToTry: string[] = [strId];
-        if (isFirstPartNumeric && firstPart !== strId) {
-          candidatesToTry.push(firstPart);
+        if (directCandidate && directCandidate !== strId) {
+          candidatesToTry.push(directCandidate);
         }
+        if (strId && !candidatesToTry.includes(strId)) {
+          candidatesToTry.push(strId);
+        }
+
+        const normalizeEvent = (payload: any) => {
+          if (!payload || typeof payload !== 'object') return payload;
+
+          const description =
+            typeof payload.description === 'string' && payload.description.trim().length > 0
+              ? payload.description
+              : typeof payload.description_html === 'string' && payload.description_html.trim().length > 0
+                ? payload.description_html
+                : typeof payload.details === 'string' && payload.details.trim().length > 0
+                  ? payload.details
+                  : typeof payload.long_description === 'string' && payload.long_description.trim().length > 0
+                    ? payload.long_description
+                    : typeof payload.content === 'string' && payload.content.trim().length > 0
+                      ? payload.content
+                      : '';
+
+          return { ...payload, description };
+        };
+
+        const extractResult = (payload: any) => {
+          if (!payload) return null;
+          if (Array.isArray(payload)) return normalizeEvent(payload[0] ?? null);
+          if (Array.isArray(payload.results)) return normalizeEvent(payload.results[0] ?? null);
+          if (Array.isArray(payload.data)) return normalizeEvent(payload.data[0] ?? null);
+          if (payload.results && typeof payload.results === 'object') return normalizeEvent(payload.results[0] ?? null);
+          if (payload.data && typeof payload.data === 'object' && !Array.isArray(payload.data)) return normalizeEvent(payload.data);
+          return normalizeEvent(payload);
+        };
 
         let foundData = null;
 
         for (const candidate of candidatesToTry) {
           const encoded = encodeURIComponent(candidate);
           const res1 = await apiGetUnRestrictedRequest(`/api/events/${encoded}`);
-          if (res1.data && !res1.error && !res1.data.detail) {
-            foundData = res1.data;
+          const payload1 = extractResult(res1.data);
+          if (res1.data && !res1.error && !res1.data.detail && payload1) {
+            foundData = payload1;
             break;
           }
+
           const res2 = await apiGetUnRestrictedRequest(`/api/events/${encoded}/`);
-          if (res2.data && !res2.error && !res2.data.detail) {
-            foundData = res2.data;
+          const payload2 = extractResult(res2.data);
+          if (res2.data && !res2.error && !res2.data.detail && payload2) {
+            foundData = payload2;
             break;
           }
         }
@@ -240,8 +276,13 @@ export const useProfileStore = defineStore("profile", {
             const titleList = Array.isArray(titleRes.data)
               ? titleRes.data
               : (titleRes.data?.results || titleRes.data?.data || []);
+            const titleMatch = titleList.find((item: any) => String(item?.id) === directCandidate || item?.title === cleanTitle || item?.title === strId);
+            if (titleMatch) {
+              foundData = normalizeEvent(titleMatch);
+              break;
+            }
             if (titleList?.[0]) {
-              foundData = titleList[0];
+              foundData = normalizeEvent(titleList[0]);
               break;
             }
 
@@ -249,8 +290,13 @@ export const useProfileStore = defineStore("profile", {
             const searchList = Array.isArray(searchRes.data)
               ? searchRes.data
               : (searchRes.data?.results || searchRes.data?.data || []);
+            const searchMatch = searchList.find((item: any) => String(item?.id) === directCandidate || item?.title === cleanTitle || item?.title === strId);
+            if (searchMatch) {
+              foundData = normalizeEvent(searchMatch);
+              break;
+            }
             if (searchList?.[0]) {
-              foundData = searchList[0];
+              foundData = normalizeEvent(searchList[0]);
               break;
             }
           }
