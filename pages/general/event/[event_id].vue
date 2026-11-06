@@ -160,8 +160,20 @@ import Ratings from '~/components/layouts/Ratings.vue';
     return (event.value?.excerpt || getPlainText(raw) || 'Find out more about this event on ESO').slice(0, 160)
   })
   const pageImage = computed(() => {
+    const fallbackImage = '/opengraph_fallback_img.JPG'
     const imageUrl = event.value?.event_image_url || event.value?.image_url || event.value?.event_image || event.value?.image
-    return makeAbsoluteUrl(imageUrl, siteUrl)
+    const resolvedImage = imageUrl ? makeAbsoluteUrl(imageUrl, siteUrl) : makeAbsoluteUrl(fallbackImage, siteUrl)
+
+    try {
+      const parsed = new URL(resolvedImage)
+      if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+        return resolvedImage
+      }
+    } catch (error) {
+      // ignore invalid URLs and fall back to the default event image
+    }
+
+    return makeAbsoluteUrl(fallbackImage, siteUrl)
   })
 
   useHead(() => ({
