@@ -136,14 +136,16 @@ import Ratings from '~/components/layouts/Ratings.vue';
     await profileStore.getSingleEvents(id)
   }
 
+  await fetchEvent(route.params.event_id)
+
   watch(
     () => route.params.event_id,
-    async (newEventId) => {
-      if (newEventId) {
+    async (newEventId, oldEventId) => {
+      if (newEventId && newEventId !== oldEventId) {
         await fetchEvent(newEventId)
       }
     },
-    { immediate: true }
+    { immediate: false }
   )
 
   const event = computed(() => {
